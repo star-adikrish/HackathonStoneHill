@@ -1,11 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import json
 import os
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+import google.generativeai as genai
+import re
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-this'
+
+# Configure Gemini AI (API key to be added later)
+GEMINI_API_KEY = "AIzaSyDHBGDruMLNeCWKUsSWAsOx6qftJ_J09Fc"  # Paste your key here
+if GEMINI_API_KEY and not GEMINI_API_KEY.startswith("AIzaSyExample"):
+    genai.configure(api_key=GEMINI_API_KEY)
 
 DATA_FILE = 'data.json'
 
@@ -137,6 +144,118 @@ def contact():
     flash(f'Thank you {name}! Your message has been sent.')
     
     return redirect(url_for('index'))
+
+@app.route('/calculate_travel_cost', methods=['POST'])
+def calculate_travel_cost():
+    data = request.get_json()
+    destination = data.get('destination', '')
+    days = int(data.get('days', 1))
+    people = int(data.get('people', 1))
+    
+    if GEMINI_API_KEY:
+        try:
+            return get_ai_travel_cost(destination, days, people)
+        except Exception as e:
+            print(f"AI API error: {e}")
+            # Fallback to static calculation
+    
+    return get_static_travel_cost(destination, days, people)
+
+def get_ai_travel_cost(destination, days, people):
+    model = genai.GenerativeModel('gemini-pro')
+    
+    prompt = f"""
+    Calculate realistic travel costs for {people} people visiting {destination} for {days} days.
+    Provide costs in Indian Rupees (₹) with the following breakdown:
+    - Accommodation (per day total for all people)
+    - Food (per day total for all people) 
+    - Transport (one-time cost for all people)
+    - Activities (per day total for all people)
+    
+    Consider:
+    - Mid-range budget travel
+    - Indian pricing standards
+    - Seasonal variations
+    - Group discounts for multiple people
+    
+    Respond ONLY in this exact format:
+    Accommodation: ₹X per day
+    Food: ₹Y per day
+    Transport: ₹Z total
+    Activities: ₹W per day
+    """
+    
+    response = model.generate_content(prompt)
+    costs = parse_ai_response(response.text, days, people)
+    
+    return jsonify(costs)
+
+def parse_ai_response(response_text, days, people):
+    # Extract costs using regex
+    accommodation_match = re.search(r'Accommodation:.*?₹(\d+)', response_text)
+    food_match = re.search(r'Food:.*?₹(\d+)', response_text)
+    transport_match = re.search(r'Transport:.*?₹(\d+)', response_text)
+    activities_match = re.search(r'Activities:.*?₹(\d+)', response_text)
+    
+    accommodation_per_day = int(accommodation_match.group(1)) if accommodation_match else 2500
+    food_per_day = int(food_match.group(1)) if food_match else 1000
+    transport_total = int(transport_match.group(1)) if transport_match else 1000
+    activities_per_day = int(activities_match.group(1)) if activities_match else 1200
+    
+    total_accommodation = accommodation_per_day * days
+    total_food = food_per_day * days
+    total_activities = activities_per_day * days
+    
+    return {
+        'accommodation': total_accommodation,
+        'food': total_food,
+        'transport': transport_total,
+        'activities': total_activities,
+        'total': total_accommodation + total_food + transport_total + total_activities
+    }
+
+def get_static_travel_cost(destination, days, people):
+    destination = destination.lower()
+    
+    # Destination-based cost calculation (Indian Rupees)
+    base_costs = {
+        'goa': {'accommodation': 2500, 'food': 1200, 'transport': 800, 'activities': 1500},
+        'kerala': {'accommodation': 2200, 'food': 1000, 'transport': 900, 'activities': 1300},
+        'rajasthan': {'accommodation': 2800, 'food': 1100, 'transport': 1200, 'activities': 1600},
+        'himachal pradesh': {'accommodation': 2000, 'food': 900, 'transport': 1500, 'activities': 1200},
+        'uttarakhand': {'accommodation': 1800, 'food': 800, 'transport': 1400, 'activities': 1100},
+        'kashmir': {'accommodation': 3000, 'food': 1300, 'transport': 1800, 'activities': 2000},
+        'andaman': {'accommodation': 4000, 'food': 1500, 'transport': 2500, 'activities': 2200},
+        'leh ladakh': {'accommodation': 2500, 'food': 1000, 'transport': 2000, 'activities': 1800},
+        'mumbai': {'accommodation': 3500, 'food': 1400, 'transport': 600, 'activities': 1800},
+        'delhi': {'accommodation': 3000, 'food': 1200, 'transport': 500, 'activities': 1500}
+    }
+    
+    # Find matching destination
+    costs = None
+    for dest_key in base_costs:
+        if dest_key in destination or any(word in destination for word in dest_key.split()):
+            costs = base_costs[dest_key]
+            break
+    
+    if not costs:
+        costs = {'accommodation': 2500, 'food': 1000, 'transport': 1000, 'activities': 1200}
+    
+    # Calculate total costs
+    total_accommodation = costs['accommodation'] * days * people
+    total_food = costs['food'] * days * people
+    total_transport = costs['transport'] * people
+    total_activities = costs['activities'] * days * people
+    
+    grand_total = total_accommodation + total_food + total_transport + total_activities
+    
+    return jsonify({
+        'accommodation': total_accommodation,
+        'food': total_food,
+        'transport': total_transport,
+        'activities': total_activities,
+        'total': grand_total
+    })
 
 @app.route('/logout')
 def logout():

@@ -9,7 +9,7 @@
         
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat fixed;
             min-height: 100vh;
             padding: 10px;
         }
@@ -316,24 +316,26 @@
                         <p style="text-align: center; color: #666; padding: 40px;">No expenses recorded this month. Add your first expense above! 💰</p>
                     {% endif %}
                 </div>
-
-                <div class="form-section">
-                    <h2>🌬️ Air Quality Monitor</h2>
-                    <input id="cityInput" placeholder="Enter city name" style="width: 100%; margin-bottom: 15px;">
-                    <button class="submit-btn" onclick="checkAQI()">Check Air Quality</button>
-                    <div id="aqiResult" style="margin-top: 20px;"></div>
-                </div>
             </div>
 
             <div id="travel" class="tab-content">
-                <div class="form-section">
-                    <h2>✈️ AI Travel Research</h2>
-                    <input id="fromCity" placeholder="From which city? 🏠" style="width: 100%; margin-bottom: 15px;">
-                    <input id="toCity" placeholder="To which city? 🌍" style="width: 100%; margin-bottom: 15px;">
-                    <input id="people" type="number" placeholder="Number of people" style="width: 100%; margin-bottom: 15px;">
-                    <input id="budget" type="number" placeholder="Total budget ₹" style="width: 100%; margin-bottom: 15px;">
-                    <button class="submit-btn" onclick="planTravel()">Research Trip Costs</button>
-                    <div id="travelResult" style="margin-top: 20px;"></div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div class="form-section">
+                        <h2>✈️ AI Travel Research</h2>
+                        <input id="fromCity" placeholder="From which city? 🏠" style="width: 100%; margin-bottom: 15px;">
+                        <input id="toCity" placeholder="To which city? 🌍" style="width: 100%; margin-bottom: 15px;">
+                        <input id="people" type="number" placeholder="Number of people" style="width: 100%; margin-bottom: 15px;">
+                        <input id="budget" type="number" placeholder="Total budget ₹" style="width: 100%; margin-bottom: 15px;">
+                        <button class="submit-btn" onclick="planTravel()">Research Trip Costs</button>
+                        <div id="travelResult" style="margin-top: 20px;"></div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2>🌬️ Weather & AQI Monitor</h2>
+                        <input id="cityInputTravel" placeholder="Enter city name" style="width: 100%; margin-bottom: 15px;">
+                        <button class="submit-btn" onclick="checkAQITravel()">Check Weather & AQI</button>
+                        <div id="aqiResultTravel" style="margin-top: 20px;"></div>
+                    </div>
                 </div>
             </div>
 
@@ -345,8 +347,12 @@
                         <input type="email" name="email" placeholder="Your Email" required>
                         <input type="text" name="subject" placeholder="Subject" required>
                         <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                        <button type="submit">Send Message</button>
+                        <button onclick="sendToWhatsApp()" style="background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: white; padding: 15px 30px; border: none; border-radius: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 35px rgba(37, 211, 102, 0.4)'" onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 8px 25px rgba(37, 211, 102, 0.3)'">
+                            💬 Send via WhatsApp
+                        </button>
                     </form>
+                    
+                    
                 </div>
                 
                 <div class="contact-form" style="margin-top: 30px;">
@@ -361,13 +367,19 @@
                     </select>
                     <button class="submit-btn" onclick="submitFeedback()">Submit</button>
                     <p id="feedbackMsg" style="margin-top: 15px;"></p>
+                    
+                    <div style="margin-top: 30px; text-align: center;">
+                        <a href="https://wa.me/8618079219" style="display: inline-block; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: white; padding: 15px 30px; border-radius: 15px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 35px rgba(37, 211, 102, 0.4)'" onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 8px 25px rgba(37, 211, 102, 0.3)'">
+                            💬 Message us on WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            // Tab navigation
+            // Load live data on page load
             document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('.tab').forEach(function(tab) {
                     tab.addEventListener('click', function() {
@@ -380,7 +392,190 @@
                 {% if expenses %}
                 initChart();
                 {% endif %}
+                
+                // Load live global data
+                loadLiveData();
+                loadLiveDataTravel();
             });
+            
+            function loadLiveDataTravel() {
+                const cities = ['Delhi', 'Mumbai', 'London', 'New York', 'Tokyo'];
+                const randomCity = cities[Math.floor(Math.random() * cities.length)];
+                
+                const API_KEY = 'e84a8261d3cd4786a8281927250707';
+                const WEATHER_URL = 'https://api.weatherapi.com/v1';
+                
+                fetch(`${WEATHER_URL}/current.json?key=${API_KEY}&q=${randomCity}&aqi=yes`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const { location, current } = data;
+                        
+                        document.getElementById('liveTempTravel').innerHTML = `
+                            <div style="font-size: 24px;">🌡️</div>
+                            <div style="font-size: 18px; font-weight: 600; color: #667eea;">${current.temp_c}°C</div>
+                            <div style="font-size: 12px; color: #666;">${location.name}</div>
+                        `;
+                        
+                        const epaIndex = current.air_quality['us-epa-index'];
+                        let aqiColor = '#667eea';
+                        if (epaIndex <= 2) aqiColor = '#00e400';
+                        else if (epaIndex <= 3) aqiColor = '#ffff00';
+                        else if (epaIndex <= 4) aqiColor = '#ff7e00';
+                        else aqiColor = '#ff0000';
+                        
+                        document.getElementById('liveAQITravel').innerHTML = `
+                            <div style="font-size: 24px;">🌬️</div>
+                            <div style="font-size: 18px; font-weight: 600; color: ${aqiColor};">AQI ${epaIndex}</div>
+                            <div style="font-size: 12px; color: #666;">${location.name}</div>
+                        `;
+                    })
+                    .catch(() => {
+                        document.getElementById('liveTempTravel').innerHTML = `
+                            <div style="font-size: 24px;">🌡️</div>
+                            <div style="font-size: 18px; font-weight: 600; color: #667eea;">--°C</div>
+                            <div style="font-size: 12px; color: #666;">Offline</div>
+                        `;
+                        document.getElementById('liveAQITravel').innerHTML = `
+                            <div style="font-size: 24px;">🌬️</div>
+                            <div style="font-size: 18px; font-weight: 600; color: #667eea;">--</div>
+                            <div style="font-size: 12px; color: #666;">Offline</div>
+                        `;
+                    });
+            }
+            
+            function checkAQITravel() {
+                const city = document.getElementById('cityInputTravel').value;
+                if (!city) {
+                    document.getElementById('aqiResultTravel').innerHTML = '<div style="color: red; padding: 15px; background: rgba(255,0,0,0.1); border-radius: 10px;">Please enter a city name!</div>';
+                    return;
+                }
+                
+                document.getElementById('aqiResultTravel').innerHTML = '<div style="padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 10px;">🔍 Checking weather & air quality...</div>';
+                
+                const API_KEY = 'e84a8261d3cd4786a8281927250707';
+                const WEATHER_URL = 'https://api.weatherapi.com/v1';
+                
+                fetch(`${WEATHER_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}&aqi=yes`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error.message);
+                        }
+                        
+                        const { location, current } = data;
+                        const epaIndex = current.air_quality['us-epa-index'];
+                        const aqiValue = Math.round(current.air_quality.pm2_5 * 2.5); // Convert PM2.5 to AQI approximation
+                        let statusText, color, advice;
+                        
+                        if (epaIndex === 1) {
+                            statusText = 'Good';
+                            color = '#00e400';
+                            advice = 'Air quality is satisfactory and poses little or no risk.';
+                        } else if (epaIndex === 2) {
+                            statusText = 'Moderate';
+                            color = '#ffff00';
+                            advice = 'Air quality is acceptable for most people.';
+                        } else if (epaIndex === 3) {
+                            statusText = 'Unhealthy for Sensitive Groups';
+                            color = '#ff7e00';
+                            advice = 'Sensitive individuals should limit outdoor activities.';
+                        } else if (epaIndex === 4) {
+                            statusText = 'Unhealthy';
+                            color = '#ff0000';
+                            advice = 'Everyone should limit outdoor activities.';
+                        } else if (epaIndex === 5) {
+                            statusText = 'Very Unhealthy';
+                            color = '#8f3f97';
+                            advice = 'Health alert: everyone may experience serious health effects.';
+                        } else {
+                            statusText = 'Hazardous';
+                            color = '#7e0023';
+                            advice = 'Emergency conditions. Stay indoors with air purifier.';
+                        }
+                        
+                        document.getElementById('aqiResultTravel').innerHTML = `
+                            <div style="background: ${color}20; border: 2px solid ${color}; padding: 20px; border-radius: 15px; margin-top: 15px;">
+                                <h3 style="color: ${color}; margin-bottom: 15px;">🌍 ${location.name}, ${location.country}</h3>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 15px;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2.5em; font-weight: bold; color: #667eea;">${current.temp_c}°C</div>
+                                        <div style="font-weight: bold; color: #667eea;">Temperature</div>
+                                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Feels like ${current.feelslike_c}°C</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2.5em; font-weight: bold; color: ${color};">${aqiValue}</div>
+                                        <div style="font-weight: bold; color: ${color};">AQI ${statusText}</div>
+                                        <div style="font-size: 12px; color: #666; margin-top: 5px;">EPA Level: ${epaIndex}</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 1.5em; font-weight: bold; color: #333;">PM2.5</div>
+                                        <div style="font-size: 2em; font-weight: bold; color: ${color};">${current.air_quality.pm2_5}</div>
+                                        <div style="font-size: 12px; color: #666;">particles</div>
+                                    </div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.8); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                                    <h4 style="margin-bottom: 10px; color: #333;">Other Pollutants</h4>
+                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 12px;">
+                                        <div><strong>Coarse Particles (PM10):</strong><br>${current.air_quality.pm10} particles</div>
+                                        <div><strong>Carbon Monoxide (CO):</strong><br>${current.air_quality.co} units</div>
+                                        <div><strong>Nitrogen Dioxide (NO2):</strong><br>${current.air_quality.no2} units</div>
+                                        <div><strong>Ozone (O3):</strong><br>${current.air_quality.o3} units</div>
+                                        <div><strong>Sulfur Dioxide (SO2):</strong><br>${current.air_quality.so2} units</div>
+                                    </div>
+                                </div>
+                                <p style="color: #333; font-weight: 500; text-align: center;">${advice}</p>
+                            </div>
+                        `;
+                    })
+                    .catch(error => {
+                        document.getElementById('aqiResultTravel').innerHTML = `<div style="color: red; padding: 15px; background: rgba(255,0,0,0.1); border-radius: 10px;">Error: ${error.message}</div>`;
+                    });
+            }
+            
+            function loadLiveData() {
+                const cities = ['Delhi', 'Mumbai', 'London', 'New York', 'Tokyo'];
+                const randomCity = cities[Math.floor(Math.random() * cities.length)];
+                
+                const API_KEY = 'e84a8261d3cd4786a8281927250707';
+                const WEATHER_URL = 'https://api.weatherapi.com/v1';
+                
+                fetch(`${WEATHER_URL}/current.json?key=${API_KEY}&q=${randomCity}&aqi=yes`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const { location, current } = data;
+                        
+                        document.getElementById('liveTemp').innerHTML = `
+                            <div style="font-size: 24px;">🌡️</div>
+                            <div style="font-size: 18px; font-weight: 600; color: #667eea;">${current.temp_c}°C</div>
+                            <div style="font-size: 12px; color: #666;">${location.name}</div>
+                        `;
+                        
+                        const epaIndex = current.air_quality['us-epa-index'];
+                        let aqiColor = '#667eea';
+                        if (epaIndex <= 2) aqiColor = '#00e400';
+                        else if (epaIndex <= 3) aqiColor = '#ffff00';
+                        else if (epaIndex <= 4) aqiColor = '#ff7e00';
+                        else aqiColor = '#ff0000';
+                        
+                        document.getElementById('liveAQI').innerHTML = `
+                            <div style="font-size: 24px;">🌬️</div>
+                            <div style="font-size: 18px; font-weight: 600; color: ${aqiColor};">AQI ${epaIndex}</div>
+                            <div style="font-size: 12px; color: #666;">${location.name}</div>
+                        `;
+                    })
+                    .catch(() => {
+                        document.getElementById('liveTemp').innerHTML = `
+                            <div style="font-size: 24px;">🌡️</div>
+                            <div style="font-size: 18px; font-weight: 600; color: #667eea;">--°C</div>
+                            <div style="font-size: 12px; color: #666;">Offline</div>
+                        `;
+                        document.getElementById('liveAQI').innerHTML = `
+                            <div style="font-size: 24px;">🌬️</div>
+                            <div style="font-size: 18px; font-weight: 600; color: #667eea;">--</div>
+                            <div style="font-size: 12px; color: #666;">Offline</div>
+                        `;
+                    });
+            }
             
             function showTab(tabName) {
                 document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
@@ -427,36 +622,103 @@
                     return;
                 }
                 
-                document.getElementById('aqiResult').innerHTML = '<div style="padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 10px;">🔍 Checking air quality...</div>';
+                document.getElementById('aqiResult').innerHTML = '<div style="padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 10px;">🔍 Checking weather & air quality...</div>';
                 
-                // Simulate AQI data
-                const aqiValue = Math.floor(Math.random() * 300) + 1;
-                let category, color, advice;
+                // Use real API call
+                const API_KEY = 'e84a8261d3cd4786a8281927250707';
+                const WEATHER_URL = 'https://api.weatherapi.com/v1';
                 
-                if (aqiValue <= 50) {
-                    category = 'Good'; color = '#00e400'; advice = 'Air quality is great! Perfect for outdoor activities.';
-                } else if (aqiValue <= 100) {
-                    category = 'Moderate'; color = '#ffff00'; advice = 'Air quality is acceptable for most people.';
-                } else if (aqiValue <= 150) {
-                    category = 'Unhealthy for Sensitive Groups'; color = '#ff7e00'; advice = 'Sensitive individuals should limit outdoor activities.';
-                } else if (aqiValue <= 200) {
-                    category = 'Unhealthy'; color = '#ff0000'; advice = 'Everyone should limit outdoor activities.';
-                } else if (aqiValue <= 300) {
-                    category = 'Very Unhealthy'; color = '#8f3f97'; advice = 'Avoid outdoor activities. Stay indoors.';
-                } else {
-                    category = 'Hazardous'; color = '#7e0023'; advice = 'Emergency conditions. Stay indoors with air purifier.';
+                fetch(`${WEATHER_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}&aqi=yes`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error.message);
+                        }
+                        
+                        const { location, current } = data;
+                        const epaIndex = current.air_quality['us-epa-index'];
+                        const aqiValue = Math.round(current.air_quality.pm2_5 * 2.5); // Convert PM2.5 to AQI approximation
+                        let statusText, color, advice;
+                        
+                        if (epaIndex === 1) {
+                            statusText = 'Good';
+                            color = '#00e400';
+                            advice = 'Air quality is satisfactory and poses little or no risk.';
+                        } else if (epaIndex === 2) {
+                            statusText = 'Moderate';
+                            color = '#ffff00';
+                            advice = 'Air quality is acceptable for most people.';
+                        } else if (epaIndex === 3) {
+                            statusText = 'Unhealthy for Sensitive Groups';
+                            color = '#ff7e00';
+                            advice = 'Sensitive individuals should limit outdoor activities.';
+                        } else if (epaIndex === 4) {
+                            statusText = 'Unhealthy';
+                            color = '#ff0000';
+                            advice = 'Everyone should limit outdoor activities.';
+                        } else if (epaIndex === 5) {
+                            statusText = 'Very Unhealthy';
+                            color = '#8f3f97';
+                            advice = 'Health alert: everyone may experience serious health effects.';
+                        } else {
+                            statusText = 'Hazardous';
+                            color = '#7e0023';
+                            advice = 'Emergency conditions. Stay indoors with air purifier.';
+                        }
+                        
+                        document.getElementById('aqiResult').innerHTML = `
+                            <div style="background: ${color}20; border: 2px solid ${color}; padding: 20px; border-radius: 15px; margin-top: 15px;">
+                                <h3 style="color: ${color}; margin-bottom: 15px;">🌍 ${location.name}, ${location.country}</h3>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 15px;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2.5em; font-weight: bold; color: #667eea;">${current.temp_c}°C</div>
+                                        <div style="font-weight: bold; color: #667eea;">Temperature</div>
+                                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Feels like ${current.feelslike_c}°C</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2.5em; font-weight: bold; color: ${color};">${aqiValue}</div>
+                                        <div style="font-weight: bold; color: ${color};">AQI ${statusText}</div>
+                                        <div style="font-size: 12px; color: #666; margin-top: 5px;">EPA Level: ${epaIndex}</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 1.5em; font-weight: bold; color: #333;">PM2.5</div>
+                                        <div style="font-size: 2em; font-weight: bold; color: ${color};">${current.air_quality.pm2_5}</div>
+                                        <div style="font-size: 12px; color: #666;">particles</div>
+                                    </div>
+                                </div>
+                                <div style="background: rgba(255,255,255,0.8); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                                    <h4 style="margin-bottom: 10px; color: #333;">Other Pollutants</h4>
+                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 12px;">
+                                        <div><strong>Coarse Particles (PM10):</strong><br>${current.air_quality.pm10} particles</div>
+                                        <div><strong>Carbon Monoxide (CO):</strong><br>${current.air_quality.co} units</div>
+                                        <div><strong>Nitrogen Dioxide (NO2):</strong><br>${current.air_quality.no2} units</div>
+                                        <div><strong>Ozone (O3):</strong><br>${current.air_quality.o3} units</div>
+                                        <div><strong>Sulfur Dioxide (SO2):</strong><br>${current.air_quality.so2} units</div>
+                                    </div>
+                                </div>
+                                <p style="color: #333; font-weight: 500; text-align: center;">${advice}</p>
+                            </div>
+                        `;
+                    })
+                    .catch(error => {
+                        document.getElementById('aqiResult').innerHTML = `<div style="color: red; padding: 15px; background: rgba(255,0,0,0.1); border-radius: 10px;">Error: ${error.message}</div>`;
+                    });
+            }
+            
+            function sendToWhatsApp() {
+                const name = document.querySelector('input[name="name"]').value;
+                const email = document.querySelector('input[name="email"]').value;
+                const subject = document.querySelector('input[name="subject"]').value;
+                const message = document.querySelector('textarea[name="message"]').value;
+                
+                if (!name || !email || !subject || !message) {
+                    alert('Please fill all fields before sending to WhatsApp!');
+                    return;
                 }
                 
-                setTimeout(() => {
-                    document.getElementById('aqiResult').innerHTML = `
-                        <div style="background: ${color}20; border: 2px solid ${color}; padding: 20px; border-radius: 15px; margin-top: 15px;">
-                            <h3 style="color: ${color}; margin-bottom: 10px;">🌬️ ${city} Air Quality</h3>
-                            <div style="font-size: 2em; font-weight: bold; color: ${color}; margin: 10px 0;">${aqiValue}</div>
-                            <div style="font-weight: bold; color: ${color}; margin-bottom: 10px;">${category}</div>
-                            <p style="color: #333;">${advice}</p>
-                        </div>
-                    `;
-                }, 1000);
+                const whatsappMessage = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`;
+                const whatsappUrl = `https://wa.me/8618079219?text=${encodeURIComponent(whatsappMessage)}`;
+                window.open(whatsappUrl, '_blank');
             }
             
             function submitFeedback() {
@@ -482,16 +744,57 @@
                 
                 document.getElementById('travelResult').innerHTML = '<div style="padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 10px;">🤖 AI researching travel costs...</div>';
                 
-                const perPerson = budget / people;
-                const breakdown = {
-                    transport: { amount: Math.round(budget * 0.35), percentage: 35, details: 'Flight/train costs' },
-                    accommodation: { amount: Math.round(budget * 0.30), percentage: 30, details: 'Hotel stays' },
-                    food: { amount: Math.round(budget * 0.20), percentage: 20, details: 'Meals & dining' },
-                    activities: { amount: Math.round(budget * 0.10), percentage: 10, details: 'Sightseeing' },
-                    extras: { amount: Math.round(budget * 0.05), percentage: 5, details: 'Miscellaneous' }
-                };
-                
-                setTimeout(() => {
+                // Call AI-powered travel cost calculator
+                fetch('/calculate_travel_cost', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        destination: toCity,
+                        days: Math.ceil(budget / (people * 3000)), // Estimate days based on budget
+                        people: people
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const perPerson = budget / people;
+                    const aiTotal = data.total;
+                    const budgetFit = budget >= aiTotal ? '✅ Within Budget' : '⚠️ Over Budget';
+                    const budgetColor = budget >= aiTotal ? '#00e400' : '#ff7e00';
+                    
+                    document.getElementById('travelResult').innerHTML = `
+                        <div style="background: rgba(102, 126, 234, 0.1); padding: 20px; border-radius: 15px; margin-top: 15px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">🎆 AI Trip Analysis: ${fromCity} → ${toCity}</h3>
+                            <div style="background: ${budgetColor}20; border: 2px solid ${budgetColor}; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                                <p style="color: ${budgetColor}; font-weight: bold; text-align: center;">${budgetFit}</p>
+                                <p><strong>Your Budget:</strong> ₹${budget.toLocaleString()} | <strong>AI Estimate:</strong> ₹${aiTotal.toLocaleString()}</p>
+                                <p><strong>Per Person:</strong> ₹${perPerson.toLocaleString()} | <strong>People:</strong> ${people}</p>
+                            </div>
+                            <h4 style="color: #667eea; margin-bottom: 10px;">🤖 AI Cost Breakdown:</h4>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                <p>🏨 Accommodation: ₹${data.accommodation.toLocaleString()}</p>
+                                <p>🍽️ Food: ₹${data.food.toLocaleString()}</p>
+                                <p>🚗 Transport: ₹${data.transport.toLocaleString()}</p>
+                                <p>🎭 Activities: ₹${data.activities.toLocaleString()}</p>
+                            </div>
+                            <hr style="margin: 15px 0; border: 1px solid rgba(102, 126, 234, 0.2);">
+                            <p style="text-align: center; font-weight: bold; color: #667eea;">Total AI Estimate: ₹${aiTotal.toLocaleString()}</p>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Fallback to static calculation
+                    const perPerson = budget / people;
+                    const breakdown = {
+                        transport: { amount: Math.round(budget * 0.35), percentage: 35, details: 'Flight/train costs' },
+                        accommodation: { amount: Math.round(budget * 0.30), percentage: 30, details: 'Hotel stays' },
+                        food: { amount: Math.round(budget * 0.20), percentage: 20, details: 'Meals & dining' },
+                        activities: { amount: Math.round(budget * 0.10), percentage: 10, details: 'Sightseeing' },
+                        extras: { amount: Math.round(budget * 0.05), percentage: 5, details: 'Miscellaneous' }
+                    };
+                    
                     document.getElementById('travelResult').innerHTML = `
                         <div style="background: rgba(102, 126, 234, 0.1); padding: 20px; border-radius: 15px; margin-top: 15px;">
                             <h3 style="color: #667eea; margin-bottom: 15px;">🎆 Trip: ${fromCity} → ${toCity}</h3>
@@ -505,7 +808,7 @@
                             <p>📋 Extras: ₹${breakdown.extras.amount.toLocaleString()} (${breakdown.extras.percentage}%)<br><small style="color: #666;">${breakdown.extras.details}</small></p>
                         </div>
                     `;
-                }, 1000);
+                });
             }
         </script>
     </div>

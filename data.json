@@ -112,6 +112,20 @@
         "amount": 200.0,
         "paid_by": "Jakes Father",
         "added_by": "GL"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Brushes",
+        "amount": 50.0,
+        "paid_by": "Jakes Mother ",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Brushes",
+        "amount": 50.0,
+        "paid_by": "Jakes Father",
+        "added_by": "GL"
       }
     ],
     "abc": [
