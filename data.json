@@ -1,6 +1,34 @@
 {
   "users": {
-    "TESTING": "pbkdf2:sha256:600000$oYO6qXrvlLiayi8v$1c85575132dc3b0aca628b74da2881d319f99451dbdd35a3f11c80b897f638dc"
+    "TESTING": "pbkdf2:sha256:600000$oYO6qXrvlLiayi8v$1c85575132dc3b0aca628b74da2881d319f99451dbdd35a3f11c80b897f638dc",
+    "Adi": "pbkdf2:sha256:600000$h5A7fHFw8yVW5CQd$eb2aef15399daa2638dfcc97fc3bc6d84ffeed35cfcaa06d01c59ab2df6e338e",
+    "Admin": "pbkdf2:sha256:600000$0CuAdy2tTcvaUY6N$08c99b0686ce2d0b97af780a8362fe50473ad59dfec18a3478c0f62d2e98ffe6",
+    "Krishna": "pbkdf2:sha256:600000$DpjzYVgsYrL1aHls$c5917c3eac72770efb418c706221cdc5c539e96a93f426d8b05af0999e50ffd5",
+    "GL": {
+      "password": "pbkdf2:sha256:600000$OPsDY8TV1A8nTkUg$40eaab88ce9524c903916eca8325b5cce56d5cd4f434962dedfdcc27ed092ccc",
+      "family_members": [
+        "Jake",
+        "Jakes brother",
+        "Jakes Mother ",
+        "Jakes Father"
+      ]
+    },
+    "HACKATHON ": {
+      "password": "pbkdf2:sha256:600000$bKbVt1JZmWwOz7Q1$287abb5af46486d12ff6d4d4a2f3cd8cacbfab17392c67acdb97b184fc440b13",
+      "family_members": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "abc": {
+      "password": "pbkdf2:sha256:600000$mIBU4uxiQTYm6Maq$df5c3734ad77ed4258584570540ec6e918b1c69c34799b4d6081540ce03a13e2",
+      "family_members": [
+        "Jake",
+        "Jakes Father",
+        "Jakes Mother "
+      ]
+    }
   },
   "expenses": [
     {
@@ -16,6 +44,133 @@
       "amount": 50.0,
       "paid_by": "Jake",
       "added_by": "TESTING"
+    },
+    {
+      "date": "2026-01-31",
+      "item": "Oranges",
+      "amount": 500.0,
+      "paid_by": "Jake",
+      "added_by": "TESTING"
+    },
+    {
+      "date": "2026-01-04",
+      "item": "me",
+      "amount": 1e+49,
+      "paid_by": "me",
+      "added_by": "TESTING"
+    },
+    {
+      "date": "2026-01-09",
+      "item": "stuff",
+      "amount": 10000000.0,
+      "paid_by": "jake",
+      "added_by": "TESTING"
     }
-  ]
+  ],
+  "user_expenses": {
+    "Krishna": [
+      {
+        "date": "2026-01-30",
+        "item": "stuff",
+        "amount": 50.0,
+        "paid_by": "Jake",
+        "added_by": "Krishna"
+      }
+    ],
+    "GL": [
+      {
+        "date": "2026-01-30",
+        "item": "Light bulb",
+        "amount": 75.0,
+        "paid_by": "Jake",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-01-30",
+        "item": "Cab",
+        "amount": 120.0,
+        "paid_by": "Jakes brother",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-01-06",
+        "item": "Wires",
+        "amount": 65.0,
+        "paid_by": "Jakes Father",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Light bulb",
+        "amount": 75.0,
+        "paid_by": "Jake",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-02-27",
+        "item": "Cab",
+        "amount": 200.0,
+        "paid_by": "Jakes Father",
+        "added_by": "GL"
+      }
+    ],
+    "abc": [
+      {
+        "date": "2026-02-01",
+        "item": "Wires",
+        "amount": 50.0,
+        "paid_by": "Jake",
+        "added_by": "abc"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Light bulb",
+        "amount": 75.0,
+        "paid_by": "Jakes Father",
+        "added_by": "abc"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Light bulb",
+        "amount": 22.0,
+        "paid_by": "Jake",
+        "added_by": "abc"
+      },
+      {
+        "date": "2026-02-02",
+        "item": "Light bulb",
+        "amount": 65.0,
+        "paid_by": "Jake",
+        "added_by": "abc"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Light bulb",
+        "amount": 65.0,
+        "paid_by": "Jakes Father",
+        "added_by": "abc"
+      },
+      {
+        "date": "2026-03-30",
+        "item": "Cab",
+        "amount": 5000.0,
+        "paid_by": "Jakes Father",
+        "added_by": "abc"
+      },
+      {
+        "date": "2026-02-11",
+        "item": "Cab",
+        "amount": 200.0,
+        "paid_by": "Jake",
+        "added_by": "abc"
+      },
+      {
+        "date": "2026-02-02",
+        "item": "stuff",
+        "amount": 100000.0,
+        "paid_by": "Jake",
+        "added_by": "abc"
+      }
+    ]
+  }
 }
