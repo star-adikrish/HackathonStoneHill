@@ -19,7 +19,7 @@ GEMINI_API_KEY = "AIzaSyDHBGDruMLNeCWKUsSWAsOx6qftJ_J09Fc"  # Paste your key her
 if GEMINI_API_KEY and not GEMINI_API_KEY.startswith("AIzaSyExample"):
     genai.configure(api_key=GEMINI_API_KEY)
 
-DATA_FILE = 'data.json'
+DATA_FILE = '/tmp/data.json'
 
 def load_data():
     if os.path.exists(DATA_FILE):
