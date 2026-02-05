@@ -1,100 +1,278 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Family Expense Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
         }
+
+        .bg-wrapper {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: linear-gradient(
+                135deg,
+                #e8f4f8 0%,
+                #fdf2f8 30%,
+                #fef9e7 60%,
+                #f0f9ff 100%
+            );
+        }
+
+        .bg-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 70% 60% at 10% 20%, rgba(255, 182, 193, 0.6), transparent 50%),
+                radial-gradient(ellipse 60% 50% at 90% 80%, rgba(173, 216, 230, 0.6), transparent 50%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(221, 160, 221, 0.3), transparent 60%);
+            animation: bgFlow 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgFlow {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.9; transform: scale(1.02); }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.6;
+            animation: floatOrb 18s ease-in-out infinite;
+            will-change: transform;
+        }
+        .orb-1 { width: 320px; height: 320px; background: rgba(255, 182, 193, 0.7); top: 5%; left: 5%; animation-delay: 0s; }
+        .orb-2 { width: 280px; height: 280px; background: rgba(173, 216, 230, 0.7); top: 55%; right: 10%; animation-delay: -4s; }
+        .orb-3 { width: 220px; height: 220px; background: rgba(221, 160, 221, 0.5); bottom: 15%; left: 15%; animation-delay: -8s; }
+        .orb-4 { width: 200px; height: 200px; background: rgba(255, 218, 185, 0.6); top: 25%; right: 25%; animation-delay: -2s; }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(25px, -35px) scale(1.08); }
+            66% { transform: translate(-15px, 25px) scale(0.96); }
+        }
+
+        .shape {
+            position: absolute;
+            border: 2px solid rgba(147, 112, 219, 0.15);
+            border-radius: 12px;
+            animation: floatShape 25s linear infinite;
+        }
+        .shape-1 { width: 50px; height: 50px; top: 12%; right: 18%; animation-duration: 28s; animation-delay: 0s; }
+        .shape-2 { width: 35px; height: 35px; top: 65%; left: 12%; animation-duration: 22s; animation-delay: -6s; }
+        .shape-3 { width: 65px; height: 65px; bottom: 12%; right: 22%; animation-duration: 32s; animation-delay: -14s; }
+        .shape-4 { width: 28px; height: 28px; top: 38%; left: 8%; animation-duration: 20s; animation-delay: -4s; }
+        .shape-5 { width: 45px; height: 45px; top: 22%; left: 72%; animation-duration: 24s; animation-delay: -11s; }
+
+        @keyframes floatShape {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+            50% { transform: translateY(-25px) rotate(180deg); opacity: 0.7; }
+            100% { transform: translateY(0) rotate(360deg); opacity: 0.4; }
+        }
+
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(147, 112, 219, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(147, 112, 219, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
         .login-container {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 48px 44px;
+            border-radius: 24px;
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.04),
+                0 20px 40px rgba(147, 112, 219, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            animation: cardEntrance 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            transform-origin: center;
         }
+
+        @keyframes cardEntrance {
+            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         .login-header {
-            margin-bottom: 40px;
+            margin-bottom: 36px;
+            animation: fadeInUp 0.5s 0.15s both;
         }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .login-header h2 {
-            color: #333;
-            font-size: 2.5em;
-            font-weight: 300;
-            margin-bottom: 10px;
+            color: #2d3748;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
+
         .login-subtitle {
-            color: #666;
-            font-size: 1.1em;
-        }
-        .form-group {
-            margin-bottom: 25px;
-            text-align: left;
-        }
-        input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        input:focus {
-            outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
-        }
-        .login-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-        }
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
-        }
-        .register-link {
-            color: #4facfe;
-            text-decoration: none;
+            color: #718096;
+            font-size: 0.95rem;
             font-weight: 500;
         }
+
+        .form-group {
+            margin-bottom: 22px;
+            text-align: left;
+            animation: fadeInUp 0.5s both;
+        }
+        .form-group:nth-child(1) { animation-delay: 0.25s; }
+        .form-group:nth-child(2) { animation-delay: 0.3s; }
+
+        input {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid rgba(147, 112, 219, 0.2);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d3748;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        input::placeholder {
+            color: #a0aec0;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: rgba(147, 112, 219, 0.6);
+            box-shadow: 0 0 0 4px rgba(147, 112, 219, 0.12);
+            background: #fff;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #9f7aea 0%, #ed64a6 100%);
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.25s ease;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s 0.4s both;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(159, 122, 234, 0.35);
+        }
+
+        .login-btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .register-link {
+            color: #805ad5;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease, transform 0.2s ease;
+            animation: fadeInUp 0.5s 0.45s both;
+            display: inline-block;
+        }
+
         .register-link:hover {
-            text-decoration: underline;
+            color: #ed64a6;
+            transform: translateY(-1px);
         }
+
+        .message {
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            animation: messageIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes messageIn {
+            0% { opacity: 0; transform: translateY(-8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         .error {
-            background: #ffe6e6;
-            color: #d63031;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #d63031;
+            background: rgba(245, 101, 101, 0.15);
+            color: #c53030;
+            border: 1px solid rgba(245, 101, 101, 0.3);
         }
+
         .success {
-            background: #e6ffe6;
-            color: #00b894;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #00b894;
+            background: rgba(72, 187, 120, 0.15);
+            color: #276749;
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+
+        .form-wrapper {
+            animation: fadeInUp 0.5s 0.2s both;
         }
     </style>
 </head>
 <body>
+    <div class="bg-wrapper">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
     <div class="login-container">
         <div class="login-header">
             <h2>🔐 Welcome Back</h2>
@@ -104,20 +282,22 @@
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
-                    <div class="{% if 'successful' in message %}success{% else %}error{% endif %}">{{ message }}</div>
+                    <div class="message {% if 'successful' in message %}success{% else %}error{% endif %}">{{ message }}</div>
                 {% endfor %}
             {% endif %}
         {% endwith %}
 
-        <form method="POST">
-            <div class="form-group">
-                <input type="text" name="username" placeholder="Username" required>
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" placeholder="Password" required>
-            </div>
-            <button type="submit" class="login-btn">Sign In</button>
-        </form>
+        <div class="form-wrapper">
+            <form method="POST">
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+        </div>
         
         <p>Don't have an account? <a href="{{ url_for('register') }}" class="register-link">Create one here</a></p>
     </div>

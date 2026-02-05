@@ -112,6 +112,41 @@
         "amount": 200.0,
         "paid_by": "Jakes Father",
         "added_by": "GL"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Brushes",
+        "amount": 50.0,
+        "paid_by": "Jakes Mother ",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Brushes",
+        "amount": 50.0,
+        "paid_by": "Jakes Father",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "Books",
+        "amount": 500.0,
+        "paid_by": "Jakes brother",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-02-01",
+        "item": "gift bag",
+        "amount": 754.0,
+        "paid_by": "Jakes Father",
+        "added_by": "GL"
+      },
+      {
+        "date": "2026-02-03",
+        "item": "snacks",
+        "amount": 506.0,
+        "paid_by": "Jakes Father",
+        "added_by": "GL"
       }
     ],
     "abc": [
