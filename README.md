@@ -2,6 +2,21 @@
 
 FamEase is a family budgeting and expense-tracking web application built with Flask. It helps families record shared expenses, review spending trends, plan meals, and make better day-to-day financial decisions from one dashboard.
 
+## Developer Review
+Stone hill is project i built to make managing expenses and planning trips a little easier. 
+I wanted to bring different everyday features together instead of having separate tools for everything. This project is a mix of a few number of my projects you can imagine it as my own github but integreated and shaped for a family.
+
+The project includes a user registration and login system, family member management, monthly expense tracking and a travel cost calculator. One of the features I worked on was integrating Gemini AI to estimate travel expenses based on the destination, number of people and duration of the trip.
+
+Building this project helped me explore Flask, Python, API integration, JSON-based data storage and connecting frontend interfaces with backend functionality.
+
+One of the interesting parts was working on the travel cost calculator and making it handle different inputs. I also added a fallback system so that users can still receive estimated costs if the AI service is unavailable.
+
+There is still room for improvement, especially in the database structure, security, UI consistency and making the application more scalable. However, this project gave me a better understanding of how different components of a web application work together.
+
+Overall, StoneHill Hack was a valuable learning experience that pushed me to experiment with backend development and build something beyond a basic static website.
+## Hope you enjoy it!!
+
 ## Features
 
 - User registration and login with hashed passwords
