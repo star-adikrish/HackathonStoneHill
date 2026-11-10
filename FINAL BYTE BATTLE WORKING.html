@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather & AQI Checker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <div class="logo">
+                <h3>Climate Action Unit</h3>
+            </div>
+            <div class="nav-links">
+                <a id="homeLink" onclick="showPage('home')" class="active">Home</a>
+                <a id="aboutLink" onclick="showPage('about')">About Us</a>
+                <a id="contactLink" onclick="showPage('contact')">Contact</a>
+                <a id="blogLink" onclick="showPage('blog')">Blog</a>
+            </div>
+        </nav> 
+        
+        <div id="home" class="page active">
+            <div class="header">
+                <h1>Action Climate Unit</h1>
+                <h2>Weather & Air Quality Checker</h2>
+            </div>
+        
+            <div class="form-section">
+                <div class="input-group">
+                    <input type="text" id="cityInput" placeholder="Enter city name (e.g., Mumbai, Delhi)" />
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="aqiCheck" checked />
+                        <label for="aqiCheck">Include Air Quality</label>
+                    </div>
+                    <button onclick="getWeather()">Get Weather Data</button>
+                </div>
+            </div>
+            
+            <div class="search-history" id="searchHistory">
+                <h3>Recent Searches</h3>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>City</th>
+                            <th>Temperature</th>
+                            <th>Condition</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="error" id="errorMsg"></div>
+            
+            <div class="weather-display" id="weatherDisplay">
+                <div class="location-info">
+                    <h2 id="locationName"></h2>
+                    <p id="locationDetails"></p>
+                    <p id="lastUpdated"></p>
+                </div>
+                
+                <div class="weather-grid">
+                    <div class="weather-card">
+                        <h3>Current Weather</h3>
+                        <div class="condition">
+                            <img id="weatherIcon" src="" alt="" />
+                            <span id="conditionText"></span>
+                        </div>
+                        <div class="temp-display" id="temperature"></div>
+                        <div class="weather-details" id="weatherDetails"></div>
+                    </div>
+                    
+                    <div class="aqi-card" id="aqiCard" style="display: none;">
+                        <h3>Air Quality Index</h3>
+                        <div id="aqiStatus" style="padding: 15px; margin-bottom: 15px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 18px;"></div>
+                        <div class="aqi-grid" id="aqiGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="about" class="page">
+            <div class="about-hero">
+                <h1>About Us</h1>
+                <p class="hero-subtitle">Pioneering Environmental Intelligence for a Sustainable Future</p>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <h3>10K+</h3>
+                        <p>Daily Users</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>100%</h3>
+                        <p>World Coverage</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>99.99%</h3>
+                        <p>Uptime</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-content">
+                <div class="mission-section">
+                    <h2>Our Mission</h2>
+                    <p>We're committed to democratizing access to critical environmental data, empowering communities worldwide to make informed decisions about air quality and weather conditions that directly impact their health and well-being.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌡️</div>
+                        <h3>Real-Time Weather</h3>
+                        <p>Accurate, up-to-the-minute weather data from trusted global meteorological sources</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🌬️</div>
+                        <h3>Air Quality Monitoring</h3>
+                        <p>Comprehensive AQI tracking including PM2.5, PM10, CO, NO2, O3, and SO2 levels</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Optimized</h3>
+                        <p>Responsive design ensuring seamless access across all devices and platforms</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Global Coverage</h3>
+                        <p>Worldwide weather and air quality data for cities and regions across the globe</p>
+                    </div>
+                </div>
+                
+                <div class="team-section">
+                    <h2>Meet Our Team</h2>
+                    <div class="team-grid">
+                        <div class="team-card">
+                            <div class="team-avatar">👨‍💻</div>
+                            <h4>Development Team</h4>
+                            <p>I, Krishna Agrawal, am an experienced coder with 4+ hackathons under my belt, consistently leading my team to success.</p>
+                        </div>
+                        
+                        <div class="team-card">
+                            <div class="team-avatar">👩‍🔬</div>
+                            <h4>Hardware Development</h4>
+                            <p>"Hello,we are Sri Krishna and Darsh Goyal, we are students at nps east. We enjoy doing robotics in our free time, which has taught us the importance of coding. We hope to become an engineer in the future."</p>
+                        </div>
+                        
+                        <div class="team-card">
+                            <div class="team-avatar">👨‍🎨</div>
+                            <h4>Visual Communications Team</h4>
+                            <p>Hi, I am Tanay Acharya an enthusiastic hacker/coder and someone who loves to code and design.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        
+        <div id="contact" class="page">
+            <div class="contact-hero">
+                <h1>Contact Us</h1>
+                <p class="hero-subtitle">Get in touch with our environmental experts</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2>Reach Out</h2>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>&starf;.adikris.x@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+91 *61807921*
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div>
+                                <h4>Address</h4>
+                                <p>NPS East Campus<br>Bangalore, Karnataka</p>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links">
+                            <h4>Follow Us</h4>
+                            <div class="social-icons">
+                                <span class="social-icon">📘</span>
+                                <span class="social-icon">🐦</span>
+                                <span class="social-icon">📷</span>
+                                <span class="social-icon">💼</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h2>Send Message</h2>
+                        <div id="contactSuccess" style="display: none; background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin-bottom: 20px;" ></div>
+                        <div id="contactError" style="display: none; background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px;"></div>
+                        <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                            <input type="text" id="contactName" placeholder="Your Name" required>
+                            <input type="email" id="contactEmail" placeholder="Your Email" required>
+                            <input type="text" id="contactSubject" placeholder="Subject" required>
+                            <textarea id="contactMessage" placeholder="Your Message" rows="5" required></textarea>
+                            <button type="submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="blog" class="page">
+            <div class="blog-hero">
+                <h1>Environmental Blog</h1>
+                <p class="hero-subtitle">Latest insights on climate and air quality</p>
+            </div>
+            
+            <div class="blog-content">
+                <div class="blog-grid">
+                    <article class="blog-card featured" onclick="showBlogPost(1)" style="cursor: pointer;">
+                        <div class="blog-badge">FEATURED</div>
+                        <div class="blog-image">🌍</div>
+                        <div class="blog-meta">
+                            <span class="blog-date">Dec 5, 2025</span>
+                            <span class="blog-category">Climate Change</span>
+                        </div>
+                        <h3>Understanding Global Air Quality Trends</h3>
+                        <p>Explore how air quality patterns are changing worldwide and what it means for public health...</p>
+                        <a href="#" class="read-more" onclick="event.stopPropagation(); showBlogPost(1);">Read More →</a>
+                    </article>
+                    
+                    <article class="blog-card" onclick="showBlogPost(2)" style="cursor: pointer;">
+                        <div class="blog-image">🌡️</div>
+                        <div class="blog-meta">
+                            <span class="blog-date">Dec 3, 2025</span>
+                            <span class="blog-category">Weather</span>
+                        </div>
+                        <h3>Weather Prediction Technology</h3>
+                        <p>How modern meteorology uses AI and machine learning to improve forecast accuracy...</p>
+                        <a href="#" class="read-more" onclick="event.stopPropagation(); showBlogPost(2);">Read More →</a>
+                    </article>
+                    
+                    <article class="blog-card" onclick="showBlogPost(3)" style="cursor: pointer;">
+                        <div class="blog-image">🏭</div>
+                        <div class="blog-meta">
+                            <span class="blog-date">Dec 1, 2025</span>
+                            <span class="blog-category">Pollution</span>
+                        </div>
+                        <h3>Urban Air Quality Solutions</h3>
+                        <p>Innovative approaches cities are taking to combat air pollution and improve citizen health...</p>
+                        <a href="#" class="read-more" onclick="event.stopPropagation(); showBlogPost(3);">Read More →</a>
+                    </article>
+                    
+                    <article class="blog-card" onclick="showBlogPost(4)" style="cursor: pointer;">
+                        <div class="blog-image">🌱</div>
+                        <div class="blog-meta">
+                            <span class="blog-date">Nov 28, 2025</span>
+                            <span class="blog-category">Sustainability</span>
+                        </div>
+                        <h3>Green Technology Impact</h3>
+                        <p>How renewable energy and green tech are positively affecting global air quality metrics...</p>
+                        <a href="#" class="read-more" onclick="event.stopPropagation(); showBlogPost(4);">Read More →</a>
+                    </article>
+                </div>
+                
+                <div id="blogPostView" style="display: none;">
+                    <button onclick="closeBlogPost()" style="margin-bottom: 20px;">← Back to Blog</button>
+                    <article class="blog-post-full">
+                        <h1 id="postTitle"></h1>
+                        <div class="post-meta">
+                            <span id="postDate"></span>
+                            <span id="postCategory"></span>
+                        </div>
+                        <div id="postContent"></div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Action Climate Unit reserves all rights. | Powered by Super 4</p>
+    </footer>
+
+    <script>
+        const API_KEY = 'e84a8261d3cd4786a8281927250707';
+        const WEATHER_URL = 'https://api.weatherapi.com/v1';
+        let searchHistory = [];
+
+        async function getWeather() {
+            const city = document.getElementById('cityInput').value.trim();
+            const includeAqi = document.getElementById('aqiCheck').checked;
+            
+            if (!city) {
+                showError('Please enter a city name');
+                return;
+            }
+
+            try {
+                hideError();
+                const aqiParam = includeAqi ? 'yes' : 'no';
+                const url = `${WEATHER_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}&aqi=${aqiParam}`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error?.message || 'Failed to fetch weather data');
+                }
+                
+                displayWeather(data, includeAqi);
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function displayWeather(data, showAqi) {
+            const { location, current } = data;
+            
+            document.getElementById('locationName').textContent = location.name;
+            document.getElementById('locationDetails').textContent = `${location.region}, ${location.country}`;
+            document.getElementById('lastUpdated').textContent = `Last updated: ${current.last_updated}`;
+            
+            document.getElementById('weatherIcon').src = `https:${current.condition.icon}`;
+            document.getElementById('conditionText').textContent = current.condition.text;
+            document.getElementById('temperature').textContent = `${current.temp_c}°C`;
+            
+            const weatherDetails = document.getElementById('weatherDetails');
+            weatherDetails.innerHTML = `
+                <div class="detail-item"><span>Feels like:</span><span>${current.feelslike_c}°C</span></div>
+                <div class="detail-item"><span>Humidity:</span><span>${current.humidity}%</span></div>
+                <div class="detail-item"><span>Wind:</span><span>${current.wind_kph} km/h ${current.wind_dir}</span></div>
+                <div class="detail-item"><span>Pressure:</span><span>${current.pressure_mb} mb</span></div>
+                <div class="detail-item"><span>Visibility:</span><span>${current.vis_km} km</span></div>
+                <div class="detail-item"><span>UV Index:</span><span>${current.uv}</span></div>
+            `;
+            
+            // Display AQI data if checkbox is checked and data is available
+            const aqiCard = document.getElementById('aqiCard');
+            if (showAqi && current.air_quality) {
+                // Get EPA index to determine air quality level
+                const epaIndex = current.air_quality['us-epa-index'];
+                const aqiStatus = document.getElementById('aqiStatus');
+                let statusText = '';
+                
+                // Determine AQI status based on EPA index
+                if (epaIndex === 1) {
+                    statusText = '✓ Good - Air quality is satisfactory';
+                    aqiStatus.style.background = '#d4edda';
+                    aqiStatus.style.color = '#155724';
+                } else if (epaIndex === 2) {
+                    statusText = '⚠ Moderate - Acceptable for most people';
+                    aqiStatus.style.background = '#fff3cd';
+                    aqiStatus.style.color = '#856404';
+                } else if (epaIndex === 3) {
+                    statusText = '⚠ Unhealthy for Sensitive Groups';
+                    aqiStatus.style.background = '#ffe5cc';
+                    aqiStatus.style.color = '#cc5200';
+                } else if (epaIndex === 4) {
+                    statusText = '⚠ Unhealthy - Everyone may experience effects';
+                    aqiStatus.style.background = '#ffcccc';
+                    aqiStatus.style.color = '#cc0000';
+                } else if (epaIndex === 5) {
+                    statusText = '⚠ Very Unhealthy - Health alert';
+                    aqiStatus.style.background = '#e6ccff';
+                    aqiStatus.style.color = '#660099';
+                } else if (epaIndex === 6) {
+                    statusText = '⚠ Hazardous - Health warning';
+                    aqiStatus.style.background = '#cc99cc';
+                    aqiStatus.style.color = '#4d0066';
+                }
+                
+                aqiStatus.innerHTML = `${statusText}<br><strong style="font-size: 24px; margin-top: 10px; display: inline-block;">AQI Level: ${epaIndex}</strong>`
+                
+                // Display individual pollutant levels
+                const aqiGrid = document.getElementById('aqiGrid');
+                aqiGrid.innerHTML = `
+                    <div class="aqi-item"><strong>CO</strong><br>${current.air_quality.co}</div>
+                    <div class="aqi-item"><strong>NO2</strong><br>${current.air_quality.no2}</div>
+                    <div class="aqi-item"><strong>O3</strong><br>${current.air_quality.o3}</div>
+                    <div class="aqi-item"><strong>SO2</strong><br>${current.air_quality.so2}</div>
+                    <div class="aqi-item"><strong>PM2.5</strong><br>${current.air_quality.pm2_5}</div>
+                    <div class="aqi-item"><strong>PM10</strong><br>${current.air_quality.pm10}</div>
+                    <div class="aqi-item"><strong>US EPA</strong><br>${current.air_quality['us-epa-index']}</div>
+                    <div class="aqi-item"><strong>UK DEFRA</strong><br>${current.air_quality['gb-defra-index']}</div>
+                `;
+                aqiCard.style.display = 'block';
+            } else {
+                aqiCard.style.display = 'none';
+            }
+            
+            // Show the weather display section
+            document.getElementById('weatherDisplay').style.display = 'block';
+            
+            // Add current search to history
+            const historyItem = {
+                city: `${location.name}, ${location.country}`,
+                temperature: `${current.temp_c}°C`,
+                condition: current.condition.text,
+                time: new Date().toLocaleTimeString()
+            };
+            
+            // Keep only last 2 searches in history
+            searchHistory.unshift(historyItem);
+            if (searchHistory.length > 2) {
+                searchHistory = searchHistory.slice(0, 2);
+            }
+            
+            updateHistoryTable();
+        }
+
+        // Display error message to user
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+            document.getElementById('weatherDisplay').style.display = 'none';
+        }
+
+        // Hide error message
+        function hideError() {
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+        
+        // Update the search history table with recent searches
+        function updateHistoryTable() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+            
+            // Add each history item as a table row
+            searchHistory.forEach(item => {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = item.city;
+                row.insertCell(1).textContent = item.temperature;
+                row.insertCell(2).textContent = item.condition;
+                row.insertCell(3).textContent = item.time;
+            });
+            
+            // Show history table only if there are searches
+            document.getElementById('searchHistory').style.display = searchHistory.length > 0 ? 'block' : 'none';
+        }
+
+        // Allow Enter key to trigger weather search
+        document.getElementById('cityInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getWeather();
+            }
+        });
+
+        // Voice search functionality using Web Speech API
+        function startVoiceSearch() {
+            // Check if browser supports speech recognition
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert('Voice search not supported. Use Chrome or Edge.');
+                return;
+            }
+
+            // Initialize speech recognition with settings
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            
+            // Change mic icon to red when listening
+            const micIcon = document.getElementById('micIcon');
+            micIcon.setAttribute('fill', '#ea4335');
+            
+            // Handle successful speech recognition
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById('cityInput').value = transcript;
+                micIcon.setAttribute('fill', '#4285f4');
+            };
+
+            // Handle speech recognition errors
+            recognition.onerror = function(event) {
+                micIcon.setAttribute('fill', '#4285f4');
+                if (event.error === 'no-speech') {
+                    alert('No speech detected. Please try again.');
+                } else if (event.error === 'not-allowed') {
+                    alert('Microphone access denied. Please allow microphone access.');
+                } else {
+                    alert('Speech recognition error: ' + event.error);
+                }
+            };
+
+            // Reset mic icon when recognition ends
+            recognition.onend = function() {
+                micIcon.setAttribute('fill', '#4285f4');
+            };
+
+            // Start speech recognition
+            try {
+                recognition.start();
+            } catch(e) {
+                micIcon.setAttribute('fill', '#4285f4');
+                alert('Error starting voice recognition.');
+            }
+        }
+        
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = ['home', 'about', 'contact', 'blog'];
+            pages.forEach(page => {
+                document.getElementById(page).classList.remove('active');
+                const link = document.getElementById(page + 'Link');
+                if (link) link.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            const activeLink = document.getElementById(pageId + 'Link');
+            if (activeLink) activeLink.classList.add('active');
+        }
+        
+        window.onload = function() {
+            showPage('home');
+        };
+        
+        const blogPosts = {
+            1: {
+                title: 'Understanding Global Air Quality Trends',
+                date: 'Dec 5, 2025',
+                category: 'Climate Change',
+                content: `
+                    <p>Air quality has become one of the most pressing environmental concerns of our time. As urbanization accelerates and industrial activities expand, understanding global air quality trends is crucial for public health and environmental policy.</p>
+                    
+                    <h2>The Current State of Global Air Quality</h2>
+                    <p>According to the World Health Organization, 99% of the world's population breathes air that exceeds WHO guideline limits. This alarming statistic highlights the widespread nature of air pollution and its impact on human health.</p>
+                    
+                    <h2>Key Pollutants and Their Sources</h2>
+                    <p>The primary pollutants affecting air quality include particulate matter (PM2.5 and PM10), nitrogen dioxide (NO2), sulfur dioxide (SO2), carbon monoxide (CO), and ozone (O3). These pollutants originate from various sources including vehicle emissions, industrial processes, and natural events.</p>
+                    
+                    <h2>Health Implications</h2>
+                    <p>Poor air quality is linked to respiratory diseases, cardiovascular problems, and reduced life expectancy. Children and elderly populations are particularly vulnerable to the effects of air pollution.</p>
+                    
+                    <h2>Moving Forward</h2>
+                    <p>Addressing air quality requires coordinated efforts from governments, industries, and individuals. Monitoring systems like ours help raise awareness and enable informed decision-making.</p>
+                `
+            },
+            2: {
+                title: 'Weather Prediction Technology',
+                date: 'Dec 3, 2025',
+                category: 'Weather',
+                content: `
+                    <p>Modern weather prediction has evolved dramatically with the integration of artificial intelligence and machine learning technologies, revolutionizing how we forecast atmospheric conditions.</p>
+                    
+                    <h2>The Evolution of Weather Forecasting</h2>
+                    <p>From simple barometers to sophisticated satellite systems, weather prediction has come a long way. Today's forecasting combines traditional meteorological methods with cutting-edge AI algorithms.</p>
+                    
+                    <h2>AI and Machine Learning in Meteorology</h2>
+                    <p>Machine learning models can process vast amounts of historical weather data to identify patterns and make predictions with unprecedented accuracy. These systems can analyze satellite imagery, radar data, and atmospheric measurements in real-time.</p>
+                    
+                    <h2>Improved Accuracy and Lead Time</h2>
+                    <p>AI-powered forecasting has significantly improved prediction accuracy, especially for severe weather events. This advancement provides communities with more time to prepare for storms, floods, and other weather-related emergencies.</p>
+                    
+                    <h2>The Future of Weather Prediction</h2>
+                    <p>As technology continues to advance, we can expect even more accurate and localized weather predictions, helping societies better adapt to changing climate patterns.</p>
+                `
+            },
+            3: {
+                title: 'Urban Air Quality Solutions',
+                date: 'Dec 1, 2025',
+                category: 'Pollution',
+                content: `
+                    <p>Cities around the world are implementing innovative solutions to combat air pollution and improve the health and well-being of their residents.</p>
+                    
+                    <h2>Green Infrastructure</h2>
+                    <p>Urban forests, green roofs, and vertical gardens are being integrated into city planning to naturally filter air pollutants and reduce the urban heat island effect.</p>
+                    
+                    <h2>Transportation Initiatives</h2>
+                    <p>Many cities are promoting electric vehicles, expanding public transportation networks, and creating car-free zones to reduce vehicle emissions. Bike-sharing programs and pedestrian-friendly infrastructure encourage sustainable mobility.</p>
+                    
+                    <h2>Smart City Technologies</h2>
+                    <p>IoT sensors and real-time monitoring systems help cities track air quality and respond quickly to pollution spikes. This data-driven approach enables targeted interventions and policy adjustments.</p>
+                    
+                    <h2>Community Engagement</h2>
+                    <p>Successful air quality improvement requires public participation. Educational campaigns and citizen science initiatives empower residents to contribute to cleaner air.</p>
+                `
+            },
+            4: {
+                title: 'Green Technology Impact',
+                date: 'Nov 28, 2025',
+                category: 'Sustainability',
+                content: `
+                    <p>The adoption of renewable energy and green technologies is having a measurable positive impact on global air quality metrics, offering hope for a cleaner future.</p>
+                    
+                    <h2>Renewable Energy Revolution</h2>
+                    <p>Solar, wind, and hydroelectric power are replacing fossil fuel-based energy generation, significantly reducing emissions of harmful pollutants and greenhouse gases.</p>
+                    
+                    <h2>Measurable Improvements</h2>
+                    <p>Regions with high renewable energy adoption have seen notable decreases in air pollution levels. Studies show reduced concentrations of PM2.5, NO2, and SO2 in areas transitioning to clean energy.</p>
+                    
+                    <h2>Economic and Health Benefits</h2>
+                    <p>Beyond environmental benefits, green technology creates jobs and reduces healthcare costs associated with air pollution-related illnesses. The economic case for clean energy continues to strengthen.</p>
+                    
+                    <h2>Scaling Up Solutions</h2>
+                    <p>As technology costs decrease and efficiency improves, renewable energy becomes increasingly accessible. Global cooperation and investment are key to accelerating this transition.</p>
+                `
+            }
+        };
+        
+        function showBlogPost(postId) {
+            const post = blogPosts[postId];
+            document.getElementById('postTitle').textContent = post.title;
+            document.getElementById('postDate').textContent = post.date;
+            document.getElementById('postCategory').textContent = post.category;
+            document.getElementById('postContent').innerHTML = post.content;
+            
+            document.querySelector('.blog-grid').style.display = 'none';
+            document.getElementById('blogPostView').style.display = 'block';
+        }
+        
+        function closeBlogPost() {
+            document.querySelector('.blog-grid').style.display = 'grid';
+            document.getElementById('blogPostView').style.display = 'none';
+        }
+        
+        async function handleContactSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            const successDiv = document.getElementById('contactSuccess');
+            const errorDiv = document.getElementById('contactError');
+            
+            // Hide previous messages
+            successDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            
+            // For now, simulate success (replace with actual API call)
+            // In production, uncomment the fetch code below
+            
+            /* 
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, subject, message })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    successDiv.textContent = 'Thank you! Your message has been sent successfully.';
+                    successDiv.style.display = 'block';
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Failed to send message. Please try again or email us directly.';
+                errorDiv.style.display = 'block';
+            }
+            */
+            
+            // Simulated success for demo
+            successDiv.textContent = `Thank you ${name}! Your message has been received. We'll get back to you at ${email} soon.`;
+            successDiv.style.display = 'block';
+            document.getElementById('contactForm').reset();
+        }
+    </script>
+</body>
+</html>
