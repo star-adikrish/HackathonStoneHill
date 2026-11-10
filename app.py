@@ -73,11 +73,15 @@ def _database_connection():
 
     import psycopg
 
-    return psycopg.connect(
+    connection = psycopg.connect(
         DATABASE_URL,
         sslmode="require",
         connect_timeout=10
     )
+    # Supabase transaction poolers do not support server-side prepared
+    # statements. Disable psycopg auto-prepare for compatibility.
+    connection.prepare_threshold = None
+    return connection
 
 
 def load_data():
