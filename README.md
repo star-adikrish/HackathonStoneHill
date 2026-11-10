@@ -22,7 +22,7 @@ FamEase is a family budgeting and expense-tracking web application built with Fl
 - Werkzeug
 - Jinja2 templates
 - Chart.js, Tesseract.js, and Google Fonts via CDN
-- JSON file storage (`data.json`)
+- Local JSON storage for development; PostgreSQL for Vercel deployments
 
 ## Project structure
 
@@ -106,11 +106,13 @@ Visit [http://127.0.0.1:5000/demo](http://127.0.0.1:5000/demo) to open the dashb
 
 ## Data storage
 
-FamEase currently stores users and expenses in `data.json`. This is convenient for local demos and hackathon deployments, but it is not intended for concurrent production workloads. Back up this file before making changes, and use a database with proper migrations and access controls for production.
+Local development uses `data.json`. Vercel's filesystem is temporary, so deployed data is stored in PostgreSQL instead. Configure a persistent database and set `DATABASE_URL` in the Vercel project settings before deploying; otherwise the app will refuse account and expense operations rather than silently lose data. See [VERCEL_DATABASE_SETUP.md](./VERCEL_DATABASE_SETUP.md) for Supabase setup instructions.
+
+Existing accounts and expenses in local `data.json` are not copied automatically to the deployment database. Back up that file before making changes, and migrate any data you need before switching users to the deployed app.
 
 ## Development notes
 
-- Run the app from the repository root so `data.json` is found correctly.
+- Run the app from the repository root so local `data.json` is found correctly.
 - The browser loads Chart.js, Tesseract.js, and Google Fonts from public CDNs.
 - Receipt OCR runs in the browser and requires an internet connection to load Tesseract.js.
 - Weather lookup is optional and depends on a valid API key.
