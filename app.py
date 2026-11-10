@@ -18,40 +18,167 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # ==========================================
 
 WEATHER_API_KEY = os.environ.get("WEATHER_API_KEY")
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 app = Flask(__name__)
 
-# Use a secure environment variable in production.
-# The temporary random key allows local development without configuration.
-app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(32)
+# Vercel runs serverless instances. A random secret on each cold start
+# invalidates sessions, so production must use one stable SECRET_KEY.
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if os.environ.get("VERCEL") and not SECRET_KEY:
+    raise RuntimeError(
+        "SECRET_KEY is missing. Add a stable SECRET_KEY in Vercel "
+        "Project Settings > Environment Variables."
+    )
+app.secret_key = SECRET_KEY or "local-development-only-change-this"
 
-DATA_FILE = "data.json"
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=bool(os.environ.get("VERCEL"))
+)
+
+DATA_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "data.json"
+)
+
+DATABASE_TABLE_SQL = """
+CREATE TABLE IF NOT EXISTS famease_app_state (
+    id SMALLINT PRIMARY KEY CHECK (id = 1),
+    payload JSONB NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+)
+"""
 
 
 # ==========================================
 # DATA MANAGEMENT
 # ==========================================
 
-def load_data():
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except (json.JSONDecodeError, OSError) as e:
-            print(f"Error loading {DATA_FILE}: {e}")
-
+def _default_data():
     return {
         "users": {},
-        "user_expenses": {}
+        "user_expenses": {},
+        "expenses": []
     }
 
 
+def _database_connection():
+    if not DATABASE_URL:
+        raise RuntimeError(
+            "DATABASE_URL is not configured. Add your Supabase "
+            "PostgreSQL connection string to Vercel Environment Variables."
+        )
+
+    import psycopg
+
+    return psycopg.connect(
+        DATABASE_URL,
+        sslmode="require",
+        connect_timeout=10
+    )
+
+
+def load_data():
+    """
+    Load FamEase data from persistent PostgreSQL on Vercel.
+    Local development continues to use data.json.
+    """
+    if DATABASE_URL:
+        with _database_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(DATABASE_TABLE_SQL)
+                cursor.execute(
+                    "SELECT payload FROM famease_app_state WHERE id = 1"
+                )
+                row = cursor.fetchone()
+
+                if row:
+                    payload = row[0]
+                    if isinstance(payload, str):
+                        payload = json.loads(payload)
+                    return payload
+
+                initial_data = _default_data()
+                cursor.execute(
+                    """
+                    INSERT INTO famease_app_state (id, payload)
+                    VALUES (1, %s::jsonb)
+                    ON CONFLICT (id) DO NOTHING
+                    """,
+                    (json.dumps(initial_data),)
+                )
+                return initial_data
+
+    # Never silently fall back to an ephemeral file on Vercel.
+    if os.environ.get("VERCEL"):
+        raise RuntimeError(
+            "DATABASE_URL is required on Vercel. Configure a persistent "
+            "PostgreSQL database before using FamEase accounts."
+        )
+
+    if os.path.exists(DATA_FILE):
+        try:
+            with open(DATA_FILE, "r", encoding="utf-8") as file:
+                loaded = json.load(file)
+                if isinstance(loaded, dict):
+                    loaded.setdefault("users", {})
+                    loaded.setdefault("user_expenses", {})
+                    loaded.setdefault("expenses", [])
+                    return loaded
+        except (json.JSONDecodeError, OSError) as error:
+            app.logger.exception("Could not load local data.json: %s", error)
+            raise
+
+    return _default_data()
+
+
 def save_data(data):
+    """
+    Persist the existing FamEase data structure.
+    PostgreSQL is used when DATABASE_URL is set; local JSON is for
+    development only. Errors are raised so registration never reports
+    success when the write failed.
+    """
+    if DATABASE_URL:
+        with _database_connection() as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(DATABASE_TABLE_SQL)
+                cursor.execute(
+                    """
+                    INSERT INTO famease_app_state (id, payload, updated_at)
+                    VALUES (1, %s::jsonb, NOW())
+                    ON CONFLICT (id)
+                    DO UPDATE SET
+                        payload = EXCLUDED.payload,
+                        updated_at = NOW()
+                    """,
+                    (json.dumps(data),)
+                )
+        return True
+
+    if os.environ.get("VERCEL"):
+        raise RuntimeError(
+            "Cannot save FamEase data: DATABASE_URL is not configured."
+        )
+
+    temporary_file = DATA_FILE + ".tmp"
     try:
-        with open(DATA_FILE, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2)
-    except OSError as e:
-        print(f"Error saving {DATA_FILE}: {e}")
+        with open(temporary_file, "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=2)
+            file.flush()
+            os.fsync(file.fileno())
+        os.replace(temporary_file, DATA_FILE)
+        return True
+    except OSError:
+        app.logger.exception("Could not save local data.json")
+        try:
+            if os.path.exists(temporary_file):
+                os.remove(temporary_file)
+        except OSError:
+            pass
+        raise
 
 
 # ==========================================
@@ -333,7 +460,15 @@ def register():
             if username not in data["user_expenses"]:
                 data["user_expenses"][username] = []
 
-            save_data(data)
+            try:
+                save_data(data)
+            except Exception:
+                app.logger.exception("Registration could not be saved")
+                flash(
+                    "We couldn't create your account right now. "
+                    "Please try again in a moment."
+                )
+                return render_template("register.html"), 503
 
             flash("Registration successful! Please sign in.")
 
