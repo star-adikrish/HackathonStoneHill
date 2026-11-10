@@ -6,7 +6,7 @@ Vercel's function filesystem is temporary and is not a database. FamEase now use
 
 1. Create a Supabase project.
 2. Open **SQL Editor** and run the contents of `schema.sql`.
-3. In **Project Settings → Database → Connection string**, choose the **Session pooler** connection string (URI) if the direct connection is not reachable from your deployment.
+3. In **Project Settings → Database → Connection string**, choose the **Transaction pooler** connection string (URI), which is designed for serverless deployments.
 4. Copy the URI and replace its password placeholder with your database password. Keep it private.
 
 ## 2. Add Vercel environment variables
