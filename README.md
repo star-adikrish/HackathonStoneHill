@@ -31,14 +31,13 @@ FamEase is a family budgeting and expense-tracking web application built with Fl
 ├── app.py                         # Flask application and routes
 ├── data.json                      # Local users and expense data
 ├── requirements.txt               # Python dependencies
+├── schema.sql                     # Persistent database table definition
 ├── static/
-│   └── images/
-│       └── FamEase.png            # Application logo
+│   └── images/FamEase.png         # Application logo
 └── templates/
     ├── index.html                 # Main dashboard
     ├── login.html                 # Login page
-    ├── register.html              # Registration page
-    └── FINAL BYTE BATTLE WORKING.html
+    └── register.html              # Registration page
 ```
 
 ## Getting started
