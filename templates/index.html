@@ -6,6 +6,337 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Expense Tracker</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #805ad5;
+            --primary-light: #9f7aea;
+            --accent: #ed64a6;
+            --surface: #fff;
+            --text: #2d3748;
+            --muted: #718096;
+            --border: #e9d8fd;
+            --gradient: linear-gradient(135deg, #805ad5, #ed64a6);
+            --shadow: 0 12px 35px rgba(89, 61, 138, .12);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 24px;
+            color: var(--text);
+            background: linear-gradient(135deg, #e8f4f8, #fdf2f8 55%, #fef9e7);
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            background: rgba(255, 255, 255, .94);
+            border: 1px solid rgba(255, 255, 255, .9);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 28px 36px;
+            color: #fff;
+            background: var(--gradient);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logout-btn {
+            padding: 10px 18px;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, .65);
+            border-radius: 999px;
+        }
+
+        .content {
+            padding: 28px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding: 6px;
+            background: #f7f5fb;
+            border-radius: 14px;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .tab {
+            flex: 0 0 auto;
+            padding: 12px 16px;
+            color: var(--muted);
+            font-weight: 600;
+            background: transparent;
+            border: 0;
+            border-radius: 10px;
+        }
+
+        .tab.active {
+            color: #fff;
+            background: var(--gradient);
+        }
+
+        .tab-content {
+            display: none;
+            min-width: 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-section,
+        .contact-form {
+            margin-bottom: 24px;
+            padding: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 4px 14px rgba(45, 55, 72, .04);
+        }
+
+        .form-section h2,
+        .contact-form h2 {
+            margin-top: 0;
+        }
+
+        .expense-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+        }
+
+        input,
+        select,
+        textarea {
+            min-width: 0;
+            padding: 12px 14px;
+            color: var(--text);
+            background: #fff;
+            border: 1px solid #d6c9e8;
+            border-radius: 10px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 3px solid rgba(128, 90, 213, .18);
+            border-color: var(--primary);
+        }
+
+        .submit-btn,
+        .whatsapp-btn {
+            padding: 12px 18px;
+            color: #fff;
+            font-weight: 600;
+            background: var(--gradient);
+            border: 0;
+            border-radius: 10px;
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+        }
+
+        .expenses-grid,
+        .travel-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+            gap: 24px;
+        }
+
+        .expense-card,
+        .feature-card,
+        .team-card,
+        .blog-card {
+            min-width: 0;
+            padding: 18px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .expense-card {
+            margin-bottom: 12px;
+        }
+
+        .expense-total,
+        .total-cost {
+            padding: 16px;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            background: var(--gradient);
+            border-radius: 12px;
+        }
+
+        .expense-empty {
+            padding: 18px;
+            color: var(--muted);
+            text-align: center;
+            background: #f7f5fb;
+            border-radius: 12px;
+        }
+
+        .chart-wrap {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .travel-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+        }
+
+        .row-inputs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .ticket-card,
+        .ticket-body {
+            padding: 18px;
+            background: #f8f6fc;
+            border-radius: 12px;
+        }
+
+        .ticket-header,
+        .ticket-details,
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .error-msg {
+            margin-top: 12px;
+            color: #b42318;
+        }
+
+        .blog-hero {
+            text-align: center;
+        }
+
+        .blog-grid,
+        .features-grid,
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+            gap: 18px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .blog-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-wrap: anywhere;
+        }
+
+        .blog-card.featured {
+            grid-column: 1 / -1;
+        }
+
+        .blog-image {
+            display: grid;
+            min-height: 120px;
+            place-items: center;
+            background: #f7f5fb;
+            border-radius: 12px;
+            font-size: 3rem;
+        }
+
+        .blog-details {
+            margin-top: auto;
+        }
+
+        .blog-details summary {
+            cursor: pointer;
+        }
+
+        .read-more {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .delete-btn {
+            margin-top: 8px;
+            padding: 8px 12px;
+            color: #b42318;
+            background: #fff1f0;
+            border: 1px solid #ffd1cc;
+            border-radius: 8px;
+        }
+
+        pre {
+            max-width: 100%;
+            overflow: auto;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
 
 * {
     box-sizing: border-box;
@@ -294,7 +625,44 @@ table {
     }
 }
 
-@media (prefers-reduced-motion: reduce
+@media (max-width: 760px) {
+    body {
+        padding: 12px;
+    }
+
+    .content {
+        padding: 18px;
+    }
+
+    .header {
+        align-items: stretch;
+        flex-direction: column;
+        text-align: center;
+        padding: 22px;
+    }
+
+    .user-info {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .expenses-grid,
+    .travel-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+    </style>
 </head>
 
 <body>
@@ -433,29 +801,6 @@ table {
                         <div id="travelResult"></div>
                     </div>
 
-                    <div class="form-section">
-                        <h2>🌤️ Weather & AQI</h2>
-                        <div class="input-group">
-                            <label class="input-label">Check City Weather</label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">🏙️</span>
-                                <input id="cityInputTravel" placeholder="Enter city name..." type="text">
-                            </div>
-                        </div>
-                        <div class="checkbox-group" style="margin: 12px 0;">
-                            <input type="checkbox" id="aqiCheckTravel" checked>
-                            <label for="aqiCheckTravel">Include Air Quality Report</label>
-                        </div>
-                        <button class="submit-btn secondary-btn" onclick="getWeatherTravel()">Get Report</button>
-
-                        <div id="weatherErrorTravel" class="error-msg" style="display: none; margin-top: 14px;"></div>
-                        <div id="aqiResultTravel" style="margin-top: 20px;"></div>
-
-                        <div class="search-history" id="searchHistoryTravel" style="margin-top: 24px; display: none;">
-                            <h3>Recent Checks</h3>
-                            <div id="historyTableBodyTravel" class="history-list"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -756,19 +1101,8 @@ table {
                 {% if monthly_expenses %}
                 initChart();
                 {% endif %}
-
-                // Load live global data (if elements exist)
-                if (document.getElementById('liveTemp')) loadLiveData();
-
-                const cityInput = document.getElementById('cityInputTravel');
-                if (cityInput) {
-                    cityInput.addEventListener('keypress', function (e) {
-                        if (e.key === 'Enter') getWeatherTravel();
-                    });
-                }
             });
 
-            let searchHistoryTravel = [];
             const currentUser = {{ user|tojson }};
             const addExpenseUrl = {{ url_for('add_expense')|tojson }};
             const demoMode = {{ demo_mode|tojson }};
@@ -879,164 +1213,6 @@ table {
                     cell.textContent = 'No item prices detected. Review the OCR text above and add expenses manually.';
                 }
             }
-
-            async function getWeatherTravel() {
-                const city = document.getElementById('cityInputTravel').value.trim();
-                const includeAqi = document.getElementById('aqiCheckTravel').checked;
-
-                if (!city) {
-                    document.getElementById('weatherErrorTravel').textContent = 'Please enter a city name';
-                    document.getElementById('weatherErrorTravel').style.display = 'block';
-                    document.getElementById('aqiResultTravel').innerHTML = '';
-                    return;
-                }
-
-                try {
-                    document.getElementById('weatherErrorTravel').style.display = 'none';
-                    document.getElementById('aqiResultTravel').innerHTML = '<div style="padding: 15px; background: rgba(159, 122, 234, 0.1); border-radius: 10px;">Checking weather & air quality...</div>';
-
-                    const API_KEY = 'e84a8261d3cd4786a8281927250707';
-                    const WEATHER_URL = 'https://api.weatherapi.com/v1';
-                    const aqiParam = includeAqi ? 'yes' : 'no';
-                    const url = `${WEATHER_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}&aqi=${aqiParam}`;
-
-                    const response = await fetch(url);
-                    const data = await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(data.error?.message || 'Failed to fetch weather data');
-                    }
-
-                    displayWeatherTravel(data, includeAqi);
-                } catch (error) {
-                    document.getElementById('weatherErrorTravel').textContent = error.message;
-                    document.getElementById('weatherErrorTravel').style.display = 'block';
-                    document.getElementById('aqiResultTravel').innerHTML = '';
-                }
-            }
-
-            function displayWeatherTravel(data, showAqi) {
-                const { location, current } = data;
-
-                let html = `
-                    <div style="background: rgba(159, 122, 234, 0.08); border: 1px solid var(--border); padding: 24px; border-radius: 16px; margin-top: 16px;">
-                        <div style="margin-bottom: 20px;">
-                            <h3 style="color: var(--text); font-size: 1.3em; margin-bottom: 4px;">${location.name}</h3>
-                            <p style="color: var(--text-muted); font-size: 0.95rem;">${location.region ? location.region + ', ' : ''}${location.country}</p>
-                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 8px;">Last updated: ${current.last_updated}</p>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
-                            <div style="background: var(--surface-elevated); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-                                <h4 style="color: var(--text); margin-bottom: 12px;">Current Weather</h4>
-                                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                                    <img src="https:${current.condition.icon}" alt="${current.condition.text}" style="width: 64px; height: 64px;">
-                                    <div>
-                                        <div style="font-size: 2em; font-weight: bold; color: #9f7aea;">${current.temp_c}°C</div>
-                                        <div style="color: var(--text-muted);">${current.condition.text}</div>
-                                    </div>
-                                </div>
-                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 0.9rem;">
-                                    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><span>Feels like</span><span>${current.feelslike_c}°C</span></div>
-                                    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><span>Humidity</span><span>${current.humidity}%</span></div>
-                                    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><span>Wind</span><span>${current.wind_kph} km/h ${current.wind_dir || ''}</span></div>
-                                    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><span>Pressure</span><span>${current.pressure_mb} mb</span></div>
-                                    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><span>Visibility</span><span>${current.vis_km} km</span></div>
-                                    <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05);"><span>UV Index</span><span>${current.uv}</span></div>
-                                </div>
-                            </div>`;
-
-                if (showAqi && current.air_quality) {
-                    const epaIndex = current.air_quality['us-epa-index'];
-                    let statusText, bgColor, textColor;
-                    if (epaIndex === 1) { statusText = 'Good - Air quality is satisfactory'; bgColor = '#d4edda'; textColor = '#155724'; }
-                    else if (epaIndex === 2) { statusText = 'Moderate - Acceptable for most people'; bgColor = '#fff3cd'; textColor = '#000'; }
-                    else if (epaIndex === 3) { statusText = 'Unhealthy for Sensitive Groups'; bgColor = '#ffe5cc'; textColor = '#cc5200'; }
-                    else if (epaIndex === 4) { statusText = 'Unhealthy - Everyone may experience effects'; bgColor = '#ffcccc'; textColor = '#cc0000'; }
-                    else if (epaIndex === 5) { statusText = 'Very Unhealthy - Health alert'; bgColor = '#e6ccff'; textColor = '#660099'; }
-                    else { statusText = 'Hazardous - Health warning'; bgColor = '#cc99cc'; textColor = '#4d0066'; }
-
-                    html += `
-                            <div style="background: var(--surface-elevated); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-                                <h4 style="color: var(--text); margin-bottom: 12px;">Air Quality Index</h4>
-                                <div style="background: ${bgColor}; color: ${textColor}; padding: 15px; border-radius: 10px; margin-bottom: 15px; font-weight: 600; text-align: center;">${statusText}<br><strong style="font-size: 1.3em; margin-top: 8px; display: inline-block;">AQI Level: ${epaIndex}</strong></div>
-                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 0.9rem;">
-                                    <div style="padding: 10px; background: rgba(0,0,0,0.03); border-radius: 8px;"><strong>CO</strong><br>${current.air_quality.co}</div>
-                                    <div style="padding: 10px; background: rgba(0,0,0,0.03); border-radius: 8px;"><strong>NO2</strong><br>${current.air_quality.no2}</div>
-                                    <div style="padding: 10px; background: rgba(0,0,0,0.03); border-radius: 8px;"><strong>O3</strong><br>${current.air_quality.o3}</div>
-                                    <div style="padding: 10px; background: rgba(0,0,0,0.03); border-radius: 8px;"><strong>SO2</strong><br>${current.air_quality.so2}</div>
-                                    <div style="padding: 10px; background: rgba(0,0,0,0.03); border-radius: 8px;"><strong>PM2.5</strong><br>${current.air_quality.pm2_5}</div>
-                                    <div style="padding: 10px; background: rgba(0,0,0,0.03); border-radius: 8px;"><strong>PM10</strong><br>${current.air_quality.pm10}</div>
-                                </div>
-                            </div>`;
-                }
-
-                html += '</div></div>';
-                document.getElementById('aqiResultTravel').innerHTML = html;
-
-                const historyItem = { city: `${location.name}, ${location.country}`, temperature: `${current.temp_c}°C`, condition: current.condition.text, time: new Date().toLocaleTimeString() };
-                searchHistoryTravel.unshift(historyItem);
-                if (searchHistoryTravel.length > 2) searchHistoryTravel = searchHistoryTravel.slice(0, 2);
-                updateHistoryTableTravel();
-            }
-
-            function updateHistoryTableTravel() {
-                const tbody = document.getElementById('historyTableBodyTravel');
-                tbody.innerHTML = '';
-                searchHistoryTravel.forEach(item => {
-                    const row = tbody.insertRow();
-                    row.insertCell(0).textContent = item.city;
-                    row.insertCell(1).textContent = item.temperature;
-                    row.insertCell(2).textContent = item.condition;
-                    row.insertCell(3).textContent = item.time;
-                });
-                document.getElementById('searchHistoryTravel').style.display = searchHistoryTravel.length > 0 ? 'block' : 'none';
-            }
-
-            function loadLiveData() {
-                const cities = ['Delhi', 'Mumbai', 'London', 'New York', 'Tokyo'];
-                const randomCity = cities[Math.floor(Math.random() * cities.length)];
-
-                const API_KEY = 'e84a8261d3cd4786a8281927250707';
-                const WEATHER_URL = 'https://api.weatherapi.com/v1';
-
-                fetch(`${WEATHER_URL}/current.json?key=${API_KEY}&q=${randomCity}&aqi=yes`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const { location, current } = data;
-
-                        document.getElementById('liveTemp').innerHTML = `
-                            <div style="font-size: 24px;">🌡️</div>
-                            <div style="font-size: 18px; font-weight: 600; color: #9f7aea;">${current.temp_c}°C</div>
-                            <div style="font-size: 12px; color: #666;">${location.name}</div>
-                        `;
-
-                        const epaIndex = current.air_quality['us-epa-index'];
-                        let aqiColor = '#9f7aea';
-                        if (epaIndex <= 2) aqiColor = '#00e400';
-                        else if (epaIndex <= 3) aqiColor = '#ffff00';
-                        else if (epaIndex <= 4) aqiColor = '#ff7e00';
-                        else aqiColor = '#ff0000';
-
-                        document.getElementById('liveAQI').innerHTML = `
-                            <div style="font-size: 24px;">🌬️</div>
-                            <div style="font-size: 18px; font-weight: 600; color: ${aqiColor};">AQI ${epaIndex}</div>
-                            <div style="font-size: 12px; color: #666;">${location.name}</div>
-                        `;
-                    })
-                    .catch(() => {
-                        document.getElementById('liveTemp').innerHTML = `
-                            <div style="font-size: 24px;">🌡️</div>
-                            <div style="font-size: 18px; font-weight: 600; color: #9f7aea;">--°C</div>
-                            <div style="font-size: 12px; color: #666;">Offline</div>
-                        `;
-                        document.getElementById('liveAQI').innerHTML = `
-                            <div style="font-size: 24px;">🌬️</div>
-                            <div style="font-size: 18px; font-weight: 600; color: #9f7aea;">--</div>
-                            <div style="font-size: 12px; color: #666;">Offline</div>
-                        `;
-                    });
-            }
-
             function showTab(tabName) {
                 document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -1074,97 +1250,6 @@ table {
                     }
                 }
             });
-            }
-
-            function checkAQI() {
-                const city = document.getElementById('cityInput').value;
-                if (!city) {
-                    document.getElementById('aqiResult').innerHTML = '<div style="color: red; padding: 15px; background: rgba(255,0,0,0.1); border-radius: 10px;">Please enter a city name!</div>';
-                    return;
-                }
-
-                document.getElementById('aqiResult').innerHTML = '<div style="padding: 15px; background: rgba(159, 122, 234, 0.1); border-radius: 10px;">🔍 Checking weather & air quality...</div>';
-
-                // Use real API call
-                const API_KEY = 'e84a8261d3cd4786a8281927250707';
-                const WEATHER_URL = 'https://api.weatherapi.com/v1';
-
-                fetch(`${WEATHER_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(city)}&aqi=yes`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            throw new Error(data.error.message);
-                        }
-
-                        const { location, current } = data;
-                        const epaIndex = current.air_quality['us-epa-index'];
-                        const aqiValue = Math.round(current.air_quality.pm2_5 * 2.5); // Convert PM2.5 to AQI approximation
-                        let statusText, color, advice;
-
-                        if (epaIndex === 1) {
-                            statusText = 'Good';
-                            color = '#00e400';
-                            advice = 'Air quality is satisfactory and poses little or no risk.';
-                        } else if (epaIndex === 2) {
-                            statusText = 'Moderate';
-                            color = '#ffff00';
-                            advice = 'Air quality is acceptable for most people.';
-                        } else if (epaIndex === 3) {
-                            statusText = 'Unhealthy for Sensitive Groups';
-                            color = '#ff7e00';
-                            advice = 'Sensitive individuals should limit outdoor activities.';
-                        } else if (epaIndex === 4) {
-                            statusText = 'Unhealthy';
-                            color = '#ff0000';
-                            advice = 'Everyone should limit outdoor activities.';
-                        } else if (epaIndex === 5) {
-                            statusText = 'Very Unhealthy';
-                            color = '#8f3f97';
-                            advice = 'Health alert: everyone may experience serious health effects.';
-                        } else {
-                            statusText = 'Hazardous';
-                            color = '#7e0023';
-                            advice = 'Emergency conditions. Stay indoors with air purifier.';
-                        }
-                        const textColor = (color === '#ffff00') ? '#000' : color;
-
-                        document.getElementById('aqiResult').innerHTML = `
-                            <div style="background: ${color}20; border: 2px solid ${color}; padding: 20px; border-radius: 15px; margin-top: 15px;">
-                                <h3 style="color: ${textColor}; margin-bottom: 15px;">${location.name}, ${location.country}</h3>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 15px;">
-                                    <div style="text-align: center;">
-                                        <div style="font-size: 2.5em; font-weight: bold; color: #9f7aea;">${current.temp_c}°C</div>
-                                        <div style="font-weight: bold; color: #9f7aea;">Temperature</div>
-                                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Feels like ${current.feelslike_c}°C</div>
-                                    </div>
-                                    <div style="text-align: center;">
-                                        <div style="font-size: 2.5em; font-weight: bold; color: ${textColor};">${aqiValue}</div>
-                                        <div style="font-weight: bold; color: ${textColor};">AQI ${statusText}</div>
-                                        <div style="font-size: 12px; color: #666; margin-top: 5px;">EPA Level: ${epaIndex}</div>
-                                    </div>
-                                    <div style="text-align: center;">
-                                        <div style="font-size: 1.5em; font-weight: bold; color: #333;">PM2.5</div>
-                                        <div style="font-size: 2em; font-weight: bold; color: ${textColor};">${current.air_quality.pm2_5}</div>
-                                        <div style="font-size: 12px; color: #666;">particles</div>
-                                    </div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.8); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-                                    <h4 style="margin-bottom: 10px; color: #333;">Other Pollutants</h4>
-                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 12px;">
-                                        <div><strong>Coarse Particles (PM10):</strong><br>${current.air_quality.pm10} particles</div>
-                                        <div><strong>Carbon Monoxide (CO):</strong><br>${current.air_quality.co} units</div>
-                                        <div><strong>Nitrogen Dioxide (NO2):</strong><br>${current.air_quality.no2} units</div>
-                                        <div><strong>Ozone (O3):</strong><br>${current.air_quality.o3} units</div>
-                                        <div><strong>Sulfur Dioxide (SO2):</strong><br>${current.air_quality.so2} units</div>
-                                    </div>
-                                </div>
-                                <p style="color: #333; font-weight: 500; text-align: center;">${advice}</p>
-                            </div>
-                        `;
-                    })
-                    .catch(error => {
-                        document.getElementById('aqiResult').innerHTML = `<div style="color: red; padding: 15px; background: rgba(255,0,0,0.1); border-radius: 10px;">Error: ${error.message}</div>`;
-                    });
             }
 
             function sendToWhatsApp() {
@@ -1393,27 +1478,6 @@ table {
 
             if (mealForm) {
                 mealForm.addEventListener('submit', addMeal);
-            }
-
-            function updateHistoryTableTravel() {
-                const container = document.getElementById('historyTableBodyTravel');
-                container.innerHTML = '';
-                searchHistoryTravel.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'history-item';
-                    div.innerHTML = `
-                        <div>
-                            <div style="font-weight:600;">${item.city}</div>
-                            <div style="font-size:0.8rem; color:var(--text-muted);">${item.time}</div>
-                        </div>
-                        <div style="text-align:right;">
-                            <div style="font-weight:bold; color:var(--primary);">${item.temperature}</div>
-                            <div style="font-size:0.8rem;">${item.condition}</div>
-                        </div>
-                    `;
-                    container.appendChild(div);
-                });
-                document.getElementById('searchHistoryTravel').style.display = searchHistoryTravel.length > 0 ? 'block' : 'none';
             }
 
             // Initialize Data

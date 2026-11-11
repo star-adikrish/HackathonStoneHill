@@ -99,24 +99,49 @@
             pointer-events: none;
         }
 
-        .login-container {
+        .login-shell {
             position: relative;
             z-index: 10;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            padding: 48px 44px;
-            border-radius: 24px;
-            box-shadow: 
-                0 4px 6px rgba(0, 0, 0, 0.04),
-                0 20px 40px rgba(147, 112, 219, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: min(92vw, 470px);
+        }
+
+        .login-container {
             width: 100%;
-            max-width: 420px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            padding: 28px 28px 22px;
+            border-radius: 28px;
+            box-shadow: 0 20px 45px rgba(99, 102, 241, 0.16), 0 10px 20px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.75);
             animation: cardEntrance 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             transform-origin: center;
+        }
+
+        .brand-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 14px;
+            border-radius: 999px;
+            background: rgba(159, 122, 234, 0.12);
+            color: #5b3fb3;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            margin-bottom: 18px;
+        }
+
+        .brand-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            box-shadow: 0 0 18px rgba(168, 85, 247, 0.7);
         }
 
         @keyframes cardEntrance {
@@ -125,7 +150,8 @@
         }
 
         .login-header {
-            margin-bottom: 36px;
+            margin-bottom: 26px;
+            text-align: center;
             animation: fadeInUp 0.5s 0.15s both;
         }
 
@@ -135,60 +161,71 @@
         }
 
         .login-header h2 {
-            color: #2d3748;
-            font-size: 2rem;
-            font-weight: 700;
+            color: #1f2937;
+            font-size: clamp(1.9rem, 3vw, 2.3rem);
+            font-weight: 800;
             margin-bottom: 8px;
+            letter-spacing: -0.04em;
         }
 
         .login-subtitle {
-            color: #718096;
-            font-size: 0.95rem;
+            color: #64748b;
+            font-size: 0.96rem;
             font-weight: 500;
         }
 
         .form-group {
-            margin-bottom: 22px;
+            margin-bottom: 18px;
             text-align: left;
             animation: fadeInUp 0.5s both;
         }
         .form-group:nth-child(1) { animation-delay: 0.25s; }
         .form-group:nth-child(2) { animation-delay: 0.3s; }
 
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            color: #475569;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
         input {
             width: 100%;
-            padding: 15px 18px;
-            border: 2px solid rgba(147, 112, 219, 0.2);
-            border-radius: 12px;
+            padding: 15px 16px;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            border-radius: 14px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #2d3748;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            background: rgba(248, 250, 252, 0.85);
+            color: #0f172a;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.2s ease;
         }
 
         input::placeholder {
-            color: #a0aec0;
+            color: #94a3b8;
         }
 
         input:focus {
             outline: none;
-            border-color: rgba(147, 112, 219, 0.6);
-            box-shadow: 0 0 0 4px rgba(147, 112, 219, 0.12);
+            border-color: rgba(168, 85, 247, 0.65);
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12);
             background: #fff;
         }
 
         .login-btn {
             width: 100%;
-            background: linear-gradient(135deg, #9f7aea 0%, #ed64a6 100%);
+            background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
             color: #fff;
             border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 15px 18px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.25s ease;
-            margin-bottom: 24px;
+            transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+            margin: 8px 0 18px;
             position: relative;
             overflow: hidden;
             animation: fadeInUp 0.5s 0.4s both;
@@ -217,23 +254,25 @@
         }
 
         .register-link {
-            color: #805ad5;
+            color: #7c3aed;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             transition: color 0.2s ease, transform 0.2s ease;
             animation: fadeInUp 0.5s 0.45s both;
             display: inline-block;
         }
 
         .register-link:hover {
-            color: #ed64a6;
+            color: #ec4899;
             transform: translateY(-1px);
         }
 
         .message {
-            padding: 14px 16px;
+            padding: 12px 14px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            font-size: 0.92rem;
+            font-weight: 600;
             animation: messageIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
@@ -273,33 +312,38 @@
         <div class="grid-overlay"></div>
     </div>
 
-    <div class="login-container">
-        <div class="login-header">
-            <h2>🔐 Welcome Back</h2>
-            <p class="login-subtitle">Sign in to your family expense tracker</p>
-        </div>
-        
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="message {% if 'successful' in message %}success{% else %}error{% endif %}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+    <div class="login-shell">
+        <div class="login-container">
+            <div class="brand-chip"><span class="brand-dot"></span>FamEase</div>
+            <div class="login-header">
+                <h2>Welcome back</h2>
+                <p class="login-subtitle">Sign in to keep your family budget on track.</p>
+            </div>
+            
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="message {% if 'successful' in message %}success{% else %}error{% endif %}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
-        <div class="form-wrapper">
-            <form method="POST">
-                <div class="form-group">
-                    <input type="text" name="username" placeholder="Username" required autocomplete="username">
-                </div>
-                <div class="form-group">
-                    <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
-                </div>
-                <button type="submit" class="login-btn">Sign In</button>
-            </form>
+            <div class="form-wrapper">
+                <form method="POST">
+                    <div class="form-group">
+                        <label class="input-label" for="username">Username</label>
+                        <input id="username" type="text" name="username" placeholder="Enter your username" required autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label" for="password">Password</label>
+                        <input id="password" type="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="login-btn">Sign In</button>
+                </form>
+            </div>
+            
+            <p>Don't have an account? <a href="{{ url_for('register') }}" class="register-link">Create one here</a></p>
         </div>
-        
-        <p>Don't have an account? <a href="{{ url_for('register') }}" class="register-link">Create one here</a></p>
     </div>
 </body>
 </html>

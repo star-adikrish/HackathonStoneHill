@@ -694,6 +694,55 @@ def contact():
 
 
 # ==========================================
+# WEATHER API
+# ==========================================
+
+@app.route("/api/weather")
+def weather_api():
+    city = (request.args.get("q") or "").strip()
+    if not city:
+        return jsonify({"error": "Please provide a city name."}), 400
+
+    if not WEATHER_API_KEY:
+        return jsonify({
+            "error": "Weather service is not configured on this server."
+        }), 503
+
+    include_aqi = str(request.args.get("aqi", "no")).lower() in {
+        "1", "true", "yes", "y"
+    }
+
+    params = urllib.parse.urlencode({
+        "key": WEATHER_API_KEY,
+        "q": city,
+        "aqi": "yes" if include_aqi else "no"
+    })
+
+    try:
+        req = urllib.request.Request(
+            f"https://api.weatherapi.com/v1/current.json?{params}",
+            headers={"User-Agent": "FamEase/1.0"}
+        )
+        with urllib.request.urlopen(req, timeout=8) as response:
+            data = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as error:
+        try:
+            body = json.loads(error.read().decode("utf-8"))
+            message = body.get("error", {}).get("message", "Place not found")
+        except (ValueError, OSError):
+            message = "Place not found"
+        return jsonify({"error": message}), 400
+    except Exception as error:
+        app.logger.exception("Weather API request failed: %s", error)
+        return jsonify({"error": "Weather data is temporarily unavailable."}), 503
+
+    if data.get("error"):
+        return jsonify({"error": data["error"].get("message", "Place not found")}), 400
+
+    return jsonify(data)
+
+
+# ==========================================
 # WEATHER API PLACE VALIDATION
 # ==========================================
 
