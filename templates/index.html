@@ -173,8 +173,7 @@
             background: linear-gradient(135deg, #25d366, #128c7e);
         }
 
-        .expenses-grid,
-        .travel-grid {
+        .expenses-grid {
             display: grid;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
             gap: 24px;
@@ -195,8 +194,7 @@
             margin-bottom: 12px;
         }
 
-        .expense-total,
-        .total-cost {
+        .expense-total {
             padding: 16px;
             color: #fff;
             font-weight: 700;
@@ -218,10 +216,6 @@
             margin: 0 auto;
         }
 
-        .travel-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
         .input-group {
             margin-bottom: 14px;
         }
@@ -240,22 +234,6 @@
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 12px;
-        }
-
-        .ticket-card,
-        .ticket-body {
-            padding: 18px;
-            background: #f8f6fc;
-            border-radius: 12px;
-        }
-
-        .ticket-header,
-        .ticket-details,
-        .cost-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 12px;
         }
 
         .error-msg {
@@ -646,8 +624,7 @@ table {
         flex-wrap: wrap;
     }
 
-    .expenses-grid,
-    .travel-grid {
+    .expenses-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -682,7 +659,6 @@ table {
             <div class="tabs">
                 <button class="tab active" data-tab="scanner">🎟️ RECEIPT</button>
                 <button class="tab " data-tab="expenses">💰 EXPENSES</button>
-                <button class="tab" data-tab="travel">✈️ TRAVEL</button>
                 <button class="tab" data-tab="contact">📧 CONTACT</button>
                 <button class="tab" data-tab="meal">🍔 MEAL PLANNER</button>
                 <button class="tab" data-tab="todo">📝 TO DO LIST</button>
@@ -754,53 +730,6 @@ table {
                     {% else %}
                     <p class="expense-empty">No expenses recorded this month. Add your first expense above! 💰</p>
                     {% endif %}
-                </div>
-            </div>
-
-            <div id="travel" class="tab-content">
-                <div class="travel-grid">
-                    <div class="form-section travel-input-card">
-                        <h2>✈️ Plan Your Trip</h2>
-                        <div class="input-group">
-                            <label class="input-label">From</label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">🛫</span>
-                                <input id="fromCity" placeholder="Origin (e.g., Delhi)" type="text">
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label class="input-label">To</label>
-                            <div class="input-wrapper">
-                                <span class="input-icon">🛬</span>
-                                <input id="toCity" placeholder="Destination (e.g., London)" type="text">
-                            </div>
-                        </div>
-
-                        <div class="row-inputs">
-                            <div class="input-group">
-                                <label class="input-label">Travelers</label>
-                                <div class="input-wrapper">
-                                    <span class="input-icon">👥</span>
-                                    <input id="people" type="number" min="1" value="2">
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label">Duration</label>
-                                <div class="input-wrapper">
-                                    <span class="input-icon">📅</span>
-                                    <input id="days" type="number" min="1" value="5">
-                                </div>
-                            </div>
-                        </div>
-
-                        <button class="submit-btn" onclick="planTravel()" id="planTravelBtn">
-                            <span class="btn-text">Check Costs</span>
-                            <span class="btn-loader" style="display:none;"></span>
-                        </button>
-                        <div id="travelError" class="error-msg" style="display:none;"></div>
-                        <div id="travelResult"></div>
-                    </div>
-
                 </div>
             </div>
 
@@ -894,7 +823,7 @@ table {
                     </p>
 
                     <p>
-                        Whether you're splitting bills, going on vacation, tracking personal expenses,
+                        Whether you're splitting bills, tracking personal expenses,
                         or just trying to save more, we've got your back. 💪
                     </p>
                     <br>
@@ -902,23 +831,20 @@ table {
                         The app exists to help families manage their finances with ease, providing tools for
                         budgeting, saving, and tracking expenses in one place.
                         It aims to reduce financial stress by offering a simple way for families to organize their
-                        spending and achieve their financial goals - whether
-                        it's saving for a vacation or building an emergency fund. <br>
+                        spending and achieve their financial goals, such as building an emergency fund. <br>
                         Additionally, the app encourages family collaboration, making it easy for everyone to
                         participate in managing finances, even kids.
                         By providing clear insights into spending patterns and setting financial goals, the app
                         empowers
-                        families to make smarter financial decisions, save for the future, and plan memorable,
-                        budget-friendly vacations.
+                        families to make smarter financial decisions and save for the future.
                         Ultimately, its goal is to help families feel more in control of their money and more
                         confident about their financial health.<br>
 
                     </p>
                     <div class="mission-section">
                         <h2>Our Mission</h2>
-                        <p>Our mission is to simplify family life by providing an all-in-one app that helps users
-                            manage their budgets, plan memorable vacations, organize meals, and stay on top of
-                            everyday tasks—empowering families to spend smarter, travel more, and enjoy every moment
+                        <p>Our mission is to simplify family life with tools to manage budgets, organize meals, and
+                            stay on top of everyday tasks—helping families spend smarter and enjoy more time
                             together.</p>
                     </div>
 
@@ -931,12 +857,6 @@ table {
                         </div>
 
                         <div class="feature-card">
-                            <div class="feature-icon">🧳</div>
-                            <h3>Vacation Travel Budgeting</h3>
-                            <p>Estimate and track vacation costs real-time</p>
-                        </div>
-
-                        <div class="feature-card">
                             <div class="feature-icon">🍽️</div>
                             <h3>Meal Planner</h3>
                             <p>Plan weekly meals based on a balanced diet, ensuring nutritional variety and healthy
@@ -946,55 +866,8 @@ table {
                         <div class="feature-card">
                             <div class="feature-icon">✍️</div>
                             <h3>Visionary Blogs</h3>
-                            <p>Inspire and inform users with forward-thinking content on budgeting, travel,
+                            <p>Inspire and inform users with forward-thinking content on budgeting,
                                 wellness, and lifestyle, helping families stay ahead of trends</p>
-                        </div>
-                    </div>
-
-                    <div class="team-section">
-                        <h2>Meet Our Team</h2>
-                        <div class="final-section">
-                            <p><b>Our team has worked hard with a strong sense of collaboration, combining diverse
-                                    skills and
-                                    expertise to build an intuitive and reliable app
-                                    that simplifies family budgeting and financial management.</b><br></p>
-                        </div>
-                        <div class="team-grid">
-                            <!-- Team Member 1 -->
-                            <div class="team-card">
-                                <div class="team-avatar">👨‍💻</div>
-                                <h4>Krishna Agarwal</h4>
-                                <p class="team-role">Tech Lead & Backend Developer</p>
-                                <p>Experienced tech expert with 4+ hackathons under his belt, consistently leading the
-                                    team to success with robust backend solutions.</p>
-                            </div>
-
-                            <!-- Team Member 2 -->
-                            <div class="team-card">
-                                <div class="team-avatar">👨‍💻</div>
-                                <h4>S Shravan</h4>
-                                <p class="team-role">Frontend Specialist</p>
-                                <p>Logical and technical coder focused on crafting user-friendly interfaces and seamless
-                                    interactive experiences.</p>
-                            </div>
-
-                            <!-- Team Member 3 -->
-                            <div class="team-card">
-                                <div class="team-avatar">👩‍🔬</div>
-                                <h4>Aishani Satheesh Rai</h4>
-                                <p class="team-role">UX/UI Designer & Tester</p>
-                                <p>Enthusiastic coder driven by curiosity, ensuring the application is meaningful,
-                                    bug-free, and intuitive.</p>
-                            </div>
-
-                            <!-- Team Member 4 -->
-                            <div class="team-card">
-                                <div class="team-avatar">👨‍🎨</div>
-                                <h4>Jake Manu</h4>
-                                <p class="team-role">Creative Developer</p>
-                                <p>Innovative developer exploring design solutions to build simple, useful, and
-                                    impactful applications.</p>
-                            </div>
                         </div>
                     </div>
 
@@ -1222,8 +1095,7 @@ table {
             }
 
             function initChart() {
-                const expenses = {{ monthly_expenses| tojson
-            }};
+            const expenses = {{ monthly_expenses|tojson }};
             const memberTotals = {};
 
             expenses.forEach(expense => {
@@ -1277,88 +1149,6 @@ table {
                 document.getElementById('feedbackMsg').innerHTML = `<span style="color: #9f7aea;">Thank you for rating us ${rating}!</span>`;
                 document.getElementById('stars').value = '';
             }
-
-            function planTravel() {
-                const fromCity = document.getElementById('fromCity').value.trim();
-                const toCity = document.getElementById('toCity').value.trim();
-                const people = parseInt(document.getElementById('people').value, 10) || 1;
-                const days = parseInt(document.getElementById('days').value, 10) || 1;
-
-                const errorDiv = document.getElementById('travelError');
-                const resultDiv = document.getElementById('travelResult');
-                const btn = document.getElementById('planTravelBtn');
-
-                errorDiv.style.display = 'none';
-                resultDiv.innerHTML = '';
-
-                if (!toCity) {
-                    errorDiv.innerHTML = '⚠️ Please enter a destination city.';
-                    errorDiv.style.display = 'block';
-                    return;
-                }
-
-                // Loading state
-                btn.classList.add('loading');
-                btn.querySelector('.btn-text').textContent = 'Researching...';
-                btn.querySelector('.btn-loader').style.display = 'inline-block';
-
-                fetch('/calculate_travel_cost', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        destination: toCity,
-                        origin: fromCity,
-                        days: Math.max(1, days),
-                        people: Math.max(1, people)
-                    })
-                })
-                    .then(response => response.json().then(data => ({ ok: response.ok, data })))
-                    .then(({ ok, data }) => {
-                        if (!ok) {
-                            errorDiv.innerHTML = `⚠️ ${data.error || 'Could not verify place.'}`;
-                            errorDiv.style.display = 'block';
-                            return;
-                        }
-
-                        const aiTotal = data.total;
-                        const perPerson = Math.round(aiTotal / people);
-
-                        resultDiv.innerHTML = `
-                        <div class="ticket-card">
-                            <div class="ticket-header">
-                                <div class="ticket-route">${fromCity || 'Anywhere'} ➝ ${toCity}</div>
-                                <div>✈️ Ticket Estimate</div>
-                            </div>
-                            <div class="ticket-body">
-                                <div class="ticket-details">
-                                    <div><strong>👥 Travelers:</strong> ${people}</div>
-                                    <div><strong>🗓️ Duration:</strong> ${days} days</div>
-                                    <div><strong>👤 Per Person:</strong> ₹${perPerson.toLocaleString()}</div>
-                                </div>
-                                <h4 style="color: var(--text-muted); margin-bottom: 12px; font-size: 0.9rem;">ESTIMATED BREAKDOWN</h4>
-                                <div class="cost-row"><span>🏨 Accommodation</span> <strong>₹${data.accommodation.toLocaleString()}</strong></div>
-                                <div class="cost-row"><span>🍔 Food & Dining</span> <strong>₹${data.food.toLocaleString()}</strong></div>
-                                <div class="cost-row"><span>🚕 Transport</span> <strong>₹${data.transport.toLocaleString()}</strong></div>
-                                <div class="cost-row"><span>🎟️ Activities</span> <strong>₹${data.activities.toLocaleString()}</strong></div>
-                                
-                                <div class="total-cost">Total Budget: ₹${aiTotal.toLocaleString()}</div>
-                            </div>
-                        </div>
-                    `;
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        errorDiv.innerHTML = '❌ Network error. Please check your connection.';
-                        errorDiv.style.display = 'block';
-                    })
-                    .finally(() => {
-                        btn.classList.remove('loading');
-                        btn.querySelector('.btn-text').textContent = 'Check Costs';
-                        btn.querySelector('.btn-loader').style.display = 'none';
-                    });
-            }
-
-
 
             /* ---------- TO DO LIST ---------- */
             let todos = [];

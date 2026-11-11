@@ -10,8 +10,6 @@ FamEase is a family budgeting and expense-tracking web application built with Fl
 - Monthly and all-time spending summaries
 - Charts and spending insights in the dashboard
 - Receipt scanning with browser-based OCR and optional expense entry
-- Travel-cost calculator
-- Weather lookup for planning and daily decisions
 - Demo mode available at `/demo`
 - Responsive interface for desktop and mobile screens
 
@@ -73,21 +71,17 @@ pip install -r requirements.txt
 
 ### 4. Configure environment variables
 
-Set a unique Flask secret and add optional service keys before starting the app:
+Set a unique Flask secret before starting the app:
 
 ```bash
 export SECRET_KEY="replace-with-a-long-random-value"
-export WEATHER_API_KEY="your-weatherapi-key"
 ```
 
 On Windows PowerShell:
 
 ```powershell
 $env:SECRET_KEY = "replace-with-a-long-random-value"
-$env:WEATHER_API_KEY = "your-weatherapi-key"
 ```
-
-The weather integration is optional. Travel-cost estimates use built-in destination-based calculations.
 
 > **Security note:** Never commit real API keys, passwords, or production secrets. Use environment variables and rotate any credentials that may have been exposed in local source or sample data.
 
@@ -114,7 +108,6 @@ Existing accounts and expenses in local `data.json` are not copied automatically
 - Run the app from the repository root so local `data.json` is found correctly.
 - The browser loads Chart.js, Tesseract.js, and Google Fonts from public CDNs.
 - Receipt OCR runs in the browser and requires an internet connection to load Tesseract.js.
-- Weather lookup is optional and depends on a valid API key.
 
 ## License
 

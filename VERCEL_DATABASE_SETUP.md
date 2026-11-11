@@ -15,7 +15,6 @@ In Vercel → your FamEase project → **Settings → Environment Variables**, a
 
 - `DATABASE_URL`: the PostgreSQL connection URI from Supabase.
 - `SECRET_KEY`: a long, random, private value that stays the same between deployments.
-- `WEATHER_API_KEY`: optional; only needed for WeatherAPI place validation.
 
 Add the variables to **Production** (and Preview if you test preview deployments). Do not put these values in source code or commit them to GitHub.
 
