@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,13 +17,11 @@
             --gradient: linear-gradient(135deg, #805ad5, #ed64a6);
             --shadow: 0 12px 35px rgba(89, 61, 138, .12);
         }
-
         *,
         *::before,
         *::after {
             box-sizing: border-box;
         }
-
         body {
             margin: 0;
             padding: 24px;
@@ -32,7 +29,6 @@
             background: linear-gradient(135deg, #e8f4f8, #fdf2f8 55%, #fef9e7);
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -42,7 +38,6 @@
             border-radius: 24px;
             box-shadow: var(--shadow);
         }
-
         .header {
             display: flex;
             align-items: center;
@@ -51,18 +46,15 @@
             color: #fff;
             background: var(--gradient);
         }
-
         .header h1 {
             margin: 0;
             font-size: clamp(1.4rem, 3vw, 2.2rem);
         }
-
         .user-info {
             display: flex;
             align-items: center;
             gap: 16px;
         }
-
         .logout-btn {
             padding: 10px 18px;
             color: #fff;
@@ -70,11 +62,9 @@
             border: 1px solid rgba(255, 255, 255, .65);
             border-radius: 999px;
         }
-
         .content {
             padding: 28px;
         }
-
         .tabs {
             display: flex;
             gap: 8px;
@@ -84,18 +74,15 @@
             background: #f7f5fb;
             border-radius: 14px;
         }
-
         button,
         input,
         select,
         textarea {
             font: inherit;
         }
-
         button {
             cursor: pointer;
         }
-
         .tab {
             flex: 0 0 auto;
             padding: 12px 16px;
@@ -105,21 +92,17 @@
             border: 0;
             border-radius: 10px;
         }
-
         .tab.active {
             color: #fff;
             background: var(--gradient);
         }
-
         .tab-content {
             display: none;
             min-width: 0;
         }
-
         .tab-content.active {
             display: block;
         }
-
         .form-section,
         .contact-form {
             margin-bottom: 24px;
@@ -129,18 +112,15 @@
             border-radius: 18px;
             box-shadow: 0 4px 14px rgba(45, 55, 72, .04);
         }
-
         .form-section h2,
         .contact-form h2 {
             margin-top: 0;
         }
-
         .expense-form {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 12px;
         }
-
         input,
         select,
         textarea {
@@ -151,14 +131,12 @@
             border: 1px solid #d6c9e8;
             border-radius: 10px;
         }
-
         input:focus,
         select:focus,
         textarea:focus {
             outline: 3px solid rgba(128, 90, 213, .18);
             border-color: var(--primary);
         }
-
         .submit-btn,
         .whatsapp-btn {
             padding: 12px 18px;
@@ -168,17 +146,14 @@
             border: 0;
             border-radius: 10px;
         }
-
         .whatsapp-btn {
             background: linear-gradient(135deg, #25d366, #128c7e);
         }
-
         .expenses-grid {
             display: grid;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
             gap: 24px;
         }
-
         .expense-card,
         .feature-card,
         .team-card,
@@ -189,11 +164,9 @@
             border: 1px solid var(--border);
             border-radius: 14px;
         }
-
         .expense-card {
             margin-bottom: 12px;
         }
-
         .expense-total {
             padding: 16px;
             color: #fff;
@@ -202,7 +175,6 @@
             background: var(--gradient);
             border-radius: 12px;
         }
-
         .expense-empty {
             padding: 18px;
             color: var(--muted);
@@ -210,41 +182,33 @@
             background: #f7f5fb;
             border-radius: 12px;
         }
-
         .chart-wrap {
             max-width: 400px;
             margin: 0 auto;
         }
-
         .input-group {
             margin-bottom: 14px;
         }
-
         .input-label {
             display: block;
             margin-bottom: 6px;
             font-weight: 600;
         }
-
         .input-wrapper input {
             width: 100%;
         }
-
         .row-inputs {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 12px;
         }
-
         .error-msg {
             margin-top: 12px;
             color: #b42318;
         }
-
         .blog-hero {
             text-align: center;
         }
-
         .blog-grid,
         .features-grid,
         .team-grid {
@@ -254,18 +218,15 @@
             margin-top: 20px;
             text-align: left;
         }
-
         .blog-card {
             display: flex;
             flex-direction: column;
             gap: 10px;
             overflow-wrap: anywhere;
         }
-
         .blog-card.featured {
             grid-column: 1 / -1;
         }
-
         .blog-image {
             display: grid;
             min-height: 120px;
@@ -274,32 +235,26 @@
             border-radius: 12px;
             font-size: 3rem;
         }
-
         .blog-details {
             margin-top: auto;
         }
-
         .blog-details summary {
             cursor: pointer;
         }
-
         .read-more {
             color: var(--primary);
             font-weight: 600;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         th,
         td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }
-
         .delete-btn {
             margin-top: 8px;
             padding: 8px 12px;
@@ -308,60 +263,49 @@
             border: 1px solid #ffd1cc;
             border-radius: 8px;
         }
-
         pre {
             max-width: 100%;
             overflow: auto;
             white-space: pre-wrap;
             overflow-wrap: anywhere;
         }
-
 * {
     box-sizing: border-box;
 }
-
 html {
     width: 100%;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
-
 body {
     width: 100%;
     min-width: 320px;
     overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
 }
-
 img, video, canvas {
     max-width: 100%;
     height: auto;
 }
-
 button, input, select, textarea {
     font: inherit;
     max-width: 100%;
 }
-
 .container {
     width: min(1200px, 94%);
     margin: 24px auto;
 }
-
 .content {
     min-width: 0;
     width: 100%;
 }
-
 .header {
     gap: 16px;
     flex-wrap: wrap;
 }
-
 .header h1 {
     overflow-wrap: anywhere;
 }
-
 .tabs {
     display: flex;
     flex-wrap: nowrap;
@@ -372,7 +316,6 @@ button, input, select, textarea {
     -webkit-overflow-scrolling: touch;
     padding: 8px 4px 12px;
 }
-
 .tabs button {
     flex: 0 0 auto;
     white-space: nowrap;
@@ -380,7 +323,6 @@ button, input, select, textarea {
     padding: 11px 17px;
     border-radius: 12px;
 }
-
 .card,
 .expense-card,
 .feature-card {
@@ -388,13 +330,11 @@ button, input, select, textarea {
     max-width: 100%;
     overflow-wrap: anywhere;
 }
-
 .features-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 18px;
 }
-
 input,
 select,
 textarea {
@@ -403,23 +343,19 @@ textarea {
     min-height: 44px;
     border-radius: 10px;
 }
-
 button {
     min-height: 44px;
     cursor: pointer;
     touch-action: manipulation;
 }
-
 .expense-form {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
 }
-
 .expense-form button {
     width: 100%;
 }
-
 .table-container,
 .table-responsive {
     width: 100%;
@@ -427,18 +363,15 @@ button {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
-
 table {
     min-width: 560px;
     border-collapse: collapse;
 }
-
 #todoList {
     padding-left: 0;
     list-style: none;
     min-width: 0;
 }
-
 #todoList li {
     display: flex;
     align-items: center;
@@ -447,34 +380,28 @@ table {
     flex-wrap: wrap;
     overflow-wrap: anywhere;
 }
-
 @media (max-width: 900px) {
     .container {
         width: 95%;
         margin: 16px auto;
     }
-
     .features-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
     .header {
         align-items: center;
     }
 }
-
 @media (max-width: 600px) {
     body {
         font-size: 14px;
     }
-
     .container {
         width: 100%;
         margin: 0;
         padding: 12px;
         border-radius: 0;
     }
-
     .header {
         padding: 18px 14px;
         border-radius: 16px;
@@ -483,94 +410,76 @@ table {
         text-align: center;
         gap: 12px;
     }
-
     .header h1 {
         font-size: 25px;
         line-height: 1.25;
     }
-
     .header p {
         font-size: 13px;
     }
-
     .header button,
     .header a {
         align-self: center;
     }
-
     .content {
         padding: 14px 10px;
         border-radius: 16px;
     }
-
     .tabs {
         margin: 0 -4px 16px;
         gap: 7px;
         padding: 6px 4px 12px;
         scroll-snap-type: x proximity;
     }
-
     .tabs button {
         font-size: 12px;
         padding: 10px 13px;
         min-height: 42px;
         scroll-snap-align: start;
     }
-
     .expense-form {
         grid-template-columns: 1fr;
         gap: 12px;
     }
-
     .expense-form > * {
         width: 100%;
     }
-
     .card button,
     .expense-card button,
     .tab-content button {
         max-width: 100%;
     }
-
     .features-grid {
         grid-template-columns: 1fr;
         gap: 12px;
     }
-
     .feature-card {
         padding: 18px;
     }
-
     .tab-content {
         padding: 10px 0;
         min-width: 0;
     }
-
     .tab-content h2 {
         font-size: 21px;
         line-height: 1.3;
     }
-
     .tab-content h3 {
         font-size: 17px;
     }
-
     .expense-card,
     .card {
         padding: 15px;
         border-radius: 14px;
     }
-
     p {
         line-height: 1.6;
         overflow-wrap: anywhere;
     }
-
     input[type="file"] {
         font-size: 12px;
         padding: 10px;
     }
-
     .about-content,
     .mission-section,
     .team-section,
@@ -578,23 +487,18 @@ table {
         width: 100%;
         padding: 16px;
     }
-
     .contact-form {
         width: 100%;
     }
-
     #todoList li button {
         min-height: 40px;
     }
-
     h1 {
         font-size: 25px;
     }
-
     h2 {
         font-size: 21px;
     }
-
     button,
     input,
     select,
@@ -602,33 +506,27 @@ table {
         font-size: 16px;
     }
 }
-
 @media (max-width: 760px) {
     body {
         padding: 12px;
     }
-
     .content {
         padding: 18px;
     }
-
     .header {
         align-items: stretch;
         flex-direction: column;
         text-align: center;
         padding: 22px;
     }
-
     .user-info {
         justify-content: center;
         flex-wrap: wrap;
     }
-
     .expenses-grid {
         grid-template-columns: 1fr;
     }
 }
-
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -641,7 +539,6 @@ table {
 }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="header">
@@ -651,7 +548,6 @@ table {
                 <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
             </div>
         </div>
-
         <div class="content">
             {% if demo_mode %}
             <p class="expense-empty" role="status">Demo mode: sample data is read-only. Create an account to save your own expenses.</p>
@@ -667,13 +563,10 @@ table {
             </div>
             <div id="scanner" class="tab-content active">
                 <h2>Scan Receipt</h2>
-
                 <input type="file" id="imageInput" accept="image/*"><br><br>
                 <button type="button" class="submit-btn" id="scanReceiptBtn" onclick="scanReceipt()">Scan Receipt</button><br><br>
-
                 <h3>OCR Text</h3>
                 <pre id="ocrOutput"></pre><br><br>
-
                 <h3>Extracted Products</h3>
                 <table id="productsTable">
                     <tr>
@@ -684,7 +577,6 @@ table {
                     </tr>
                 </table><br><br>
             </div>
-
             <div id="expenses" class="tab-content">
                 <div class="form-section">
                     <h2>➕ Add New Expense</h2>
@@ -703,7 +595,6 @@ table {
                     </form>
                     {% endif %}
                 </div>
-
                 <div class="form-section">
                     <h2>📊 Expenses for {{ current_month_name }}</h2>
                     {% if expenses %}
@@ -732,7 +623,6 @@ table {
                     {% endif %}
                 </div>
             </div>
-
             <div id="contact" class="tab-content">
                 <div class="contact-form">
                     <h2>Send Message</h2>
@@ -755,7 +645,7 @@ table {
                         <option>⭐⭐⭐⭐</option>
                         <option>⭐⭐⭐⭐⭐</option>
                     </select>
-                    <button class="submit-btn" onclick="submitFeedback()">Submit</button>
+                    <button type="button" class="submit-btn" onclick="submitFeedback()">Submit</button>
                     <p id="feedbackMsg" style="margin-top: 16px;"></p>
                     <div class="rating-cta">
                         <a href="https://wa.me/8618079219" class="whatsapp-btn">💬 Message us on WhatsApp</a>
@@ -787,6 +677,7 @@ table {
                             <th>Lunch</th>
                             <th>Dinner</th>
                             <th>Snack</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -797,31 +688,24 @@ table {
         <div id="todo" class="tab-content">
             <div class="form-section">
                 <h2>To-Do List</h2>
-
                 <input id="todoInput" placeholder="Add a task..." />
                 <button onclick="addTodo()">Add</button>
-
                 <ul id="todoList"></ul>
             </div>
-
-
         </div>
         <div id="about" class="tab-content">
             <div class="form-section">
                 <h2>ℹ️ About Us</h2>
-
                 <div class="about-content">
                     <p>
                         Welcome to <strong>FamEase</strong> 👋!
                         This app helps you easily track daily expenses, manage spending,
                         and stay on top of your finances without the headache.
                     </p>
-
                     <p>
                         Built with basic code from scratch, our goal is to keep money tracking fast,
                         clean, and stress-free.
                     </p>
-
                     <p>
                         Whether you're splitting bills, tracking personal expenses,
                         or just trying to save more, we've got your back. 💪
@@ -839,7 +723,6 @@ table {
                         families to make smarter financial decisions and save for the future.
                         Ultimately, its goal is to help families feel more in control of their money and more
                         confident about their financial health.<br>
-
                     </p>
                     <div class="mission-section">
                         <h2>Our Mission</h2>
@@ -847,7 +730,6 @@ table {
                             stay on top of everyday tasks—helping families spend smarter and enjoy more time
                             together.</p>
                     </div>
-
                     <div class="features-grid">
                         <div class="feature-card">
                             <div class="feature-icon">💰</div>
@@ -855,14 +737,12 @@ table {
                             <p>Track income, expenses, and visualize spending trends with customizable categories
                             </p>
                         </div>
-
                         <div class="feature-card">
                             <div class="feature-icon">🍽️</div>
                             <h3>Meal Planner</h3>
                             <p>Plan weekly meals based on a balanced diet, ensuring nutritional variety and healthy
                                 eating</p>
                         </div>
-
                         <div class="feature-card">
                             <div class="feature-icon">✍️</div>
                             <h3>Visionary Blogs</h3>
@@ -870,7 +750,6 @@ table {
                                 wellness, and lifestyle, helping families stay ahead of trends</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -895,7 +774,6 @@ table {
                                     <p>Stonehill International Techno-fest brings students together to explore technology, share ideas, and build practical solutions. Events like this encourage teamwork, creativity, and confidence with emerging tools.</p>
                                 </details>
                             </article>
-
                             <article class="blog-card">
                                 <div class="blog-image">🍕</div>
                                 <div class="blog-meta">
@@ -909,7 +787,6 @@ table {
                                     <p>Plan a few meals before shopping, check what is already in the pantry, and choose ingredients that can be used in more than one dish. A simple weekly plan can reduce food waste, takeout spending, and last-minute stress while keeping meals varied.</p>
                                 </details>
                             </article>
-
                             <article class="blog-card">
                                 <div class="blog-image">💰</div>
                                 <div class="blog-meta">
@@ -923,7 +800,6 @@ table {
                                     <p>Start by setting a realistic savings goal and scheduling a small transfer after each payday. Keep emergency savings separate from everyday spending, review subscriptions regularly, and revisit the plan together as family priorities change.</p>
                                 </details>
                             </article>
-
                             <article class="blog-card">
                                 <div class="blog-image">💵</div>
                                 <div class="blog-meta">
@@ -937,7 +813,6 @@ table {
                                     <p>Build a budget from actual income and recent spending. Group costs into essentials, flexible spending, and savings, then agree on a limit for each. Check in monthly and adjust categories when circumstances change instead of treating the budget as fixed.</p>
                                 </details>
                             </article>
-
                             <article class="blog-card">
                                 <div class="blog-image">🌱</div>
                                 <div class="blog-meta">
@@ -952,16 +827,27 @@ table {
                                 </details>
                             </article>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+             <script id="app-config" type="application/json">{{ {
+        "currentUser": user,
+        "addExpenseUrl": url_for('add_expense'),
+        "demoMode": demo_mode,
+        "monthlyExpenses": monthly_expenses
+    }|tojson }}</script>
+       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
         <script>
             // Load live data on page load
+            const appConfig = JSON.parse(document.getElementById('app-config').textContent);
+            const currentUser = appConfig.currentUser || '';
+            const addExpenseUrl = appConfig.addExpenseUrl || '';
+            const demoMode = Boolean(appConfig.demoMode);
+            const monthlyExpenses = Array.isArray(appConfig.monthlyExpenses)
+                ? appConfig.monthlyExpenses
+                : [];
             document.addEventListener('DOMContentLoaded', function () {
                 document.querySelectorAll('.tab').forEach(function (tab) {
                     tab.addEventListener('click', function () {
@@ -969,29 +855,21 @@ table {
                         showTab(tabName);
                     });
                 });
-
-                // Initialize chart if this month has expenses
-                {% if monthly_expenses %}
-                initChart();
-                {% endif %}
+                if (monthlyExpenses.length > 0) {
+                    initChart();
+                }
             });
-
-            const currentUser = {{ user|tojson }};
-            const addExpenseUrl = {{ url_for('add_expense')|tojson }};
-            const demoMode = {{ demo_mode|tojson }};
-
             async function scanReceipt() {
                 const imageInput = document.getElementById('imageInput');
                 const output = document.getElementById('ocrOutput');
                 const table = document.getElementById('productsTable');
                 const button = document.getElementById('scanReceiptBtn');
-
+                if (!imageInput || !output || !table || !button) return;
                 table.querySelectorAll('tr:not(:first-child)').forEach(row => row.remove());
                 if (!imageInput.files || imageInput.files.length === 0) {
                     output.textContent = 'Please choose a receipt image first.';
                     return;
                 }
-
                 const file = imageInput.files[0];
                 if (!file.type.startsWith('image/')) {
                     output.textContent = 'Please choose a valid image file.';
@@ -1002,7 +880,6 @@ table {
                     output.textContent = 'Receipt scanning could not load. Check your connection and try again.';
                     return;
                 }
-
                 button.disabled = true;
                 output.textContent = 'Reading receipt...';
                 try {
@@ -1022,12 +899,10 @@ table {
                     button.disabled = false;
                 }
             }
-
             function addRecognizedProducts(text, table) {
                 const lines = text.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
-                const pricePattern = /(?:^|[\s₹])(?:Rs\.?\s*)?(\d[\d,]*(?:\.\d{1,2})?)\s*$/i;
+                const pricePattern = /(?:₹|Rs\.?)?\s*(\d[\d,]*(?:\.\d{1,2})?)\s*$/i;
                 let extractedCount = 0;
-
                 lines.forEach(line => {
                     if (/\b(?:sub\s*total|grand\s*total|total|tax|gst|vat|discount|change|cash|card)\b/i.test(line)) return;
                     const match = line.match(pricePattern);
@@ -1036,7 +911,6 @@ table {
                     const itemEnd = match.index + match[0].lastIndexOf(match[1]);
                     const item = line.slice(0, itemEnd).replace(/(?:₹|Rs\.?)\s*$/i, '').trim();
                     if (!item || !Number.isFinite(amount) || amount <= 0 || amount > 100000000) return;
-
                     const row = table.insertRow();
                     const itemCell = row.insertCell();
                     const amountCell = row.insertCell();
@@ -1046,12 +920,10 @@ table {
                     amountCell.textContent = `₹${amount.toFixed(2)}`;
                     payerCell.textContent = currentUser;
                     extractedCount++;
-
                     if (demoMode) {
                         actionCell.textContent = 'Unavailable in read-only demo';
                         return;
                     }
-
                     const addButton = document.createElement('button');
                     addButton.type = 'button';
                     addButton.textContent = 'Add expense';
@@ -1078,7 +950,6 @@ table {
                     });
                     actionCell.appendChild(addButton);
                 });
-
                 if (extractedCount === 0) {
                     const row = table.insertRow();
                     const cell = row.insertCell();
@@ -1089,70 +960,58 @@ table {
             function showTab(tabName) {
                 document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-                document.getElementById(tabName).classList.add('active');
+                const selectedTab = document.querySelector(`[data-tab="${tabName}"]`);
+                const selectedContent = document.getElementById(tabName);
+                if (selectedTab) selectedTab.classList.add('active');
+                if (selectedContent) selectedContent.classList.add('active');
             }
-
             function initChart() {
-            const expenses = {{ monthly_expenses|tojson }};
-            const memberTotals = {};
-
-            expenses.forEach(expense => {
-                if (!memberTotals[expense.paid_by]) {
-                    memberTotals[expense.paid_by] = 0;
-                }
-                memberTotals[expense.paid_by] += expense.amount;
-            });
-
-            const ctx = document.getElementById('expenseChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(memberTotals),
-                    datasets: [{
-                        data: Object.values(memberTotals),
-                        backgroundColor: ['#9f7aea', '#ed64a6', '#f093fb', '#4ecdc4', '#ffb347']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'bottom' }
+                const chartCanvas = document.getElementById('expenseChart');
+                if (!chartCanvas || typeof Chart === 'undefined') return;
+                const memberTotals = {};
+                monthlyExpenses.forEach(expense => {
+                    const payer = expense.paid_by || 'Unknown';
+                    memberTotals[payer] = (memberTotals[payer] || 0) + Number(expense.amount || 0);
+                });
+                new Chart(chartCanvas.getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(memberTotals),
+                        datasets: [{
+                            data: Object.values(memberTotals),
+                            backgroundColor: ['#9f7aea', '#ed64a6', '#f093fb', '#4ecdc4', '#ffb347']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { position: 'bottom' } }
                     }
-                }
-            });
+                });
             }
-
-            function sendToWhatsApp() {
+                        function sendToWhatsApp() {
                 const name = document.querySelector('input[name="name"]').value;
                 const email = document.querySelector('input[name="email"]').value;
                 const subject = document.querySelector('input[name="subject"]').value;
                 const message = document.querySelector('textarea[name="message"]').value;
-
                 if (!name || !email || !subject || !message) {
                     alert('Please fill all fields before sending to WhatsApp!');
                     return;
                 }
-
                 const whatsappMessage = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`;
                 const whatsappUrl = `https://wa.me/8618079219?text=${encodeURIComponent(whatsappMessage)}`;
                 window.open(whatsappUrl, '_blank');
             }
-
             function submitFeedback() {
                 const rating = document.getElementById('stars').value;
                 if (!rating) {
-                    document.getElementById('feedbackMsg').innerHTML = '<span style="color: red;">Please select a rating!</span>';
+                    document.getElementById('feedbackMsg').textContent = 'Please select a rating!';
                     return;
                 }
-                document.getElementById('feedbackMsg').innerHTML = `<span style="color: #9f7aea;">Thank you for rating us ${rating}!</span>`;
+                document.getElementById('feedbackMsg').textContent = `Thank you for rating us ${rating}!`;
                 document.getElementById('stars').value = '';
             }
-
             /* ---------- TO DO LIST ---------- */
             let todos = [];
-
             function loadTodos() {
                 try {
                     todos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -1161,120 +1020,131 @@ table {
                 }
                 renderTodos();
             }
-
             function saveTodos() {
-                localStorage.setItem("todos", JSON.stringify(todos));
+                try {
+                    localStorage.setItem('todos', JSON.stringify(todos));
+                } catch (error) {
+                    console.warn('Could not save the to-do list:', error);
+                }
             }
-
             function renderTodos() {
-                const todoList = document.getElementById("todoList");
+                const todoList = document.getElementById('todoList');
                 if (!todoList) return;
-
-                todoList.innerHTML = "";
+                todoList.replaceChildren();
                 todos.forEach((todo, index) => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `${todo} <button onclick="deleteTodo(${index})">❌</button>`;
+                    const li = document.createElement('li');
+                    const taskText = document.createElement('span');
+                    taskText.textContent = todo;
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type = 'button';
+                    deleteButton.textContent = '❌';
+                    deleteButton.setAttribute('aria-label', `Delete task ${index + 1}`);
+                    deleteButton.addEventListener('click', () => deleteTodo(index));
+                    li.append(taskText, deleteButton);
                     todoList.appendChild(li);
                 });
             }
-
-            function addTodo() {
+                        function addTodo() {
                 const input = document.getElementById("todoInput");
                 const value = input.value.trim();
                 if (!value) return;
-
                 todos.push(value);
                 saveTodos();
                 renderTodos();
                 input.value = "";
             }
-
             function deleteTodo(index) {
                 todos.splice(index, 1);
                 saveTodos();
                 renderTodos();
             }
-
             /* ---------- MEAL PLANNER ---------- */
             const mealForm = document.getElementById('mealForm');
             const mealTable = document.getElementById('mealTable');
             let tableBody;
-
             if (mealTable) {
                 tableBody = mealTable.getElementsByTagName('tbody')[0];
             }
-
             function addMeal(event) {
                 event.preventDefault();
-
                 const date = document.getElementById('Date').value;
                 const breakfast = document.getElementById('Breakfast').value;
                 const lunch = document.getElementById('Lunch').value;
                 const dinner = document.getElementById('Dinner').value;
                 const snack = document.getElementById('Snack').value;
-
                 if (!isFood(breakfast) || !isFood(lunch) || !isFood(dinner) || !isFood(snack)) {
                     alert("Please enter valid food names (letters and spaces only).");
                     return;
                 }
-
                 saveToLocalStorage(date, breakfast, lunch, dinner, snack);
                 renderMeals();
-
                 document.getElementById('Date').value = '';
                 document.getElementById('Breakfast').value = '';
                 document.getElementById('Lunch').value = '';
                 document.getElementById('Dinner').value = '';
                 document.getElementById('Snack').value = '';
             }
-
-            function saveToLocalStorage(date, breakfast, lunch, dinner, snack) {
-                let meals = JSON.parse(localStorage.getItem('meals')) || [];
-                meals.push({ date, breakfast, lunch, dinner, snack });
-                localStorage.setItem('meals', JSON.stringify(meals));
+            function getSavedMeals() {
+                try {
+                    const saved = JSON.parse(localStorage.getItem('meals') || '[]');
+                    return Array.isArray(saved) ? saved : [];
+                } catch (error) {
+                    console.warn('Could not read saved meals:', error);
+                    return [];
+                }
             }
-
+            function saveToLocalStorage(date, breakfast, lunch, dinner, snack) {
+                const meals = getSavedMeals();
+                meals.push({ date, breakfast, lunch, dinner, snack });
+                try {
+                    localStorage.setItem('meals', JSON.stringify(meals));
+                } catch (error) {
+                    alert('Your browser could not save this meal. Please check storage settings.');
+                }
+            }
             function deleteMeal(index) {
-                let meals = JSON.parse(localStorage.getItem('meals')) || [];
+                const meals = getSavedMeals();
                 meals.splice(index, 1);
-                localStorage.setItem('meals', JSON.stringify(meals));
+                try {
+                    localStorage.setItem('meals', JSON.stringify(meals));
+                } catch (error) {
+                    console.warn('Could not update saved meals:', error);
+                }
                 renderMeals();
             }
-
             function isFood(input) {
                 const foodRegex = /^[a-zA-Z\s]+$/;
                 return foodRegex.test(input.trim());
             }
-
             function renderMeals() {
                 if (!tableBody) return;
-                tableBody.innerHTML = '';
-
-                let meals = JSON.parse(localStorage.getItem('meals')) || [];
-
+                tableBody.replaceChildren();
+                const meals = getSavedMeals();
                 meals.forEach((meal, index) => {
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td>${meal.date}</td>
-                        <td>${meal.breakfast}</td>
-                        <td>${meal.lunch}</td>
-                        <td>${meal.dinner}</td>
-                        <td>${meal.snack}</td>
-                        <td><button class="delete-btn" onclick="deleteMeal(${index})">Delete</button></td>
-                    `;
-                    tableBody.appendChild(newRow);
+                    const row = document.createElement('tr');
+                    [meal.date, meal.breakfast, meal.lunch, meal.dinner, meal.snack].forEach(value => {
+                        const cell = document.createElement('td');
+                        cell.textContent = value || '';
+                        row.appendChild(cell);
+                    });
+                    const actionCell = document.createElement('td');
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type = 'button';
+                    deleteButton.className = 'delete-btn';
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.addEventListener('click', () => deleteMeal(index));
+                    actionCell.appendChild(deleteButton);
+                    row.appendChild(actionCell);
+                    tableBody.appendChild(row);
                 });
             }
-
-            if (mealForm) {
+                        if (mealForm) {
                 mealForm.addEventListener('submit', addMeal);
             }
-
             // Initialize Data
             loadTodos();
             renderMeals();
         </script>
     </div>
 </body>
-
 </html>
