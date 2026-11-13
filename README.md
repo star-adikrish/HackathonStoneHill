@@ -20,7 +20,7 @@ FamEase is a family budgeting and expense-tracking web application built with Fl
 - Werkzeug
 - Jinja2 templates
 - Chart.js, Tesseract.js, and Google Fonts via CDN
-- Local JSON storage for development; PostgreSQL for Vercel deployments
+- Local JSON storage for development; PostgreSQL for Render deployments
 
 ## Project structure
 
@@ -99,7 +99,7 @@ Visit [http://127.0.0.1:5000/demo](http://127.0.0.1:5000/demo) to open the dashb
 
 ## Data storage
 
-Local development uses `data.json`. Vercel's filesystem is temporary, so deployed data is stored in PostgreSQL instead. Configure a persistent database and set `DATABASE_URL` in the Vercel project settings before deploying; otherwise the app will refuse account and expense operations rather than silently lose data. See [VERCEL_DATABASE_SETUP.md](./VERCEL_DATABASE_SETUP.md) for Supabase setup instructions.
+Local development uses `data.json`. For Render deployments, configure a persistent PostgreSQL database and set `DATABASE_URL` and `SECRET_KEY` in the service's environment variables. The app refuses account and expense operations if Render is missing `DATABASE_URL`, rather than silently saving data to an ephemeral file. Run [schema.sql](./schema.sql) in the database if you want to create the table before the first request; the app also creates it automatically.
 
 Existing accounts and expenses in local `data.json` are not copied automatically to the deployment database. Back up that file before making changes, and migrate any data you need before switching users to the deployed app.
 

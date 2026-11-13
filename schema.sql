@@ -1,4 +1,4 @@
--- Run this once in the Supabase SQL Editor.
+-- Run this once in your PostgreSQL database if you want to initialize it manually.
 -- FamEase stores the existing users + expenses JSON structure in one
 -- persistent PostgreSQL row so the current Flask routes remain compatible.
 

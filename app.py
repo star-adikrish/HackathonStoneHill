@@ -22,20 +22,19 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 app = Flask(__name__)
 
-# Vercel runs serverless instances. A random secret on each cold start
-# invalidates sessions, so production must use one stable SECRET_KEY.
+# A stable secret preserves sessions across production restarts.
 SECRET_KEY = os.environ.get("SECRET_KEY")
-if os.environ.get("VERCEL") and not SECRET_KEY:
+if os.environ.get("RENDER") and not SECRET_KEY:
     raise RuntimeError(
-        "SECRET_KEY is missing. Add a stable SECRET_KEY in Vercel "
-        "Project Settings > Environment Variables."
+        "SECRET_KEY is missing. Add a stable SECRET_KEY to the Render "
+        "service's environment variables."
     )
 app.secret_key = SECRET_KEY or "local-development-only-change-this"
 
 app.config.update(
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
-    SESSION_COOKIE_SECURE=bool(os.environ.get("VERCEL"))
+    SESSION_COOKIE_SECURE=bool(os.environ.get("RENDER"))
 )
 
 DATA_FILE = os.path.join(
@@ -67,8 +66,8 @@ def _default_data():
 def _database_connection():
     if not DATABASE_URL:
         raise RuntimeError(
-            "DATABASE_URL is not configured. Add your Supabase "
-            "PostgreSQL connection string to Vercel Environment Variables."
+            "DATABASE_URL is not configured. Add your PostgreSQL "
+            "connection string to the Render service's environment variables."
         )
 
     import psycopg
@@ -78,15 +77,12 @@ def _database_connection():
         sslmode="require",
         connect_timeout=10
     )
-    # Supabase transaction poolers do not support server-side prepared
-    # statements. Disable psycopg auto-prepare for compatibility.
-    connection.prepare_threshold = None
     return connection
 
 
 def load_data():
     """
-    Load FamEase data from persistent PostgreSQL on Vercel.
+    Load FamEase data from PostgreSQL when configured.
     Local development continues to use data.json.
     """
     if DATABASE_URL:
@@ -115,10 +111,10 @@ def load_data():
                 )
                 return initial_data
 
-    # Never silently fall back to an ephemeral file on Vercel.
-    if os.environ.get("VERCEL"):
+    # Never silently fall back to an ephemeral file on Render.
+    if os.environ.get("RENDER"):
         raise RuntimeError(
-            "DATABASE_URL is required on Vercel. Configure a persistent "
+            "DATABASE_URL is required on Render. Configure a persistent "
             "PostgreSQL database before using FamEase accounts."
         )
 
@@ -162,7 +158,7 @@ def save_data(data):
                 )
         return True
 
-    if os.environ.get("VERCEL"):
+    if os.environ.get("RENDER"):
         raise RuntimeError(
             "Cannot save FamEase data: DATABASE_URL is not configured."
         )
