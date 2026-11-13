@@ -1,6 +1,27 @@
 # FamEase
 
-FamEase is a family budgeting and expense-tracking web application built with Flask. It helps families record shared expenses, review spending trends, plan meals, and make better day-to-day financial decisions from one dashboard.
+FamEase is a family budgeting and expense-tracking web application built with Flask. It helps families record shared expenses, monitor spending trends, plan meals, and make better day-to-day financial decisions through a single dashboard.
+
+## Live Website
+
+[https://famease.onrender.com/](https://famease.onrender.com/)
+Website link may change in a few weeks, close to 4 to 8 weeks
+
+## Important Notice
+
+
+Please read the following notes before using this project.
+
+**WhatsApp Integration:**  
+The WhatsApp number in the `sendToWhatsApp` function is currently a placeholder (`#########`). Replace it with the intended WhatsApp number before using this feature.
+
+**Public Testing Data:**  
+The `data.json` file has been included in the public GitHub repository temporarily for Hack Club review and testing purposes.
+
+- Do not add sensitive, personal, or real financial information to this file.
+- The repository is intended to become private after the Hack Club review and testing process.
+- Making the repository private does not guarantee that previously exposed data or copies are removed.
+- For actual use, replace public JSON-based storage with a secure database and appropriate access controls.
 
 ## Features
 
@@ -8,107 +29,134 @@ FamEase is a family budgeting and expense-tracking web application built with Fl
 - Family-member setup during registration
 - Add and delete expenses with date, item, amount, and payer details
 - Monthly and all-time spending summaries
-- Charts and spending insights in the dashboard
-- Receipt scanning with browser-based OCR and optional expense entry
+- Dashboard charts and spending insights
+- Receipt scanning using browser-based OCR
+- Optional expense entry from scanned receipts
 - Demo mode available at `/demo`
 - Responsive interface for desktop and mobile screens
 
-## Technology
+## Technology Stack
 
 - Python 3.10+
 - Flask
 - Werkzeug
-- Jinja2 templates
-- Chart.js, Tesseract.js, and Google Fonts via CDN
-- Local JSON storage for development; PostgreSQL for Render deployments
+- Jinja2
+- Chart.js
+- Tesseract.js
+- Google Fonts
+- JSON for local development storage
+- PostgreSQL for Render deployments
 
-## Project structure
+## Project Structure
 
 ```text
 .
-├── app.py                         # Flask application and routes
-├── data.json                      # Local users and expense data
-├── requirements.txt               # Python dependencies
-├── schema.sql                     # Persistent database table definition
+├── app.py
+├── data.json
+├── requirements.txt
+├── schema.sql
 ├── static/
-│   └── images/FamEase.png         # Application logo
+│   └── images/
+│       └── FamEase.png
 └── templates/
-    ├── index.html                 # Main dashboard
-    ├── login.html                 # Login page
-    └── register.html              # Registration page
+    ├── index.html
+    ├── login.html
+    └── register.html
 ```
 
-## Getting started
+## Getting Started
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone <repository-url>
 cd HackathonStoneHill-main
 ```
 
-### 2. Create and activate a virtual environment
+### 2. Create and Activate a Virtual Environment
 
-macOS/Linux:
+**macOS / Linux:**
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Windows PowerShell:
+**Windows PowerShell:**
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-### 3. Install dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure environment variables
+### 4. Configure Environment Variables
 
-Set a unique Flask secret before starting the app:
+Set a unique Flask secret key before starting the application.
+
+**macOS / Linux:**
 
 ```bash
 export SECRET_KEY="replace-with-a-long-random-value"
 ```
 
-On Windows PowerShell:
+**Windows PowerShell:**
 
 ```powershell
 $env:SECRET_KEY = "replace-with-a-long-random-value"
 ```
 
-> **Security note:** Never commit real API keys, passwords, or production secrets. Use environment variables and rotate any credentials that may have been exposed in local source or sample data.
+Never commit real API keys, passwords, database credentials, or production secrets. Store sensitive configuration in environment variables.
 
-### 5. Run the application
+### 5. Run the Application
 
 ```bash
 python app.py
 ```
 
-Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in a browser.
+Open the following URL in your browser:
 
-## Demo mode
+[http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-Visit [http://127.0.0.1:5000/demo](http://127.0.0.1:5000/demo) to open the dashboard with sample expenses. Demo data is read-only. For normal use, create a new account from the registration page.
+## Demo Mode
 
-## Data storage
+Visit the following URL to access the dashboard with sample expenses:
 
-Local development uses `data.json`. For Render deployments, configure a persistent PostgreSQL database and set `DATABASE_URL` and `SECRET_KEY` in the service's environment variables. The app refuses account and expense operations if Render is missing `DATABASE_URL`, rather than silently saving data to an ephemeral file. Run [schema.sql](./schema.sql) in the database if you want to create the table before the first request; the app also creates it automatically.
+[http://127.0.0.1:5000/demo](http://127.0.0.1:5000/demo)
 
-Existing accounts and expenses in local `data.json` are not copied automatically to the deployment database. Back up that file before making changes, and migrate any data you need before switching users to the deployed app.
+Demo data is read-only. To use the application normally, create a new account through the registration page.
 
-## Development notes
+## Data Storage
 
-- Run the app from the repository root so local `data.json` is found correctly.
-- The browser loads Chart.js, Tesseract.js, and Google Fonts from public CDNs.
-- Receipt OCR runs in the browser and requires an internet connection to load Tesseract.js.
+FamEase uses different storage methods depending on the environment.
+
+**Local Development**
+
+- Uses `data.json` for storing users and expense information.
+- Run the application from the repository root to ensure the file can be located correctly.
+
+**Render Deployment**
+
+- Uses PostgreSQL for persistent data storage.
+- Configure `DATABASE_URL` and `SECRET_KEY` in the Render service's environment variables.
+- The application refuses account and expense operations if Render is missing `DATABASE_URL`, rather than silently saving data to an ephemeral file.
+
+The database table can be created by running `schema.sql` against your PostgreSQL database. The application also creates it automatically.
+
+Existing accounts and expenses in your local `data.json` file are not automatically transferred to the deployment database. Back up the file and migrate any required data before switching users to the deployed application.
+
+## Development Notes
+
+- Run the application from the repository root to ensure local JSON storage works correctly.
+- Chart.js, Tesseract.js, and Google Fonts are loaded through public CDNs.
+- Receipt OCR runs directly in the browser.
+- An internet connection is required to load Tesseract.js and other external CDN resources.
 
 ## License
 
-No license has been specified yet. Add a license before distributing or publishing the project.
+No license has been specified for this project yet. A suitable license should be added before distributing or publishing the project.
