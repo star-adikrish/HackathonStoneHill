@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Expense Tracker</title>
+    <title>FamEase · A calmer home</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -15,25 +15,60 @@
 
     <div class="container">
         <div class="header">
-            <h1>💰 Family Expense Tracker</h1>
+            <a class="brand-lockup" href="{{ url_for('index') }}" aria-label="FamEase home">
+                <span class="brand-mark" aria-hidden="true">F</span>
+                <span>
+                    <span class="brand-overline">FAMEASE · FAMILY HOME</span>
+                    <h1>Life, in rhythm.</h1>
+                </span>
+            </a>
             <div class="user-info">
-                <span>Welcome, {{ user }}!</span>
+                <span class="user-greeting">
+                    <span class="user-avatar" aria-hidden="true">{{ user[:1]|upper }}</span>
+                    <span><small>{{ 'MEAL PLANNER ACCESS' if househelp_mode else 'WELCOME HOME' }}</small>{{ user }}</span>
+                </span>
                 <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
             </div>
         </div>
         <div class="content">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="flash-stack" role="status">
+                    {% for message in messages %}<p class="flash-message">{{ message }}</p>{% endfor %}
+                </div>
+                {% endif %}
+            {% endwith %}
             {% if demo_mode %}
             <p class="expense-empty" role="status">Demo mode: sample data is read-only. Create an account to save your own expenses.</p>
             {% endif %}
+            <section class="dashboard-hero">
+                <div>
+                    <span class="eyebrow">{{ 'YOUR KITCHEN, IN SYNC' if househelp_mode else 'A LITTLE MORE ROOM TO BREATHE' }}</span>
+                    <h2>{{ 'A lovely plan starts here.' if househelp_mode else 'Make space for what matters.' }}</h2>
+                    <p>{{ 'Plan the day’s meals together, one thoughtful choice at a time.' if househelp_mode else 'Bring the moving pieces of family life together in one calm, welcoming place.' }}</p>
+                </div>
+                <div class="hero-orbit" aria-hidden="true">
+                    <span class="orbit-sun">✦</span>
+                    <span class="orbit-ring orbit-ring-one"></span>
+                    <span class="orbit-ring orbit-ring-two"></span>
+                    <span class="orbit-leaf">✳</span>
+                </div>
+            </section>
             <div class="tabs">
-                <button class="tab active" data-tab="scanner">🎟️ RECEIPT</button>
-                <button class="tab " data-tab="expenses">💰 EXPENSES</button>
-                <button class="tab" data-tab="contact">📧 CONTACT</button>
-                <button class="tab" data-tab="meal">🍔 MEAL PLANNER</button>
-                <button class="tab" data-tab="todo">📝 TO DO LIST</button>
-                <button class="tab" data-tab="about">🕵️ ABOUT US</button>
-                <button class="tab" data-tab="blog">✍️ BLOG</button>
+                {% if househelp_mode %}
+                <button class="tab active" data-tab="meal">🍲 MEAL PLANNER</button>
+                {% else %}
+                <button class="tab active" data-tab="scanner">✳ RECEIPTS</button>
+                <button class="tab" data-tab="expenses">↗ SPENDING</button>
+                <button class="tab" data-tab="meal">☼ MEAL PLANNER</button>
+                <button class="tab" data-tab="todo">✓ TO-DO</button>
+                <button class="tab" data-tab="contact">✉ CONTACT</button>
+                <button class="tab" data-tab="about">ABOUT</button>
+                <button class="tab" data-tab="blog">JOURNAL</button>
+                <button class="tab" data-tab="helper">＋ HOUSEHELP</button>
+                {% endif %}
             </div>
+            {% if not househelp_mode %}
             <div id="scanner" class="tab-content active">
                 <h2>Scan Receipt</h2>
                 <input type="file" id="imageInput" accept="image/*"><br><br>
@@ -125,38 +160,72 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
         </div>
-        <div id="meal" class="tab-content">
-            <div class="form-section">
-                <h2>🍲 Meal Planner</h2>
+        <div id="meal" class="tab-content{% if househelp_mode %} active{% endif %}">
+            <div class="form-section meal-planner-card">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">THE WEEKLY TABLE</span>
+                        <h2>Meals made with care.</h2>
+                        <p>Make a little plan today; enjoy an easier tomorrow.</p>
+                    </div>
+                    <span class="meal-heading-icon" aria-hidden="true">✿</span>
+                </div>
+                <p class="local-storage-note"><span aria-hidden="true">◎</span> This meal plan is saved in this browser. Use the same browser and device to share it between accounts.</p>
                 <form id="mealForm">
-                    <label for="date">Date:</label>
-                    <input type="date" id="Date" name="Date" required>
-                    <label for="Breakfast">Breakfast:</label>
-                    <input type="text" id="Breakfast" name="Breakfast" required>
-                    <label for="Lunch">Lunch:</label>
-                    <input type="text" id="Lunch" name="Lunch" required>
-                    <label for="Dinner">Dinner:</label>
-                    <input type="text" id="Dinner" name="Dinner" required>
-                    <label for="Snack">Snack:</label>
-                    <input type="text" id="Snack" name="Snack" required>
-                    <button type="submit">Add Meal</button>
+                    <label class="meal-field" for="Date">Date
+                        <input type="date" id="Date" name="Date" required>
+                    </label>
+                    <label class="meal-field" for="Breakfast">Breakfast
+                        <input type="text" id="Breakfast" name="Breakfast" placeholder="e.g. Poha with fruit" maxlength="100" required>
+                    </label>
+                    <label class="meal-field" for="Lunch">Lunch
+                        <input type="text" id="Lunch" name="Lunch" placeholder="e.g. Dal, rice & vegetables" maxlength="100" required>
+                    </label>
+                    <label class="meal-field" for="Dinner">Dinner
+                        <input type="text" id="Dinner" name="Dinner" placeholder="e.g. Roti and paneer curry" maxlength="100" required>
+                    </label>
+                    <label class="meal-field" for="Snack">Snack
+                        <input type="text" id="Snack" name="Snack" placeholder="e.g. Roasted makhana" maxlength="100" required>
+                    </label>
+                    <button type="submit">Add to the plan <span aria-hidden="true">→</span></button>
                 </form>
+                <div class="table-responsive">
                 <table id="mealTable" class="bordered">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Breakfast</th>
-                            <th>Lunch</th>
-                            <th>Dinner</th>
-                            <th>Snack</th>
-                            <th>Action</th>
+                            <th>DAY</th>
+                            <th>BREAKFAST</th>
+                            <th>LUNCH</th>
+                            <th>DINNER</th>
+                            <th>SNACK</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
-                </table><br><br>
+                </table>
+                </div>
             </div>
+        </div>
+        {% if not househelp_mode %}
+        <div id="helper" class="tab-content">
+            <section class="form-section helper-access-card">
+                <span class="eyebrow">A THOUGHTFUL INVITE</span>
+                <h2>Give your househelp a seat at the table.</h2>
+                <p>Create a separate login that opens only the meal planner. Their account cannot view family expenses, receipts, or other dashboard sections.</p>
+                <form method="POST" action="{{ url_for('create_househelp') }}" class="helper-form">
+                    <label for="helper-username">Househelp username
+                        <input id="helper-username" type="text" name="username" autocomplete="off" maxlength="50" placeholder="Choose a username" required>
+                    </label>
+                    <label for="helper-password">Temporary password
+                        <input id="helper-password" type="password" name="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+                    </label>
+                    <p class="helper-form-note">Share the login details privately. They can use the meal planner on this browser and device.</p>
+                    <button type="submit" class="submit-btn">Create meal-planner login <span aria-hidden="true">→</span></button>
+                </form>
+            </section>
         </div>
         <div id="todo" class="tab-content">
             <div class="form-section">
@@ -298,6 +367,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
              <script id="app-config" type="application/json">{{ {
         "currentUser": user,
         "addExpenseUrl": url_for('add_expense'),
@@ -580,13 +650,23 @@
                 renderMeals();
             }
             function isFood(input) {
-                const foodRegex = /^[a-zA-Z\s]+$/;
-                return foodRegex.test(input.trim());
+                const value = input.trim();
+                return value.length > 0 && value.length <= 100;
             }
             function renderMeals() {
                 if (!tableBody) return;
                 tableBody.replaceChildren();
                 const meals = getSavedMeals();
+                if (meals.length === 0) {
+                    const row = document.createElement('tr');
+                    const cell = document.createElement('td');
+                    cell.colSpan = 6;
+                    cell.className = 'meal-empty-cell';
+                    cell.textContent = 'Your table is clear. Add the first meal to get started.';
+                    row.appendChild(cell);
+                    tableBody.appendChild(row);
+                    return;
+                }
                 meals.forEach((meal, index) => {
                     const row = document.createElement('tr');
                     [meal.date, meal.breakfast, meal.lunch, meal.dinner, meal.snack].forEach(value => {

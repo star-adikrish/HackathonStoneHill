@@ -1,7 +1,7 @@
 
 from flask import (
     Flask, render_template, request, redirect,
-    url_for, session, flash, jsonify
+    url_for, session, flash, jsonify, abort
 )
 import json
 import os
@@ -36,6 +36,16 @@ app.config.update(
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=bool(os.environ.get("RENDER"))
 )
+
+
+@app.before_request
+def restrict_househelp_access():
+    if (
+        session.get("role") == "househelp"
+        and request.endpoint not in {"index", "logout", "static"}
+    ):
+        abort(403)
+
 
 DATA_FILE = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -190,6 +200,22 @@ def index():
     if "user" not in session:
         return redirect(url_for("login"))
 
+    househelp_mode = session.get("role") == "househelp"
+    if househelp_mode:
+        return render_template(
+            "index.html",
+            expenses=[],
+            indexed_monthly_expenses=[],
+            monthly_expenses=[],
+            monthly_total=0,
+            all_time_total=0,
+            current_month_name=datetime.now().strftime("%B %Y"),
+            user=session["user"],
+            family_members=[],
+            demo_mode=False,
+            househelp_mode=True
+        )
+
     if session.get("demo_mode"):
         today = datetime.now().date()
 
@@ -325,7 +351,8 @@ def index():
         current_month_name=current_month_name,
         user=session["user"],
         family_members=family_members,
-        demo_mode=session.get("demo_mode", False)
+        demo_mode=session.get("demo_mode", False),
+        househelp_mode=False
     )
 
 
@@ -381,6 +408,11 @@ def login():
 
             if check_password_hash(stored_password, password):
                 session["user"] = user_match
+                session["role"] = (
+                    user_data.get("role", "owner")
+                    if isinstance(user_data, dict)
+                    else "owner"
+                )
                 return redirect(url_for("index"))
 
         flash("Invalid username or password")
@@ -449,7 +481,8 @@ def register():
 
             users[username] = {
                 "password": generate_password_hash(password),
-                "family_members": family_members
+                "family_members": family_members,
+                "role": "owner"
             }
 
             data["users"] = users
@@ -475,6 +508,50 @@ def register():
             return redirect(url_for("login"))
 
     return render_template("register.html")
+
+
+@app.route("/create_househelp", methods=["POST"])
+def create_househelp():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    if session.get("demo_mode") or session.get("role") != "owner":
+        abort(403)
+
+    username = request.form.get("username", "").strip()
+    password = request.form.get("password", "")
+
+    if not username:
+        flash("Enter a username for the househelp account.")
+        return redirect(url_for("index"))
+
+    if len(password) < 8:
+        flash("Use a password with at least 8 characters.")
+        return redirect(url_for("index"))
+
+    data = load_data()
+    users = data.setdefault("users", {})
+
+    if any(existing.strip().lower() == username.lower() for existing in users):
+        flash("That username is already in use.")
+        return redirect(url_for("index"))
+
+    users[username] = {
+        "password": generate_password_hash(password),
+        "family_members": [],
+        "role": "househelp",
+        "household_owner": session["user"]
+    }
+
+    try:
+        save_data(data)
+    except Exception:
+        app.logger.exception("Househelp account could not be saved")
+        flash("We couldn't create the househelp account. Please try again.")
+        return redirect(url_for("index")), 503
+
+    flash(f"Househelp account “{username}” is ready. Share its login details securely.")
+    return redirect(url_for("index"))
 
 
 # ==========================================

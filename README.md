@@ -131,6 +131,12 @@ Visit the following URL to access the dashboard with sample expenses:
 
 Demo data is read-only. To use the application normally, create a new account through the registration page.
 
+## Househelp Meal-planner Account
+
+A household owner can create a separate househelp login from the **＋ HOUSEHELP** dashboard tab. Enter a unique username and a password of at least 8 characters, then share those login details privately. When the househelp signs in, the dashboard exposes only the meal planner and logout; other application routes are denied as well.
+
+Meal plans are stored in the browser's local storage, not in the account database. The owner and househelp can use the same plan when signing in on the same browser and device. Plans do not sync across browsers or devices, and clearing browser data removes them.
+
 ## Data Storage
 
 FamEase uses different storage methods depending on the environment.

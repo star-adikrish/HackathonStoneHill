@@ -1010,3 +1010,405 @@ input[type="file"]::file-selector-button:hover {
         transition: none;
     }
 }
+
+/* FamEase dashboard */
+
+.header {
+    padding: 26px 38px;
+    background:
+        radial-gradient(ellipse at 18% 0%, rgba(201, 222, 192, .22), transparent 42%),
+        #FFFFFF;
+}
+
+.brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.brand-lockup:hover {
+    color: inherit;
+}
+
+.brand-mark {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    color: #FFFFFF;
+    background: linear-gradient(145deg, #517b5f, #244E3C);
+    border-radius: 17px 17px 17px 6px;
+    box-shadow: 0 8px 18px rgba(36, 78, 60, .18);
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.brand-overline,
+.eyebrow {
+    display: block;
+    color: #7D927F;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.brand-lockup h1 {
+    margin-top: 2px;
+    color: var(--primary);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: -.7px;
+}
+
+.user-greeting {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    text-align: left;
+}
+
+.user-greeting > span:last-child {
+    display: grid;
+    line-height: 1.35;
+}
+
+.user-greeting small {
+    color: var(--text-secondary);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.user-avatar {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    color: var(--primary);
+    background: #EAF1E7;
+    border: 1px solid #DCE7D8;
+    border-radius: 50%;
+    font-weight: 800;
+}
+
+.dashboard-hero {
+    position: relative;
+    display: flex;
+    min-height: 218px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 27px;
+    padding: 34px 42px;
+    overflow: hidden;
+    color: #FFFFFF;
+    background:
+        radial-gradient(ellipse at 100% 0%, rgba(188, 218, 172, .29), transparent 44%),
+        linear-gradient(117deg, #244E3C 0%, #315E43 58%, #527552 100%);
+    border-radius: 22px;
+    box-shadow: 0 16px 34px rgba(36, 78, 60, .17);
+}
+
+.dashboard-hero::after {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, .16) .7px, transparent .7px);
+    background-size: 14px 14px;
+    content: "";
+    mask-image: linear-gradient(90deg, transparent 20%, #000 100%);
+    opacity: .22;
+    pointer-events: none;
+}
+
+.dashboard-hero > div:first-child {
+    position: relative;
+    z-index: 1;
+    max-width: 610px;
+}
+
+.dashboard-hero .eyebrow {
+    margin-bottom: 10px;
+    color: #D0E0C5;
+}
+
+.dashboard-hero h2 {
+    margin: 0 0 9px;
+    color: #FFFFFF;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(29px, 4vw, 42px);
+    font-weight: 500;
+    letter-spacing: -1.3px;
+}
+
+.dashboard-hero p {
+    max-width: 470px;
+    color: rgba(255, 255, 255, .78);
+    font-size: 14px;
+}
+
+.hero-orbit {
+    position: relative;
+    display: grid;
+    width: 160px;
+    height: 150px;
+    flex: 0 0 160px;
+    place-items: center;
+    color: #D4E1B8;
+}
+
+.orbit-ring {
+    position: absolute;
+    width: 124px;
+    height: 124px;
+    border: 1px solid rgba(236, 243, 217, .34);
+    border-radius: 50%;
+}
+
+.orbit-ring-one {
+    transform: rotate(-24deg) scaleX(.72);
+}
+
+.orbit-ring-two {
+    transform: rotate(35deg) scaleX(.72);
+}
+
+.orbit-sun {
+    z-index: 1;
+    display: grid;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+    color: #315E43;
+    background: #E9EDCA;
+    border-radius: 50%;
+    box-shadow: 0 0 36px rgba(233, 237, 202, .32);
+    font-size: 28px;
+}
+
+.orbit-leaf {
+    position: absolute;
+    top: 16px;
+    right: 12px;
+    color: #C4D8A7;
+    font-size: 24px;
+}
+
+.flash-stack {
+    margin-bottom: 18px;
+}
+
+.flash-message {
+    padding: 13px 16px;
+    color: var(--primary);
+    background: #EDF4E9;
+    border: 1px solid #D9E7D4;
+    border-radius: 12px;
+    font-weight: 650;
+}
+
+.tabs {
+    margin-bottom: 24px;
+    background: #F7F8F4;
+}
+
+.tab {
+    letter-spacing: .45px;
+}
+
+.meal-planner-card {
+    margin: 0 32px 32px;
+    padding: 32px;
+    border-radius: 21px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 21px;
+}
+
+.section-heading h2 {
+    margin: 7px 0 5px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -.8px;
+}
+
+.section-heading p {
+    font-size: 13px;
+}
+
+.meal-heading-icon {
+    display: grid;
+    width: 57px;
+    height: 57px;
+    flex: 0 0 57px;
+    place-items: center;
+    color: #527552;
+    background: #EEF4EB;
+    border-radius: 18px 18px 18px 6px;
+    font-size: 29px;
+}
+
+.local-storage-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    color: #667C69;
+    background: #F5F8F2;
+    border: 1px solid #E5ECE1;
+    border-radius: 11px;
+    font-size: 12px;
+}
+
+.local-storage-note span {
+    color: var(--primary);
+    font-size: 16px;
+    line-height: 1.25;
+}
+
+#mealForm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    padding: 21px;
+    background: #FAFBF8;
+}
+
+#mealForm .meal-field {
+    display: grid;
+    gap: 7px;
+    color: #45594A;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+#mealForm .meal-field input {
+    background: #FFFFFF;
+    font-weight: 450;
+}
+
+#mealForm button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 14px 20px;
+}
+
+.table-responsive {
+    margin-top: 22px;
+}
+
+#mealTable {
+    min-width: 720px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+#mealTable th {
+    padding: 13px 14px;
+    font-size: 10px;
+    letter-spacing: .8px;
+}
+
+#mealTable td {
+    color: var(--text);
+}
+
+#mealTable .meal-empty-cell {
+    padding: 25px;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+#helper {
+    margin: 0 32px 32px;
+}
+
+.helper-access-card {
+    padding: 34px;
+    background:
+        radial-gradient(ellipse at 100% 0%, rgba(204, 223, 195, .24), transparent 44%),
+        #FFFFFF;
+}
+
+.helper-access-card h2 {
+    max-width: 640px;
+    margin: 8px 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 600;
+}
+
+.helper-access-card > p {
+    max-width: 680px;
+    margin-bottom: 23px;
+}
+
+.helper-form {
+    display: grid;
+    max-width: 780px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 20px;
+    background: #F7F9F5;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+}
+
+.helper-form label {
+    display: grid;
+    gap: 8px;
+    color: #45594A;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.helper-form-note,
+.helper-form button {
+    grid-column: 1 / -1;
+}
+
+.helper-form-note {
+    font-size: 12px;
+}
+
+@media (max-width: 900px) {
+    .dashboard-hero { padding: 30px; }
+    .meal-planner-card,
+    #helper { margin-right: 23px; margin-left: 23px; }
+}
+
+@media (max-width: 600px) {
+    .header { align-items: flex-start; }
+    .brand-lockup h1 { font-size: 23px; }
+    .dashboard-hero {
+        min-height: 190px;
+        margin-bottom: 19px;
+        padding: 27px 22px;
+        border-radius: 17px;
+    }
+    .hero-orbit { width: 76px; height: 110px; flex-basis: 76px; transform: scale(.7); }
+    .dashboard-hero h2 { font-size: 29px; }
+    .dashboard-hero p { font-size: 12px; }
+    .meal-planner-card,
+    #helper { margin-right: 16px; margin-left: 16px; }
+    .meal-planner-card,
+    .helper-access-card { padding: 21px; }
+    .section-heading h2 { font-size: 25px; }
+    #mealForm,
+    .helper-form { grid-template-columns: 1fr; }
+    #mealForm button,
+    .helper-form-note,
+    .helper-form button { grid-column: auto; }
+}
