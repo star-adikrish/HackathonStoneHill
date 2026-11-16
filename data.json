@@ -36,6 +36,14 @@
         "aa",
         "bb"
       ]
+    },
+    "AA": {
+      "password": "scrypt:32768:8:1$5Lo4Q3dG1vKMmsV7$a964d7ac0eefc58e98c869446547f3aa72506e8f2373cf4483ad89426e95a5d06d1dc571de1dc85bfb43a1ca995a6b6d9dfb48894076a0c92c7dd398a5e58cd1",
+      "family_members": [
+        "AA",
+        "as",
+        "ad"
+      ]
     }
   },
   "expenses": [],
@@ -216,6 +224,7 @@
         "added_by": "TESTING"
       }
     ],
-    "GG": []
+    "GG": [],
+    "AA": []
   }
 }
