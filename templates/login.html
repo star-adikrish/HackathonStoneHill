@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Family Expense Tracker</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>FamEase · Sign in</title>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -296,7 +295,9 @@
         .form-wrapper {
             animation: fadeInUp 0.5s 0.2s both;
         }
+
     </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
 </head>
 <body>
     <div class="bg-wrapper">
@@ -316,8 +317,8 @@
         <div class="login-container">
             <div class="brand-chip"><span class="brand-dot"></span>FamEase</div>
             <div class="login-header">
-                <h2>Welcome back</h2>
-                <p class="login-subtitle">Sign in to keep your family budget on track.</p>
+                <h2>Sign in</h2>
+                <p class="login-subtitle">Enter your username and password.</p>
             </div>
             
             {% with messages = get_flashed_messages() %}

@@ -642,168 +642,16 @@ tbody tr:hover {
 }
 
 .about-content > p {
-    margin-bottom: 18px;
-    font-size: 14px;
+    margin-bottom: 12px;
 }
 
-.mission-section {
-    margin-top: 25px;
-    padding: 28px;
-    background: var(--gradient-soft);
-    border: 1px solid #E2EADF;
-    border-radius: 18px;
-}
-
-.mission-section h2 {
-    color: var(--primary);
-}
-
-.features-grid,
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 25px;
-}
-
-.feature-card,
-.team-card {
-    padding: 23px;
-    background: #FFFFFF;
-    border: 1px solid var(--border);
-    border-radius: 17px;
-    box-shadow: var(--shadow-sm);
-    transition: .22s ease;
-}
-
-.feature-card:hover,
-.team-card:hover {
-    border-color: #C6D8C4;
-    box-shadow: var(--shadow-md);
-    transform: translateY(-4px);
-}
-
-.feature-icon {
-    display: grid;
-    width: 52px;
-    height: 52px;
-    margin-bottom: 16px;
-    place-items: center;
-    background: #EAF1E7;
-    border-radius: 15px;
-    font-size: 25px;
-}
-
-.feature-card h3 {
-    margin-bottom: 9px;
-    color: var(--text);
-}
-
-/* Blog */
-
-.blog-hero {
-    text-align: center;
-}
-
-.blog-hero > h1 {
-    max-width: 750px;
-    margin: 0 auto 12px;
-    font-size: clamp(25px, 4vw, 34px);
-    letter-spacing: -1px;
-}
-
-.hero-subtitle {
-    max-width: 600px;
-    margin: 0 auto 25px;
-    font-size: 15px;
-}
-
-.blog-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-    margin-top: 25px;
-    text-align: left;
-}
-
-.blog-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-    padding: 20px;
-    overflow: hidden;
-    background: #FFFFFF;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    box-shadow: var(--shadow-sm);
-    transition: .25s ease;
-}
-
-.blog-card:hover {
-    border-color: #C6D8C4;
-    box-shadow: var(--shadow-md);
-    transform: translateY(-4px);
-}
-
-.blog-card.featured {
-    grid-column: 1 / -1;
-    background: linear-gradient(135deg, #F5F8F2, #FFFFFF);
-}
-
-.blog-image {
-    display: grid;
-    min-height: 140px;
-    place-items: center;
-    background: linear-gradient(135deg, #EAF1E7, #F7F9F4);
-    border-radius: 14px;
-    font-size: 48px;
-}
-
-.blog-badge {
-    align-self: flex-start;
-    padding: 5px 12px;
-    color: #FFFFFF;
-    background: var(--primary);
-    border-radius: 50px;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.blog-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+.about-list {
+    margin: 0 0 16px 21px;
     color: var(--text-secondary);
-    font-size: 11px;
-    font-weight: 600;
 }
 
-.blog-category {
-    color: var(--primary);
-}
-
-.blog-card h3 {
-    font-size: 18px;
-}
-
-.blog-details {
-    margin-top: auto;
-    padding-top: 10px;
-    border-top: 1px solid var(--border);
-}
-
-.blog-details summary {
-    color: var(--primary);
-    cursor: pointer;
-    font-weight: 700;
-}
-
-.blog-details p {
-    padding-top: 12px;
-    font-size: 13px;
+.about-list li {
+    margin-bottom: 7px;
 }
 
 /* Ambient background and cursor glow */
@@ -863,9 +711,7 @@ body > *:not(.ambient-effects) {
 
 .card,
 .stat-card,
-.feature-card,
-.expense-card,
-.blog-card {
+.expense-card {
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 
@@ -937,8 +783,6 @@ input[type="file"]::file-selector-button:hover {
 @media (max-width: 900px) {
     body { padding: 20px 14px; }
     .content { padding: 23px; }
-    .features-grid,
-    .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .expenses-grid { grid-template-columns: 1fr; }
 }
 
@@ -978,12 +822,6 @@ input[type="file"]::file-selector-button:hover {
     #mealForm { grid-template-columns: 1fr; }
     .expense-form button,
     #mealForm button { grid-column: auto; }
-    .features-grid,
-    .team-grid,
-    .blog-grid { grid-template-columns: 1fr; }
-    .blog-card.featured { grid-column: auto; }
-    .feature-card { padding: 18px; }
-    .mission-section { padding: 20px; }
     .expense-card { padding: 15px; }
     .chart-wrap { padding: 10px; }
     #scanner { padding: 18px; }
@@ -1005,8 +843,7 @@ input[type="file"]::file-selector-button:hover {
         transition-duration: .01ms !important;
     }
     .card,
-    .stat-card,
-    .feature-card {
+    .stat-card {
         transition: none;
     }
 }
@@ -1411,4 +1248,327 @@ input[type="file"]::file-selector-button:hover {
     #mealForm button,
     .helper-form-note,
     .helper-form button { grid-column: auto; }
+}
+
+/* Keep the dashboard practical and low-key. */
+:root {
+    --primary: #3B3935;
+    --primary-dark: #292825;
+    --primary-light: #A77A66;
+    --secondary: #746E67;
+    --accent: #DDD6CC;
+    --background: #F4F2EE;
+    --surface: #FFFFFF;
+    --surface-soft: #F7F5F1;
+    --text: #302E2B;
+    --text-secondary: #77716A;
+    --border: #E7E3DC;
+    --success: #596D59;
+    --gradient: #F7F5F1;
+    --gradient-soft: #F7F5F1;
+    --shadow-sm: 0 1px 3px rgba(48, 46, 43, .05);
+    --shadow-md: 0 4px 12px rgba(48, 46, 43, .07);
+    --shadow-lg: 0 8px 24px rgba(48, 46, 43, .08);
+    --radius-lg: 12px;
+    --radius-xl: 14px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--background);
+}
+
+*,
+*::before,
+*::after {
+    animation: none !important;
+}
+
+.tab-content {
+    animation: none;
+}
+
+.container {
+    width: min(1120px, 100%);
+    border-color: var(--border);
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.header {
+    padding: 16px 24px;
+    background: var(--surface);
+}
+
+.brand-mark {
+    width: 34px;
+    height: 34px;
+    color: #FFFFFF;
+    background: #514D47;
+    border-radius: 8px;
+    box-shadow: none;
+    font-size: 18px;
+}
+
+.brand-overline,
+.eyebrow {
+    color: var(--secondary);
+}
+
+.brand-lockup h1 {
+    color: var(--text);
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 650;
+    letter-spacing: 0;
+}
+
+.user-avatar {
+    color: var(--text);
+    background: var(--surface-soft);
+    border-color: var(--border);
+}
+
+.logout-btn {
+    padding: 8px 10px;
+    color: var(--text-secondary);
+    background: var(--surface);
+    border-color: transparent;
+    border-radius: 4px;
+}
+
+.logout-btn:hover {
+    color: var(--text);
+    background: var(--surface-soft);
+    transform: none;
+}
+
+.dashboard-hero {
+    min-height: 0;
+    margin-bottom: 16px;
+    padding: 0 0 14px;
+    color: var(--text);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.dashboard-hero::after,
+.hero-orbit {
+    display: none;
+}
+
+.dashboard-hero h2 {
+    margin-bottom: 4px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: clamp(22px, 2.4vw, 27px);
+    font-weight: 650;
+    letter-spacing: 0;
+}
+
+.dashboard-hero p {
+    max-width: 650px;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.content {
+    padding: 24px;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-bottom: 18px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+}
+
+.tab {
+    flex: 0 0 auto;
+    width: auto;
+    margin-bottom: -1px;
+    padding: 10px 14px;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.tab:hover {
+    color: var(--text);
+    background: transparent;
+    transform: none;
+}
+
+.tab.active {
+    color: var(--primary);
+    background: transparent;
+    border-bottom-color: var(--primary);
+    box-shadow: none;
+}
+
+.form-section,
+.contact-form,
+.expense-card {
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.form-section,
+.contact-form {
+    padding: 20px;
+}
+
+.form-section:hover,
+.contact-form:hover,
+.expense-card:hover {
+    border-color: var(--border);
+    box-shadow: none;
+    transform: none;
+}
+
+.submit-btn,
+.expense-form button,
+#mealForm button,
+#todo button,
+input[type="file"]::file-selector-button {
+    border-radius: 7px;
+    box-shadow: none;
+}
+
+.submit-btn:hover,
+.expense-form button:hover,
+#mealForm button:hover,
+#todo button:hover,
+input[type="file"]::file-selector-button:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.expense-total {
+    color: var(--text);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    box-shadow: none;
+}
+
+.meal-planner-card,
+#helper {
+    margin: 0 0 20px;
+}
+
+.meal-planner-card,
+.helper-access-card {
+    padding: 20px;
+}
+
+.helper-access-card {
+    background: var(--surface);
+}
+
+.section-heading h2,
+.helper-access-card h2 {
+    font-family: inherit;
+    font-size: 23px;
+    font-weight: 650;
+    letter-spacing: 0;
+}
+
+.helper-form,
+#mealForm {
+    border-radius: 8px;
+}
+
+.expense-empty,
+.local-storage-note,
+#mealForm,
+.helper-form,
+.rating-section {
+    background: var(--surface-soft);
+    border-color: var(--border);
+}
+
+.flash-message {
+    color: var(--text);
+    background: var(--surface-soft);
+    border-color: var(--border);
+}
+
+.whatsapp-btn {
+    color: #FFFFFF;
+    background: var(--primary);
+    border-radius: 5px;
+}
+
+.whatsapp-btn:hover {
+    color: #FFFFFF;
+    background: var(--primary-dark);
+    box-shadow: none;
+    transform: none;
+}
+
+th {
+    color: var(--text);
+    background: var(--surface-soft);
+}
+
+tbody tr:hover,
+#todoList li {
+    background: var(--surface-soft);
+}
+
+#todoList li:hover {
+    background: #F0EDE8;
+    border-color: var(--border);
+}
+
+#imageInput,
+input[type="file"] {
+    background: var(--surface-soft);
+    border-color: var(--border);
+}
+
+#ocrOutput {
+    color: var(--text);
+    background: var(--surface-soft);
+}
+
+.tab-content {
+    animation: none;
+}
+
+.ambient-effects {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .content {
+        padding: 16px;
+    }
+
+    .dashboard-hero {
+        padding: 0 0 14px;
+        background: transparent;
+    }
+
+    .meal-planner-card,
+    .helper-access-card {
+        padding: 16px;
+    }
+
+    .tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
 }

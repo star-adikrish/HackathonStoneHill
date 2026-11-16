@@ -3,29 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FamEase · A calmer home</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>FamEase · Family dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-
-    <div class="ambient-effects">
-        <div class="cursor-glow" id="cursorGlow"></div>
-    </div>
 
     <div class="container">
         <div class="header">
             <a class="brand-lockup" href="{{ url_for('index') }}" aria-label="FamEase home">
                 <span class="brand-mark" aria-hidden="true">F</span>
                 <span>
-                    <span class="brand-overline">FAMEASE · FAMILY HOME</span>
-                    <h1>Life, in rhythm.</h1>
+                    <h1>FamEase</h1>
                 </span>
             </a>
             <div class="user-info">
                 <span class="user-greeting">
                     <span class="user-avatar" aria-hidden="true">{{ user[:1]|upper }}</span>
-                    <span><small>{{ 'MEAL PLANNER ACCESS' if househelp_mode else 'WELCOME HOME' }}</small>{{ user }}</span>
+                    <span><small>{{ 'MEAL PLANNER' if househelp_mode else 'SIGNED IN AS' }}</small>{{ user }}</span>
                 </span>
                 <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
             </div>
@@ -43,29 +37,20 @@
             {% endif %}
             <section class="dashboard-hero">
                 <div>
-                    <span class="eyebrow">{{ 'YOUR KITCHEN, IN SYNC' if househelp_mode else 'A LITTLE MORE ROOM TO BREATHE' }}</span>
-                    <h2>{{ 'A lovely plan starts here.' if househelp_mode else 'Make space for what matters.' }}</h2>
-                    <p>{{ 'Plan the day’s meals together, one thoughtful choice at a time.' if househelp_mode else 'Bring the moving pieces of family life together in one calm, welcoming place.' }}</p>
-                </div>
-                <div class="hero-orbit" aria-hidden="true">
-                    <span class="orbit-sun">✦</span>
-                    <span class="orbit-ring orbit-ring-one"></span>
-                    <span class="orbit-ring orbit-ring-two"></span>
-                    <span class="orbit-leaf">✳</span>
+                    <h2>{{ 'Plan meals for the week' if househelp_mode else 'Family expenses and plans' }}</h2>
+                    <p>{{ 'Add and update meals for the week.' if househelp_mode else 'Track expenses, plan meals, and manage household tasks.' }}</p>
                 </div>
             </section>
             <div class="tabs">
                 {% if househelp_mode %}
-                <button class="tab active" data-tab="meal">🍲 MEAL PLANNER</button>
+                <button class="tab active" data-tab="meal">Meal planner</button>
                 {% else %}
-                <button class="tab active" data-tab="scanner">✳ RECEIPTS</button>
-                <button class="tab" data-tab="expenses">↗ SPENDING</button>
-                <button class="tab" data-tab="meal">☼ MEAL PLANNER</button>
-                <button class="tab" data-tab="todo">✓ TO-DO</button>
-                <button class="tab" data-tab="contact">✉ CONTACT</button>
-                <button class="tab" data-tab="about">ABOUT</button>
-                <button class="tab" data-tab="blog">JOURNAL</button>
-                <button class="tab" data-tab="helper">＋ HOUSEHELP</button>
+                <button class="tab active" data-tab="scanner">Receipts</button>
+                <button class="tab" data-tab="expenses">Spending</button>
+                <button class="tab" data-tab="meal">Meal planner</button>
+                <button class="tab" data-tab="todo">To-do</button>
+                <button class="tab" data-tab="about-contact">About &amp; contact</button>
+                <button class="tab" data-tab="helper">Househelp</button>
                 {% endif %}
             </div>
             {% if not househelp_mode %}
@@ -87,7 +72,7 @@
             </div>
             <div id="expenses" class="tab-content">
                 <div class="form-section">
-                    <h2>➕ Add New Expense</h2>
+                    <h2>Add New Expense</h2>
                     {% if not demo_mode %}
                     <form method="POST" action="{{ url_for('add_expense') }}" class="expense-form">
                         <input type="date" name="date" required>
@@ -104,7 +89,7 @@
                     {% endif %}
                 </div>
                 <div class="form-section">
-                    <h2>📊 Expenses for {{ current_month_name }}</h2>
+                    <h2>Expenses for {{ current_month_name }}</h2>
                     {% if expenses %}
                     <div class="expenses-grid">
                         <div class="chart-wrap">
@@ -127,36 +112,49 @@
                         </div>
                     </div>
                     {% else %}
-                    <p class="expense-empty">No expenses recorded this month. Add your first expense above! 💰</p>
+                    <p class="expense-empty">No expenses recorded this month. Add your first expense above.</p>
                     {% endif %}
                 </div>
             </div>
-            <div id="contact" class="tab-content">
+            <div id="about-contact" class="tab-content">
+                <section class="form-section">
+                    <h2>About FamEase</h2>
+                    <div class="about-content">
+                        <p>FamEase is a household expense and planning app.</p>
+                        <p>You can use it to:</p>
+                        <ul class="about-list">
+                            <li>Record expenses and review monthly spending.</li>
+                            <li>Scan receipts and check the items found.</li>
+                            <li>Plan meals and keep a to-do list.</li>
+                        </ul>
+                        <p>Meal plans and to-do items are saved in this browser.</p>
+                    </div>
+                </section>
                 <div class="contact-form">
-                    <h2>Send Message</h2>
+                    <h2>Contact</h2>
                     <form method="POST" action="{{ url_for('contact') }}">
                         <input type="text" name="name" placeholder="Your Name" required>
                         <input type="email" name="email" placeholder="Your Email" required>
                         <input type="text" name="subject" placeholder="Subject" required>
                         <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                        <button type="button" class="whatsapp-btn" onclick="sendToWhatsApp()">💬 Send via
+                        <button type="button" class="whatsapp-btn" onclick="sendToWhatsApp()">Send via
                             WhatsApp</button>
                     </form>
                 </div>
                 <div class="contact-form rating-section">
-                    <h2>⭐ Rate Your Experience</h2>
+                    <h2>Rate Your Experience</h2>
                     <select id="stars">
                         <option value="">Select Rating</option>
-                        <option>⭐</option>
-                        <option>⭐⭐</option>
-                        <option>⭐⭐⭐</option>
-                        <option>⭐⭐⭐⭐</option>
-                        <option>⭐⭐⭐⭐⭐</option>
+                        <option value="1">1 - Poor</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="3">3 - Good</option>
+                        <option value="4">4 - Very good</option>
+                        <option value="5">5 - Excellent</option>
                     </select>
                     <button type="button" class="submit-btn" onclick="submitFeedback()">Submit</button>
                     <p id="feedbackMsg" style="margin-top: 16px;"></p>
                     <div class="rating-cta">
-                        <a href="https://wa.me/8618079219" class="whatsapp-btn">💬 Message us on WhatsApp</a>
+                        <a href="https://wa.me/8618079219" class="whatsapp-btn">Message us on WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -166,13 +164,11 @@
             <div class="form-section meal-planner-card">
                 <div class="section-heading">
                     <div>
-                        <span class="eyebrow">THE WEEKLY TABLE</span>
-                        <h2>Meals made with care.</h2>
-                        <p>Make a little plan today; enjoy an easier tomorrow.</p>
+                        <h2>Weekly meal plan</h2>
+                        <p>Plan meals for the week.</p>
                     </div>
-                    <span class="meal-heading-icon" aria-hidden="true">✿</span>
                 </div>
-                <p class="local-storage-note"><span aria-hidden="true">◎</span> This meal plan is saved in this browser. Use the same browser and device to share it between accounts.</p>
+                <p class="local-storage-note">This meal plan is saved in this browser. Use the same browser and device to share it between accounts.</p>
                 <form id="mealForm">
                     <label class="meal-field" for="Date">Date
                         <input type="date" id="Date" name="Date" required>
@@ -189,7 +185,7 @@
                     <label class="meal-field" for="Snack">Snack
                         <input type="text" id="Snack" name="Snack" placeholder="e.g. Roasted makhana" maxlength="100" required>
                     </label>
-                    <button type="submit">Add to the plan <span aria-hidden="true">→</span></button>
+                    <button type="submit">Add to the plan</button>
                 </form>
                 <div class="table-responsive">
                 <table id="mealTable" class="bordered">
@@ -212,8 +208,7 @@
         {% if not househelp_mode %}
         <div id="helper" class="tab-content">
             <section class="form-section helper-access-card">
-                <span class="eyebrow">A THOUGHTFUL INVITE</span>
-                <h2>Give your househelp a seat at the table.</h2>
+                <h2>Create a meal planner account</h2>
                 <p>Create a separate login that opens only the meal planner. Their account cannot view family expenses, receipts, or other dashboard sections.</p>
                 <form method="POST" action="{{ url_for('create_househelp') }}" class="helper-form">
                     <label for="helper-username">Househelp username
@@ -223,7 +218,7 @@
                         <input id="helper-password" type="password" name="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
                     </label>
                     <p class="helper-form-note">Share the login details privately. They can use the meal planner on this browser and device.</p>
-                    <button type="submit" class="submit-btn">Create meal-planner login <span aria-hidden="true">→</span></button>
+                    <button type="submit" class="submit-btn">Create meal-planner login</button>
                 </form>
             </section>
         </div>
@@ -233,138 +228,6 @@
                 <input id="todoInput" placeholder="Add a task..." />
                 <button onclick="addTodo()">Add</button>
                 <ul id="todoList"></ul>
-            </div>
-        </div>
-        <div id="about" class="tab-content">
-            <div class="form-section">
-                <h2>ℹ️ About Us</h2>
-                <div class="about-content">
-                    <p>
-                        Welcome to <strong>FamEase</strong> 👋!
-                        This app helps you easily track daily expenses, manage spending,
-                        and stay on top of your finances without the headache.
-                    </p>
-                    <p>
-                        Built with basic code from scratch, our goal is to keep money tracking fast,
-                        clean, and stress-free.
-                    </p>
-                    <p>
-                        Whether you're splitting bills, tracking personal expenses,
-                        or just trying to save more, we've got your back. 💪
-                    </p>
-                    <br>
-                    <p>
-                        The app exists to help families manage their finances with ease, providing tools for
-                        budgeting, saving, and tracking expenses in one place.
-                        It aims to reduce financial stress by offering a simple way for families to organize their
-                        spending and achieve their financial goals, such as building an emergency fund. <br>
-                        Additionally, the app encourages family collaboration, making it easy for everyone to
-                        participate in managing finances, even kids.
-                        By providing clear insights into spending patterns and setting financial goals, the app
-                        empowers
-                        families to make smarter financial decisions and save for the future.
-                        Ultimately, its goal is to help families feel more in control of their money and more
-                        confident about their financial health.<br>
-                    </p>
-                    <div class="mission-section">
-                        <h2>Our Mission</h2>
-                        <p>Our mission is to simplify family life with tools to manage budgets, organize meals, and
-                            stay on top of everyday tasks—helping families spend smarter and enjoy more time
-                            together.</p>
-                    </div>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">💰</div>
-                            <h3>Expense Tracker</h3>
-                            <p>Track income, expenses, and visualize spending trends with customizable categories
-                            </p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🍽️</div>
-                            <h3>Meal Planner</h3>
-                            <p>Plan weekly meals based on a balanced diet, ensuring nutritional variety and healthy
-                                eating</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">✍️</div>
-                            <h3>Visionary Blogs</h3>
-                            <p>Inspire and inform users with forward-thinking content on budgeting,
-                                wellness, and lifestyle, helping families stay ahead of trends</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="blog" class="tab-content">
-            <div class="form-section">
-                <div class="blog-hero">
-                    <h1>Family Budget, Meal-planning and Savings Blog</h1>
-                    <p class="hero-subtitle">Latest insights on daily meals, expenses and savings</p>
-                    <div class="blog-content">
-                        <div class="blog-grid">
-                            <article class="blog-card featured">
-                                <div class="blog-badge">FEATURED</div>
-                                <div class="blog-image">💻</div>
-                                <div class="blog-meta">
-                                    <span class="blog-date">Feb 12th, 2026</span>
-                                    <span class="blog-category">Tech</span>
-                                </div>
-                            </article>
-                            <article class="blog-card">
-                                <div class="blog-image">🍕</div>
-                                <div class="blog-meta">
-                                    <span class="blog-date">Feb 12th, 2026</span>
-                                    <span class="blog-category">Meal Planning</span>
-                                </div>
-                                <h3>Balance in food</h3>
-                                <p>How Meal Planning Can Help Your Family Eat Healthier and Save Money...</p>
-                                <details class="blog-details">
-                                    <summary class="read-more">Read More →</summary>
-                                    <p>Plan a few meals before shopping, check what is already in the pantry, and choose ingredients that can be used in more than one dish. A simple weekly plan can reduce food waste, takeout spending, and last-minute stress while keeping meals varied.</p>
-                                </details>
-                            </article>
-                            <article class="blog-card">
-                                <div class="blog-image">💰</div>
-                                <div class="blog-meta">
-                                    <span class="blog-date">Feb 10th, 2026</span>
-                                    <span class="blog-category">Savings</span>
-                                </div>
-                                <h3>Smart Savings Strategies for Families</h3>
-                                <p>How to Build a Secure Future Together...</p>
-                                <details class="blog-details">
-                                    <summary class="read-more">Read More →</summary>
-                                    <p>Start by setting a realistic savings goal and scheduling a small transfer after each payday. Keep emergency savings separate from everyday spending, review subscriptions regularly, and revisit the plan together as family priorities change.</p>
-                                </details>
-                            </article>
-                            <article class="blog-card">
-                                <div class="blog-image">💵</div>
-                                <div class="blog-meta">
-                                    <span class="blog-date">Jan 30th, 2026</span>
-                                    <span class="blog-category">Budgeting</span>
-                                </div>
-                                <h3>The Ultimate Guide to Family Budgeting</h3>
-                                <p>Innovative approaches to Save More, Spend Smarter...</p>
-                                <details class="blog-details">
-                                    <summary class="read-more">Read More →</summary>
-                                    <p>Build a budget from actual income and recent spending. Group costs into essentials, flexible spending, and savings, then agree on a limit for each. Check in monthly and adjust categories when circumstances change instead of treating the budget as fixed.</p>
-                                </details>
-                            </article>
-                            <article class="blog-card">
-                                <div class="blog-image">🌱</div>
-                                <div class="blog-meta">
-                                    <span class="blog-date">Jan 8th, 2026</span>
-                                    <span class="blog-category">Sustainability</span>
-                                </div>
-                                <h3>Sustainable Living on a Budget</h3>
-                                <p>How Reusing and Recycling Can Save You Money...</p>
-                                <details class="blog-details">
-                                    <summary class="read-more">Read More →</summary>
-                                    <p>Reusable bags, repairing items, borrowing seldom-used equipment, and buying durable products can lower household costs and waste. Start with one change that fits your routine, then compare the savings over a few months.</p>
-                                </details>
-                            </article>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         {% endif %}
@@ -516,7 +379,7 @@
                         labels: Object.keys(memberTotals),
                         datasets: [{
                             data: Object.values(memberTotals),
-                            backgroundColor: ['#9f7aea', '#ed64a6', '#f093fb', '#4ecdc4', '#ffb347']
+                            backgroundColor: ['#504b45', '#a66a53', '#b9b1a6', '#7b8376', '#d2a266']
                         }]
                     },
                     options: {
@@ -574,7 +437,7 @@
                     taskText.textContent = todo;
                     const deleteButton = document.createElement('button');
                     deleteButton.type = 'button';
-                    deleteButton.textContent = '❌';
+                    deleteButton.textContent = 'Delete';
                     deleteButton.setAttribute('aria-label', `Delete task ${index + 1}`);
                     deleteButton.addEventListener('click', () => deleteTodo(index));
                     li.append(taskText, deleteButton);
@@ -730,3 +593,5 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
+
