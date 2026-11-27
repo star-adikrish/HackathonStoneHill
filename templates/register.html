@@ -136,14 +136,14 @@
         }
 
         .register-header h2 {
-            color: #2d3748;
+            color: #4d5e7c;
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 8px;
         }
 
         .register-subtitle {
-            color: #718096;
+            color: #667894;
             font-size: 0.95rem;
             font-weight: 500;
         }
@@ -233,7 +233,7 @@
         }
 
         .login-link:hover {
-            color: #ed64a6;
+            color: #ec71ad;
             transform: translateY(-1px);
         }
 
@@ -251,7 +251,7 @@
 
         .error {
             background: rgba(245, 101, 101, 0.15);
-            color: #c53030;
+            color: #dd3939;
             border: 1px solid rgba(245, 101, 101, 0.3);
         }
 
@@ -286,7 +286,7 @@
         <img class="auth-logo" src="{{ url_for('static', filename='images/FamEase.png') }}" alt="FamEase logo">
         <div class="register-header">
             <h2>Create your account</h2>
-            <p class="register-subtitle">Create an account to track household expenses.</p>
+            <p class="register-subtitle">Create an account to track household expenses and unlock a new world.</p>
         </div>
         
         {% with messages = get_flashed_messages() %}
@@ -303,13 +303,13 @@
                     <input type="text" name="username" placeholder="Choose a username" required autocomplete="username">
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Create a password" required autocomplete="new-password">
+                    <input type="password" name="password" placeholder="Create a password" required minlength="8" autocomplete="new-password">
                 </div>
                 <div class="form-group">
                     <input type="number" name="family_count" placeholder="How many people in family?" min="1" max="10" required>
                 </div>
                 <div id="family-names"></div>
-                <button type="submit" class="register-btn">Create Account</button>
+                <button type="submit" class="register-btn">Create An Account and start a new experience</button>
             </form>
         </div>
         

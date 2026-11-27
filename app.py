@@ -69,7 +69,8 @@ def _default_data():
     return {
         "users": {},
         "user_expenses": {},
-        "expenses": []
+        "expenses": [],
+        "feedback_ratings": {}
     }
 
 
@@ -108,6 +109,8 @@ def load_data():
                     payload = row[0]
                     if isinstance(payload, str):
                         payload = json.loads(payload)
+                    if isinstance(payload, dict):
+                        payload.setdefault("feedback_ratings", {})
                     return payload
 
                 initial_data = _default_data()
@@ -136,6 +139,7 @@ def load_data():
                     loaded.setdefault("users", {})
                     loaded.setdefault("user_expenses", {})
                     loaded.setdefault("expenses", [])
+                    loaded.setdefault("feedback_ratings", {})
                     return loaded
         except (json.JSONDecodeError, OSError) as error:
             app.logger.exception("Could not load local data.json: %s", error)
@@ -446,8 +450,8 @@ def register():
             flash("Username is required")
             return render_template("register.html")
 
-        if not password:
-            flash("Password is required")
+        if len(password) < 8:
+            flash("Use a password with at least 8 characters.")
             return render_template("register.html")
 
         data = load_data()
@@ -750,19 +754,38 @@ def contact():
     if "user" not in session:
         return redirect(url_for("login"))
 
-    name = request.form.get("name", "").strip()
-    email = request.form.get("email", "").strip()
-    subject = request.form.get("subject", "").strip()
-    message = request.form.get("message", "").strip()
+    flash("Contact is unavailable until a delivery destination is configured.")
+    return redirect(url_for("index"))
 
-    if not name or not message:
-        flash("Please enter your name and message.")
+
+@app.route("/feedback", methods=["POST"])
+def submit_feedback():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    try:
+        rating = int(request.form.get("rating", ""))
+    except (TypeError, ValueError):
+        flash("Please select a valid rating.")
         return redirect(url_for("index"))
 
-    flash(
-        f"Thank you {name}! Your message has been received."
-    )
+    if rating not in range(1, 6):
+        flash("Please select a valid rating.")
+        return redirect(url_for("index"))
 
+    data = load_data()
+    ratings = data.setdefault("feedback_ratings", {})
+    rating_key = str(rating)
+    ratings[rating_key] = ratings.get(rating_key, 0) + 1
+
+    try:
+        save_data(data)
+    except Exception:
+        app.logger.exception("Could not save feedback rating")
+        flash("We couldn't save your rating. Please try again.")
+        return redirect(url_for("index")), 503
+
+    flash("Thank you. Your rating was saved anonymously.")
     return redirect(url_for("index"))
 
 

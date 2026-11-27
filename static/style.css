@@ -413,8 +413,8 @@ th {
 
 .rating-section {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: minmax(190px, 1fr) 180px auto minmax(180px, auto);
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 16px;
     padding-top: 28px;
@@ -422,15 +422,19 @@ th {
 }
 
 .rating-section h2 {
+    flex: 1 1 190px;
     font-size: 28px;
 }
 
-#feedbackMsg {
-    color: var(--muted);
+.rating-form {
+    display: flex;
+    flex: 1 1 320px;
+    align-items: center;
+    gap: 12px;
 }
 
-.rating-cta {
-    justify-self: end;
+.rating-form select {
+    flex: 1 1 180px;
 }
 
 @media (max-width: 900px) {
@@ -460,19 +464,6 @@ th {
         border-bottom: 1px solid var(--line);
     }
 
-    .rating-section {
-        grid-template-columns: 1fr 180px;
-    }
-
-    .rating-section h2,
-    .rating-cta,
-    #feedbackMsg {
-        grid-column: 1 / -1;
-    }
-
-    .rating-cta {
-        justify-self: start;
-    }
 }
 
 @media (max-width: 600px) {
@@ -547,8 +538,7 @@ th {
     .expense-form,
     .helper-form,
     #mealForm,
-    .contact-editorial form,
-    .rating-section {
+    .contact-editorial form {
         grid-template-columns: 1fr;
     }
 
@@ -556,10 +546,7 @@ th {
     .helper-form button,
     #mealForm button,
     .contact-editorial textarea,
-    .contact-editorial form .whatsapp-btn,
-    .rating-section h2,
-    .rating-cta,
-    #feedbackMsg {
+    .contact-editorial form .whatsapp-btn {
         grid-column: 1 / -1;
     }
 
@@ -619,15 +606,20 @@ th {
     }
 
     .rating-section {
+        align-items: stretch;
         gap: 12px;
         padding-top: 22px;
     }
 
     .rating-section select,
-    .rating-section .submit-btn,
-    .rating-cta,
-    .rating-cta .whatsapp-btn {
+    .rating-section .submit-btn {
         width: 100%;
+    }
+
+    .rating-form {
+        flex-direction: column;
+        align-items: stretch;
+        flex-basis: 100%;
     }
 }
 

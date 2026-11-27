@@ -111,47 +111,37 @@
             </div>
             <div id="about-contact" class="tab-content">
                 <section class="form-section about-editorial">
-                    <span class="editorial-kicker">ABOUT famease a new project</span>
+                    <span class="editorial-kicker">Family finances, made clearer</span>
                     <h2>About FamEase </h2>
                     <div class="about-content">
-                        <p class="about-deck">A considered place to keep the everyday figures, plans, and small details that shape family life.</p>
+                        <p class="about-deck">A simple place to organize everyday spending and plans that help family life run smoothly.</p>
                         <ul class="about-list">
                             <li>Record expenses and review monthly spending.</li>
                             <li>Scan receipts and check the items found.</li>
                             <li>Plan meals and keep a to-do list.</li>
-                            <li>ALSO WITH AN NEW EDITORIAL LOOK</li>
-                            <li>House-help acct is very useful try it out</li>
+                            <li>Create a separate meal-planner account for household help.</li>
                         </ul>
                         <p class="about-note">Meal plans and to-do items are saved in this browser.</p>
                     </div>
                 </section>
                 <div class="contact-form contact-editorial">
-                    <span class="editorial-kicker">Don't prank call guys</span>
+                    <span class="editorial-kicker">Get in touch</span>
                     <h2>Contact</h2>
-                    <form method="POST" action="{{ url_for('contact') }}">
-                        <input type="text" name="name" placeholder="Your Name" required>
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <input type="text" name="subject" placeholder="Subject" required>
-                        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                        <button type="button" class="whatsapp-btn" onclick="sendToWhatsApp()">Send via
-                            WhatsApp</button>
-                    </form>
+                    <p>Contact is temporarily unavailable while a delivery destination is being configured. No messages will be sent or stored yet.</p>
                 </div>
                 <div class="contact-form rating-section">
                     <h2>Rate Your Experience</h2>
-                    <select id="stars">
-                        <option value="">Select Rating</option>
-                        <option value="1">1 - Poor</option>
-                        <option value="2">2 - Fair</option>
-                        <option value="3">3 - Good</option>
-                        <option value="4">4 - Very good</option>
-                        <option value="5">5 - Excellent</option>
-                    </select>
-                    <button type="button" class="submit-btn" onclick="submitFeedback()">Submit</button>
-                    <p id="feedbackMsg" style="margin-top: 16px;"></p>
-                    <div class="rating-cta">
-                        <a href="https://wa.me/##########" class="whatsapp-btn">Message us on WhatsApp</a>
-                    </div>
+                    <form method="POST" action="{{ url_for('submit_feedback') }}" class="rating-form">
+                        <select id="stars" name="rating" aria-label="Select a rating" required>
+                            <option value="">Select Rating</option>
+                            <option value="1">1 - Poor</option>
+                            <option value="2">2 - Fair</option>
+                            <option value="3">3 - Good</option>
+                            <option value="4">4 - Very good</option>
+                            <option value="5">5 - Excellent</option>
+                        </select>
+                        <button type="submit" class="submit-btn">Submit rating</button>
+                    </form>
                 </div>
             </div>
             {% endif %}
@@ -384,28 +374,6 @@
                     }
                 });
             }
-                        function sendToWhatsApp() {
-                const name = document.querySelector('input[name="name"]').value;
-                const email = document.querySelector('input[name="email"]').value;
-                const subject = document.querySelector('input[name="subject"]').value;
-                const message = document.querySelector('textarea[name="message"]').value;
-                if (!name || !email || !subject || !message) {
-                    alert('Please fill all fields before sending to WhatsApp!');
-                    return;
-                }
-                const whatsappMessage = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`;
-                const whatsappUrl = `https://wa.me/#########?text=${encodeURIComponent(whatsappMessage)}`;
-                window.open(whatsappUrl, '_blank');
-            }
-            function submitFeedback() {
-                const rating = document.getElementById('stars').value;
-                if (!rating) {
-                    document.getElementById('feedbackMsg').textContent = 'Please select a rating!';
-                    return;
-                }
-                document.getElementById('feedbackMsg').textContent = `Thank you for rating us ${rating}!`;
-                document.getElementById('stars').value = '';
-            }
             let todos = [];
             function loadTodos() {
                 try {
@@ -470,7 +438,7 @@
                     alert("Please enter valid food names (letters and spaces only).");
                     return;
                 }
-                saveToLocalStorage(date, breakfast, lunch, dinner, snack);
+                if (!saveToLocalStorage(date, breakfast, lunch, dinner, snack)) return;
                 renderMeals();
                 document.getElementById('Date').value = '';
                 document.getElementById('Breakfast').value = '';
@@ -492,9 +460,13 @@
                 meals.push({ date, breakfast, lunch, dinner, snack });
                 try {
                     localStorage.setItem('meals', JSON.stringify(meals));
+                    return true;
                 } catch (error) {
+                    console.warn('Could not save the meal plan:', error);
                     alert('Your browser could not save this meal. Please check storage settings.');
+                    return false;
                 }
+            
             }
             function deleteMeal(index) {
                 const meals = getSavedMeals();

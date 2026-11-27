@@ -61,7 +61,7 @@ Start the application locally, then visit:
 ```text
 .
 ├── app.py
-├── data.json
+├── data.json              # local only; created/updated by the app and git-ignored
 ├── requirements.txt
 ├── schema.sql
 ├── static/
@@ -153,7 +153,7 @@ FamEase stores application accounts and expenses in `data.json` unless `DATABASE
 
 Run the application from the repository root so the JSON file is found and updated correctly.
 
-`data.json` is demonstration and local-development data. It should not contain real financial information or credentials.
+`data.json` is local-only and ignored by Git. It may contain account and expense information, so never commit it or put real financial information in a public repository.
 
 ### Hosted deployments
 
@@ -183,8 +183,8 @@ A household owner can create a separate meal-planner login from the **Househelp*
 
 The househelp account can access the meal planner only. Family expenses and other dashboard routes are restricted.
 
-## WhatsApp Contact
+## Feedback and Contact
 
-The WhatsApp integration is intentionally not connected to a real phone number.
+Ratings are saved as anonymous aggregate counts in the configured application storage.
 
-Before using it, replace the placeholder number in the `sendToWhatsApp` function and the WhatsApp link in [templates/index.html](templates/index.html) with the intended public number.
+Contact messages are currently disabled because no delivery destination is configured. The site states this explicitly and does not claim that messages have been delivered.
