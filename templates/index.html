@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FamEase · Family Dashboard</title
-    <link rel="stylesheet" href="style.css"> 
+    <title>FamEase · Family Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -554,39 +554,9 @@
         </script>
     </div>
 <script>
-/* FamEase Cursor Glow */
-document.addEventListener("DOMContentLoaded", () => {
-    const glow = document.getElementById("cursorGlow");
-
-    if (!glow) return;
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    document.addEventListener("mousemove", (event) => {
-        mouseX = event.clientX;
-        mouseY = event.clientY;
-        glow.style.opacity = "1";
-    });
-
-    document.addEventListener("mouseleave", () => {
-        glow.style.opacity = "0";
-    });
-
-    function animateGlow() {
-        currentX += (mouseX - currentX) * 0.12;
-        currentY += (mouseY - currentY) * 0.12;
-
-        glow.style.transform =
-            `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
-
-        requestAnimationFrame(animateGlow);
-    }
-
-    animateGlow();
-});
 </script>
 </body>
 </html>
+''' The whatsapp send message is disabled kindly put your own number and try it out in line 154
+the website is available for testing on https://famease.onrender.com/
+'''

@@ -132,7 +132,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* Navigation */
+
 
 .tabs {
     display: flex;
@@ -354,7 +354,7 @@ button:disabled {
 
 .whatsapp-btn:hover {
     color: #FFFFFF;
-    background: #1D704B;
+    background: #d7fca4;
     transform: translateY(-2px);
     box-shadow: 0 8px 18px rgba(38, 135, 92, .18);
 }
@@ -1964,3 +1964,5 @@ hr {
     }
 }
 
+button {
+    

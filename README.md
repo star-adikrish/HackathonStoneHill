@@ -1,39 +1,36 @@
 # FamEase
 
-FamEase is a family budgeting and expense-tracking web application built with Flask. It helps families record shared expenses, monitor spending trends, plan meals, and make better day-to-day financial decisions through a single dashboard.
+FamEase is a family budgeting and household planning application built with Flask. It brings receipt scanning, shared expense tracking, meal planning, to-do lists, and optional household-helper access into one responsive dashboard.
 
 ## Live Website
 
-[https://famease.onrender.com/](https://famease.onrender.com/)
-Website link may change in a few weeks, close to 4 to 8 weeks
+The latest deployed version is available at:
 
-## Important Notice
+**https://famease.onrender.com/**
 
-
-Please read the following notes before using this project.
-
-**WhatsApp Integration:**  
-The WhatsApp number in the `sendToWhatsApp` function is currently a placeholder (`#########`). Replace it with the intended WhatsApp number before using this feature.
-
-**Public Testing Data:**  
-The `data.json` file has been included in the public GitHub repository temporarily for Hack Club review and testing purposes.
-
-- Do not add sensitive, personal, or real financial information to this file.
-- The repository is intended to become private after the Hack Club review and testing process.
-- Making the repository private does not guarantee that previously exposed data or copies are removed.
-- For actual use, replace public JSON-based storage with a secure database and appropriate access controls.
+The deployed URL may change when the hosting configuration changes.
 
 ## Features
 
-- User registration and login with hashed passwords
-- Family-member setup during registration
-- Add and delete expenses with date, item, amount, and payer details
-- Monthly and all-time spending summaries
-- Dashboard charts and spending insights
-- Receipt scanning using browser-based OCR
-- Optional expense entry from scanned receipts
-- Demo mode available at `/demo`
-- Responsive interface for desktop and mobile screens
+- Create family accounts with hashed passwords
+- Add, view, and delete household expenses
+- Review monthly and all-time spending
+- View spending summaries with charts
+- Scan receipts in the browser with Tesseract.js
+- Turn recognized receipt items into expense entries
+- Plan meals and keep a saved weekly meal table
+- Create and manage a browser-saved to-do list
+- Create a separate meal-planner account for a househelp
+- Use read-only demo mode for local testing
+- Use the responsive dashboard on desktop and mobile devices
+
+## Demo
+
+Start the application locally, then visit:
+
+**http://127.0.0.1:5000/demo**
+
+Demo mode uses sample expenses and is read-only. It does not save expense changes.
 
 ## Technology Stack
 
@@ -43,9 +40,8 @@ The `data.json` file has been included in the public GitHub repository temporari
 - Jinja2
 - Chart.js
 - Tesseract.js
-- Google Fonts
 - JSON for local development storage
-- PostgreSQL for Render deployments
+- PostgreSQL for hosted deployments
 
 ## Project Structure
 
@@ -56,6 +52,8 @@ The `data.json` file has been included in the public GitHub repository temporari
 ├── requirements.txt
 ├── schema.sql
 ├── static/
+│   ├── auth.css
+│   ├── style.css
 │   └── images/
 │       └── FamEase.png
 └── templates/
@@ -66,103 +64,114 @@ The `data.json` file has been included in the public GitHub repository temporari
 
 ## Getting Started
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone <repository-url>
 cd HackathonStoneHill-main
 ```
+Or from repo Famease
 
-### 2. Create and Activate a Virtual Environment
+### 2. Create and activate a virtual environment
 
-**macOS / Linux:**
+**macOS/Linux**
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-**Windows PowerShell:**
+**Windows PowerShell**
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-### 3. Install Dependencies
+### 3. Install dependencies
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-### 4. Configure Environment Variables
+### 4. Configure environment variables
 
-Set a unique Flask secret key before starting the application.
+Set a Flask secret key for persistent local sessions:
 
-**macOS / Linux:**
+**macOS/Linux**
 
 ```bash
 export SECRET_KEY="replace-with-a-long-random-value"
 ```
 
-**Windows PowerShell:**
+**Windows PowerShell**
 
 ```powershell
-$env:SECRET_KEY = "replace-with-a-long-random-value"
+$env:SECRET_KEY="replace-with-a-long-random-value"
 ```
 
-Never commit real API keys, passwords, database credentials, or production secrets. Store sensitive configuration in environment variables.
+For hosted PostgreSQL storage, also set:
 
-### 5. Run the Application
+```text
+DATABASE_URL=<PostgreSQL connection string>
+```
+
+`WEATHER_API_KEY` is optional and enables the weather endpoint when configured.
+
+Never commit real API keys, passwords, or database credentials.
+
+### 5. Run the application
+
+From the repository root:
 
 ```bash
 python app.py
 ```
 
-Open the following URL in your browser:
+Open **http://127.0.0.1:5000**.
 
-[http://127.0.0.1:5000](http://127.0.0.1:5000)
-
-## Demo Mode
-
-Visit the following URL to access the dashboard with sample expenses:
-
-[http://127.0.0.1:5000/demo](http://127.0.0.1:5000/demo)
-
-Demo data is read-only. To use the application normally, create a new account through the registration page.
-
-## Househelp Meal-planner Account
-
-A household owner can create a separate househelp login from the **＋ HOUSEHELP** dashboard tab. Enter a unique username and a password of at least 8 characters, then share those login details privately. When the househelp signs in, the dashboard exposes only the meal planner and logout; other application routes are denied as well.
-
-Meal plans are stored in the browser's local storage, not in the account database. The owner and househelp can use the same plan when signing in on the same browser and device. Plans do not sync across browsers or devices, and clearing browser data removes them.
+For Flask debug mode, set `FLASK_DEBUG=1` before starting the application.
 
 ## Data Storage
 
-FamEase uses different storage methods depending on the environment.
+### Local development
 
-**Local Development**
+FamEase stores application accounts and expenses in `data.json` unless `DATABASE_URL` is configured.
 
-- Uses `data.json` for storing users and expense information.
-- Run the application from the repository root to ensure the file can be located correctly.
+Run the application from the repository root so the JSON file is found and updated correctly.
 
-**Render Deployment**
+`data.json` is demonstration and local-development data. It should not contain real financial information or credentials.
 
-- Uses PostgreSQL for persistent data storage.
-- Configure `DATABASE_URL` and `SECRET_KEY` in the Render service's environment variables.
-- The application refuses account and expense operations if Render is missing `DATABASE_URL`, rather than silently saving data to an ephemeral file.
+### Hosted deployments
 
-The database table can be created by running `schema.sql` against your PostgreSQL database. The application also creates it automatically.
+Set `DATABASE_URL` and `SECRET_KEY` in the hosting service. FamEase will:
 
-Existing accounts and expenses in your local `data.json` file are not automatically transferred to the deployment database. Back up the file and migrate any required data before switching users to the deployed application.
+- Create the `famease_app_state` table automatically when needed
+- Store application data in PostgreSQL
+- Refuse account and expense operations if persistent database configuration is missing
 
-## Development Notes
+The SQL schema is also available in `schema.sql`.
 
-- Run the application from the repository root to ensure local JSON storage works correctly.
-- Chart.js, Tesseract.js, and Google Fonts are loaded through public CDNs.
-- Receipt OCR runs directly in the browser.
-- An internet connection is required to load Tesseract.js and other external CDN resources.
+Local JSON accounts and expenses are not automatically migrated to PostgreSQL.
 
-## License
+## Meal Planner and To-Do Storage
 
-No license has been specified for this project yet. A suitable license should be added before distributing or publishing the project.
+Meal plans and to-do items are stored in the current browser's local storage. They are not stored in the account database and do not synchronize across browsers or devices.
+
+Clearing browser data removes saved meal plans and to-do items.
+
+## Househelp Account
+
+A household owner can create a separate meal-planner login from the **Househelp** tab.
+
+- Choose a unique username
+- Use a password of at least eight characters
+- Share the credentials privately
+
+The househelp account can access the meal planner only. Family expenses and other dashboard routes are restricted.
+
+## WhatsApp Contact
+
+The WhatsApp integration is intentionally not connected to a real phone number.
+
+Before using it, replace the placeholder number in the `sendToWhatsApp` function and the WhatsApp link in [templates/index.html](templates/index.html) with the intended public number.

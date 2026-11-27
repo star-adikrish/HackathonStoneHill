@@ -1,0 +1,659 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --paper: #f3f0e8;
+    --surface: #fff;
+    --ink: #25241f;
+    --muted: #706d64;
+    --line: #d6d1c5;
+    --olive: #858d7d;
+    --rust: #b86d53;
+    --danger: #a54f45;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-width: 320px;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 32px 20px;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+.container {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid rgba(37, 36, 31, .10);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 96px;
+    padding: 20px 38px;
+    border-bottom: 1px solid var(--line);
+}
+
+.brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.brand-mark {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px;
+}
+
+.brand-lockup h1 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.user-info,
+.user-greeting {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    gap: 14px;
+}
+
+.user-greeting {
+    gap: 9px;
+}
+
+.user-greeting small {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+.user-avatar {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+}
+
+.logout-btn {
+    color: var(--ink);
+    font-size: 13px;
+    text-underline-offset: 4px;
+}
+
+.content {
+    padding: 28px 38px 38px;
+}
+
+.expense-empty,
+.local-storage-note,
+.flash-message {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    color: var(--muted);
+    background: #f8f6ef;
+    border: 1px solid var(--line);
+}
+
+.tabs {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 32px;
+    padding: 12px 0;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--line);
+    scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab {
+    flex: 0 0 auto;
+    padding: 6px 0;
+    color: var(--muted);
+    background: none;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    font: 600 13px 'DM Sans', sans-serif;
+    cursor: pointer;
+}
+
+.tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+h2,
+h3 {
+    color: var(--ink);
+}
+
+h2 {
+    margin: 0 0 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+h3 {
+    margin: 20px 0 10px;
+}
+
+.form-section,
+.contact-form {
+    margin-bottom: 24px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    min-height: 46px;
+    padding: 11px 12px;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0;
+    font: 14px 'DM Sans', sans-serif;
+}
+
+textarea {
+    min-height: 112px;
+    resize: vertical;
+}
+
+button,
+.whatsapp-btn {
+    min-height: 44px;
+    padding: 10px 16px;
+    color: var(--paper);
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    font: 700 12px 'DM Sans', sans-serif;
+    letter-spacing: .4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button:hover,
+.whatsapp-btn:hover {
+    background: var(--olive);
+    border-color: var(--olive);
+}
+
+.expense-form,
+.helper-form,
+#mealForm {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.expense-form button,
+.helper-form button,
+#mealForm button {
+    grid-column: 1 / -1;
+}
+
+.expenses-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, .8fr) 1.2fr;
+    gap: 28px;
+}
+
+.chart-wrap,
+.expense-card,
+.expense-total {
+    border: 1px solid var(--line);
+}
+
+.chart-wrap {
+    padding: 18px;
+}
+
+.expense-card {
+    margin-bottom: 10px;
+    padding: 13px 14px;
+}
+
+.expense-card small {
+    color: var(--muted);
+}
+
+.expense-card form {
+    margin-top: 8px;
+}
+
+.delete-btn {
+    min-height: 36px;
+    color: var(--danger);
+    background: transparent;
+    border-color: var(--line);
+}
+
+.expense-total {
+    margin-top: 14px;
+    padding: 12px 14px;
+    font-weight: 700;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid var(--line);
+    text-align: left;
+}
+
+th {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: .8px;
+}
+
+#todoInput {
+    width: calc(100% - 130px);
+    margin-right: 8px;
+}
+
+#todoList {
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+#todoList li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+#todoList li span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+#todoList li button {
+    flex: 0 0 auto;
+}
+
+#about-contact.active {
+    display: grid;
+    grid-template-columns: minmax(260px, .85fr) minmax(380px, 1.15fr);
+    gap: 42px;
+}
+
+.about-editorial {
+    padding-right: 42px;
+    border-right: 1px solid var(--line);
+}
+
+.editorial-kicker {
+    display: block;
+    margin-bottom: 14px;
+    color: var(--rust);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.about-editorial h2,
+.contact-editorial h2 {
+    font-size: clamp(42px, 5vw, 62px);
+    letter-spacing: -1.5px;
+}
+
+.about-deck {
+    max-width: 30rem;
+    margin: 24px 0;
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    line-height: 1.35;
+}
+
+.about-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+}
+
+.about-list li {
+    padding: 12px 0 12px 22px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    text-indent: -22px;
+}
+
+.about-list li::before {
+    content: '— ';
+    color: var(--rust);
+}
+
+.about-note {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.contact-editorial form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.contact-editorial input,
+.contact-editorial textarea {
+    border: 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.contact-editorial textarea,
+.contact-editorial form .whatsapp-btn {
+    grid-column: 1 / -1;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rating-section {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(190px, 1fr) 180px auto minmax(180px, auto);
+    align-items: center;
+    gap: 16px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+}
+
+.rating-section h2 {
+    font-size: 28px;
+}
+
+#feedbackMsg {
+    color: var(--muted);
+}
+
+.rating-cta {
+    justify-self: end;
+}
+
+@media (max-width: 900px) {
+    body {
+        padding: 18px 14px;
+    }
+
+    .header {
+        padding: 18px 24px;
+    }
+
+    .content {
+        padding: 24px;
+    }
+
+    .expenses-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #about-contact.active {
+        grid-template-columns: 1fr;
+    }
+
+    .about-editorial {
+        padding: 0 0 32px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .rating-section {
+        grid-template-columns: 1fr 180px;
+    }
+
+    .rating-section h2,
+    .rating-cta,
+    #feedbackMsg {
+        grid-column: 1 / -1;
+    }
+
+    .rating-cta {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 0;
+        font-size: 14px;
+    }
+
+    .container {
+        width: 100%;
+        border: 0;
+    }
+
+    .header {
+        align-items: flex-start;
+        min-height: 0;
+        padding: 16px;
+    }
+
+    .brand-lockup {
+        gap: 8px;
+    }
+
+    .brand-mark {
+        width: 34px;
+        height: 34px;
+        font-size: 20px;
+    }
+
+    .brand-lockup h1 {
+        font-size: 29px;
+    }
+
+    .user-greeting {
+        display: none;
+    }
+
+    .user-info {
+        gap: 0;
+    }
+
+    .logout-btn {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 10px;
+        border: 1px solid var(--line);
+        text-decoration: none;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .tabs {
+        gap: 22px;
+        margin: 0 -16px 24px;
+        padding: 10px 16px;
+    }
+
+    .tab {
+        min-height: 38px;
+        font-size: 12px;
+    }
+
+    h2,
+    .about-editorial h2,
+    .contact-editorial h2 {
+        font-size: 38px;
+    }
+
+    .expense-form,
+    .helper-form,
+    #mealForm,
+    .contact-editorial form,
+    .rating-section {
+        grid-template-columns: 1fr;
+    }
+
+    .expense-form button,
+    .helper-form button,
+    #mealForm button,
+    .contact-editorial textarea,
+    .contact-editorial form .whatsapp-btn,
+    .rating-section h2,
+    .rating-cta,
+    #feedbackMsg {
+        grid-column: 1 / -1;
+    }
+
+    .expense-card {
+        padding: 12px;
+    }
+
+    .expense-card form,
+    .expense-card form button {
+        width: 100%;
+    }
+
+    .chart-wrap {
+        padding: 8px;
+    }
+
+    #todoInput {
+        width: 100%;
+        margin: 0 0 10px;
+    }
+
+    #todoList li button {
+        min-width: 66px;
+    }
+
+    .table-responsive {
+        margin: 16px -16px -16px;
+        padding: 0 16px 16px;
+    }
+
+    #mealTable {
+        min-width: 680px;
+    }
+
+    #productsTable {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    #about-contact.active {
+        gap: 28px;
+    }
+
+    .about-editorial {
+        padding-bottom: 28px;
+    }
+
+    .about-deck {
+        margin: 18px 0;
+        font-size: 19px;
+    }
+
+    .contact-editorial input,
+    .contact-editorial textarea {
+        min-height: 48px;
+    }
+
+    .rating-section {
+        gap: 12px;
+        padding-top: 22px;
+    }
+
+    .rating-section select,
+    .rating-section .submit-btn,
+    .rating-cta,
+    .rating-cta .whatsapp-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 360px) {
+    .brand-lockup h1 {
+        font-size: 26px;
+    }
+
+    .header {
+        padding: 14px 12px;
+    }
+
+    .content {
+        padding: 14px 12px;
+    }
+
+    .tabs {
+        margin-left: -12px;
+        margin-right: -12px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
