@@ -406,7 +406,6 @@
                 document.getElementById('feedbackMsg').textContent = `Thank you for rating us ${rating}!`;
                 document.getElementById('stars').value = '';
             }
-            /* ---------- TO DO LIST ---------- */
             let todos = [];
             function loadTodos() {
                 try {
@@ -454,7 +453,6 @@
                 saveTodos();
                 renderTodos();
             }
-            /* ---------- MEAL PLANNER ---------- */
             const mealForm = document.getElementById('mealForm');
             const mealTable = document.getElementById('mealTable');
             let tableBody;
@@ -547,7 +545,6 @@
                         if (mealForm) {
                 mealForm.addEventListener('submit', addMeal);
             }
-            // Initialize Data
             loadTodos();
             renderMeals();
         </script>
@@ -556,6 +553,3 @@
 </script>
 </body>
 </html>
-''' The whatsapp send message is disabled kindly put your own number and try it out in line 154
-the website is available for testing on https://famease.onrender.com/
-'''
