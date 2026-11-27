@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FamEase · Create account</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/FamEase.png') }}">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -282,6 +283,7 @@
     </div>
 
     <div class="register-container">
+        <img class="auth-logo" src="{{ url_for('static', filename='images/FamEase.png') }}" alt="FamEase logo">
         <div class="register-header">
             <h2>Create your account</h2>
             <p class="register-subtitle">Create an account to track household expenses.</p>

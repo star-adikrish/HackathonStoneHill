@@ -136,6 +136,14 @@ input:focus {
     animation: none;
 }
 
+.auth-logo {
+    display: block;
+    width: 112px;
+    height: 112px;
+    margin: 0 auto 16px;
+    object-fit: contain;
+}
+
 .success {
     color: #4e604e;
     background: #f1f3ef;
