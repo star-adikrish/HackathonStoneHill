@@ -1,16 +1,32 @@
 # FamEase
 
 FamEase is a family budgeting and household planning application built with Flask. It brings receipt scanning, shared expense tracking, meal planning, to-do lists, and optional household-helper access into one responsive dashboard.
+Its not only that but its a wonderful experience also as u can see the website is completly in Editoral styling and i like to keep it subtle with the off white background and the musturdy green buttons and with our Canva Logo it really gives good vibes to the website.
+
+The website is supposed to help u in 
+
+Tracking day to day expenses and also have an account where you can add ur children and teach them how to save money on their wants and needs by tracking their spends
+
+Meal planner a really big help for familys as everyone in the house has different craving and can't settle out for one thus if they create a timetable for what should me made on specific days it can stop arguments over different foods.
+
+A TO-DO list is something which helps everyones from the different ranges on basis of age nowdays having a TO-DO list is quite important 
+
+A househelp account must feel like a BIG HELP as you can tell your househelp what to do without even talking to them this helps people who may be outside when their househelp arrives 
+
+ALL FEATURES can be used for various purposes and not only for their fixed purpose so feel free to explore the website
+
+FAMEASE IS meant for the betterment of family life 
 
 ## Live Website
 
 The latest deployed version is available at:
 
 **https://famease.onrender.com/**
+You may view demo if run locally by adding  **/demo** to it
 
 The deployed URL may change when the hosting configuration changes.
 
-## Features
+## Brief OF Features
 
 - Create family accounts with hashed passwords
 - Add, view, and delete household expenses
@@ -25,12 +41,9 @@ The deployed URL may change when the hosting configuration changes.
 - Use the responsive dashboard on desktop and mobile devices
 
 ## Demo
-
 Start the application locally, then visit:
-
 **http://127.0.0.1:5000/demo**
-
-Demo mode uses sample expenses and is read-only. It does not save expense changes.
+## Demo mode uses sample expenses and is read-only. It does not save expense changes.
 
 ## Technology Stack
 
