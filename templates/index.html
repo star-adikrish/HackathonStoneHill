@@ -32,7 +32,7 @@
                 {% endif %}
             {% endwith %}
             {% if demo_mode %}
-            <p class="expense-empty" role="status">Demo mode: sample data is read-only. Create an account to save your own expenses.</p>
+            <p class="expense-empty" role="status">Demo mode: sample data is read-only. Create an account to save your own expenses. ONLY FOR DEMO PURPOSES</p>
             {% endif %}
             <div class="tabs">
                 {% if househelp_mode %}
@@ -50,7 +50,7 @@
             <div id="scanner" class="tab-content active">
                 <h2>Scan Receipt</h2>
                 <input type="file" id="imageInput" accept="image/*"><br><br>
-                <button type="button" class="submit-btn" id="scanReceiptBtn" onclick="scanReceipt()">Scan Receipt</button><br><br>
+                <button type="button" class="submit-btn" id="scanReceiptBtn" onclick="scanReceipt()">Scan Receipt.  Pls upload a clear photo</button><br><br>
                 <h3>OCR Text</h3>
                 <pre id="ocrOutput"></pre><br><br>
                 <h3>Extracted Products</h3>
@@ -111,10 +111,10 @@
             </div>
             <div id="about-contact" class="tab-content">
                 <section class="form-section about-editorial">
-                    <span class="editorial-kicker">Family finances, made clearer</span>
+                    <span class="editorial-kicker">Family finances, made transparent</span>
                     <h2>About FamEase </h2>
                     <div class="about-content">
-                        <p class="about-deck">A simple place to organize everyday spending and plans that help family life run smoothly.</p>
+                        <p class="about-deck">A simple place to organize and 'understand' everyday spending and plans that help family life run smoothly.</p>
                         <ul class="about-list">
                             <li>Record expenses and review monthly spending.</li>
                             <li>Scan receipts and check the items found.</li>
@@ -140,7 +140,7 @@
                             <option value="4">4 - Very good</option>
                             <option value="5">5 - Excellent</option>
                         </select>
-                        <button type="submit" class="submit-btn">Submit rating</button>
+                        <button type="submit" class="submit-btn">Submit your rating</button>
                     </form>
                 </div>
             </div>
@@ -153,6 +153,7 @@
                         <h2>Weekly meal plan</h2>
                         <p>Plan meals for the week.</p>
                         <p>Pre Planning goes a long way.</p>
+                        <p>Make plans instead of arguments</p>
                     </div>
                 </div>
                 <p class="local-storage-note">This meal plan is saved in this browser. Use the same browser and device to share it between accounts.</p>
@@ -196,7 +197,7 @@
         <div id="helper" class="tab-content">
             <section class="form-section helper-access-card">
                 <h2>Create a meal planner account</h2>
-                <p>Create a separate login that opens only the meal planner. Their account cannot view family expenses, receipts, or other dashboard sections.</p>
+                <p>Create a separate login that opens only the meal planner for househelp. Their account cannot view family expenses, receipts, or other dashboard sections.</p>
                 <form method="POST" action="{{ url_for('create_househelp') }}" class="helper-form">
                     <label for="helper-username">Househelp username
                         <input id="helper-username" type="text" name="username" autocomplete="off" maxlength="50" placeholder="Choose a username" required>
@@ -525,3 +526,5 @@
 </script>
 </body>
 </html>
+
+// Pls upload ur own phone number in contact info

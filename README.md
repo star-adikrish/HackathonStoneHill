@@ -1,28 +1,32 @@
 # FamEase
 
 FamEase is a family budgeting and household planning application built with Flask. It brings receipt scanning, shared expense tracking, meal planning, to-do lists, and optional household-helper access into one responsive dashboard.
-Its not only that but its a wonderful experience also as u can see the website is completly in Editoral styling and i like to keep it subtle with the off white background and the musturdy green buttons and with our Canva Logo it really gives good vibes to the website.
+Its not only that but its a wonderful experience also as you can see the website is completly in Editoral styling and i like to keep it subtle with the off white background and the musturdy green buttons and with our Canva Logo it really gives good vibes to the website.
 
-The website is supposed to help u in 
+The website is supposed to help you in 
 
-Tracking day to day expenses and also have an account where you can add ur children and teach them how to save money on their wants and needs by tracking their spends
+Tracking day to day expenses and also have an account where you can add your children and teach them how to save money on their wants and needs by tracking their spends
 
-Meal planner a really big help for familys as everyone in the house has different craving and can't settle out for one thus if they create a timetable for what should me made on specific days it can stop arguments over different foods.
+Meal planner a really big help for familys as everyone in the house has different craving and can't settle out for one thus if they create a timetable for what should be made on specific days it can stop arguments over different foods.
 
-A TO-DO list is something which helps everyones from the different ranges on basis of age nowdays having a TO-DO list is quite important 
+A TO-DO list is something which helps everyones from the different ranges on basis of age nowdays having a TO-DO list is quite important.
 
 A househelp account must feel like a BIG HELP as you can tell your househelp what to do without even talking to them this helps people who may be outside when their househelp arrives 
 
 ALL FEATURES can be used for various purposes and not only for their fixed purpose so feel free to explore the website
 
-FAMEASE IS meant for the betterment of family life 
+FAMEASE Is for the good of people so do not exploit it 
+Hope you enjoy the website with editoral styling
 
 ## Live Website
 
 The latest deployed version is available at:
 
 **https://famease.onrender.com/**
-You may view demo if run locally by adding  **/demo** to it
+You may view demo if run locally by adding  **/demo** to it IF U RUN LOCALLY
+
+Also while checking on render it may take a few seconds to wake up
+
 
 The deployed URL may change when the hosting configuration changes.
 
@@ -75,98 +79,6 @@ Start the application locally, then visit:
     └── register.html
 ```
 
-## Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone <repository-url>
-cd HackathonStoneHill-main
-```
-Or from repo Famease
-
-### 2. Create and activate a virtual environment
-
-**macOS/Linux**
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-**Windows PowerShell**
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-### 3. Install dependencies
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-### 4. Configure environment variables
-
-Set a Flask secret key for persistent local sessions:
-
-**macOS/Linux**
-
-```bash
-export SECRET_KEY="replace-with-a-long-random-value"
-```
-
-**Windows PowerShell**
-
-```powershell
-$env:SECRET_KEY="replace-with-a-long-random-value"
-```
-
-For hosted PostgreSQL storage, also set:
-
-```text
-DATABASE_URL=<PostgreSQL connection string>
-```
-
-`WEATHER_API_KEY` is optional and enables the weather endpoint when configured.
-
-Never commit real API keys, passwords, or database credentials.
-
-### 5. Run the application
-
-From the repository root:
-
-```bash
-python app.py
-```
-
-Open **http://127.0.0.1:5000**.
-
-For Flask debug mode, set `FLASK_DEBUG=1` before starting the application.
-
-## Data Storage
-
-### Local development
-
-FamEase stores application accounts and expenses in `data.json` unless `DATABASE_URL` is configured.
-
-Run the application from the repository root so the JSON file is found and updated correctly.
-
-`data.json` is local-only and ignored by Git. It may contain account and expense information, so never commit it or put real financial information in a public repository.
-
-### Hosted deployments
-
-Set `DATABASE_URL` and `SECRET_KEY` in the hosting service. FamEase will:
-
-- Create the `famease_app_state` table automatically when needed
-- Store application data in PostgreSQL
-- Refuse account and expense operations if persistent database configuration is missing
-
-The SQL schema is also available in `schema.sql`.
-
-Local JSON accounts and expenses are not automatically migrated to PostgreSQL.
-
 ## Meal Planner and To-Do Storage
 
 Meal plans and to-do items are stored in the current browser's local storage. They are not stored in the account database and do not synchronize across browsers or devices.
@@ -183,8 +95,16 @@ A household owner can create a separate meal-planner login from the **Househelp*
 
 The househelp account can access the meal planner only. Family expenses and other dashboard routes are restricted.
 
-## Feedback and Contact
+## AI USAGE
+ 
+I used AI at different stages of the build sometimes to make small changes and sometimes for even adding stuff.
+Less than 30% of my project is vibe coded.
 
-Ratings are saved as anonymous aggregate counts in the configured application storage.
+Also used a AI to give me a base for the househelp account.
 
-Contact messages are currently disabled because no delivery destination is configured. The site states this explicitly and does not claim that messages have been delivered.
+## Hope You Enjoy the website 
+
+## ALSO though the data.json is uploaded all user data was for testing u will find no real expenses made my some random xyz.
+
+
+Make good use of the website

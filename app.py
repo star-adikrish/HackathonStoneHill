@@ -5,7 +5,6 @@ from flask import (
 )
 import json
 import os
-import re
 import urllib.request
 import urllib.error
 import urllib.parse
